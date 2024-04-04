@@ -1,39 +1,58 @@
 import 'package:flutter/material.dart';
 import '../widgets/search_bar.dart' as custom;
+import 'package:hymns_latest/keerthanes_def.dart'; // Assuming this still contains Hymn class and loadHymns function
+import 'package:hymns_latest/keerthane_detail_screen.dart';
 
-class KeerthaneScreen extends StatelessWidget {
+class KeerthaneScreen extends StatefulWidget {
   const KeerthaneScreen({super.key});
 
   @override
+  _KeerthaneScreenState createState() => _KeerthaneScreenState();
+}
+
+class _KeerthaneScreenState extends State<KeerthaneScreen> {
+  List<Keerthane> keerthane = []; 
+
+  @override
+  void initState() {
+    super.initState();
+    loadKeerthane().then((data) => setState(() => keerthane = data)); // Load keerthane
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            custom.SearchBar(
+            const custom.SearchBar(
               hintText: 'Search Keerthane',
               hintStyle: TextStyle(color: Colors.black),
-              ),
-            SizedBox(height: 20),
+            ),
+            const SizedBox(height: 20),
             Expanded( 
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, 
-                  children: [
-                    Icon(Icons.music_note, size: 60, color: Colors.grey),
-                    SizedBox(height: 15),
-                    Text(
-                      'Keerthane List Coming Soon!',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
+              child: ListView.builder(
+                itemCount: keerthane.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('Keerthane ${keerthane[index].number}: ${keerthane[index].title}'),
+                    onTap: () => navigateToKeerthaneDetail(context, keerthane[index]), 
+                  );
+                },
               ),
             ),
           ],
         ),
       ), 
+    );
+  }
+
+  // Add the navigation function
+  void navigateToKeerthaneDetail(BuildContext context, Keerthane keerthane) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => KeerthaneDetailScreen(keerthane: keerthane)),
     );
   }
 }

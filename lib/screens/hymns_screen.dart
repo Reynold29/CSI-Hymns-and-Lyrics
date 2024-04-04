@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import '../widgets/search_bar.dart' as custom;
-import 'package:hymns_latest/hymns_def.dart';
-import 'package:hymns_latest/hymns_data.dart';
+import 'package:hymns_latest/hymns_def.dart'; // Assuming this still contains Hymn class and loadHymns function
 import 'package:hymns_latest/hymn_detail_screen.dart';
 
-class HymnsScreen extends StatelessWidget {
+class HymnsScreen extends StatefulWidget {
   const HymnsScreen({super.key});
+
+  @override
+  _HymnsScreenState createState() => _HymnsScreenState();
+}
+
+class _HymnsScreenState extends State<HymnsScreen> {
+  List<Hymn> hymns = []; 
+
+  @override
+  void initState() {
+    super.initState();
+    loadHymns().then((data) => setState(() => hymns = data)); // Load hymns
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +33,11 @@ class HymnsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded( 
               child: ListView.builder(
-                itemCount: hymnList.length,
+                itemCount: hymns.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text('Hymn ${hymnList[index].number}: ${hymnList[index].title}'), 
-                    onTap: () => navigateToHymnDetail(context, hymnList[index]),  
+                    title: Text('Hymn ${hymns[index].number}: ${hymns[index].title}'),
+                    onTap: () => navigateToHymnDetail(context, hymns[index]), 
                   );
                 },
               ),
