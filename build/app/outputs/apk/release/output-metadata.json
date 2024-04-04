@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.hymns_latest",
+  "applicationId": "com.reyzie.hymns",
   "variantName": "release",
   "elements": [
     {
@@ -16,5 +16,6 @@
       "outputFile": "app-release.apk"
     }
   ],
-  "elementType": "File"
+  "elementType": "File",
+  "minSdkVersionForDexing": 21
 }

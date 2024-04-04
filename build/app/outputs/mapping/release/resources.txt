@@ -6,8 +6,8 @@ DISMISS
 TextInput.requestAutofill
 app_flutter
 kRepeat
-java.lang.Integer
 deviceId
+java.lang.Integer
 verticalText
 android.util.LongArray
 FlutterSharedPreferences
@@ -15,11 +15,11 @@ getUncaughtExceptionPreHandler
 onBackPressed
 adapter
 GeneratedPluginsRegister
-LANDSCAPE_RIGHT
 LEFT
 java.lang.CharSequence
-givenName
+LANDSCAPE_RIGHT
 _handled
+givenName
 androidx.window.layout.WindowInfoTrac...
 ActivityRule
 click
@@ -31,11 +31,12 @@ kotlinx.coroutines.DefaultExecutor
 TextInputClient.updateEditingStateWit...
 registerWith
 SystemSoundType.alert
-kotlin.internal.JRE7PlatformImplement...
 REDUCE_MOTION
+kotlin.internal.JRE7PlatformImplement...
 DECREASE
 $splitPairFilters
 PORTRAIT_DOWN
+touchOffset
 sidecarAdapter
 android.intent.extra.PROCESS_TEXT_REA...
 libapp.so
@@ -45,7 +46,6 @@ SystemUiMode.immersiveSticky
 flutter/platform_views
 PHYSICAL_DISPLAY_PLATFORM_VIEW
 TextCapitalization.words
-updateViewLayout
 codePoint
 SystemUiOverlay.top
 destroy_engine_with_activity
@@ -54,7 +54,6 @@ kotlin.String
 IS_CHECK_STATE_MIXED
 sidecarDeviceState
 displayFeatures
-SwitchIntDef
 component
 java.lang.Module
 SUSPEND
@@ -77,10 +76,9 @@ addressCountry
 LIGHT
 kotlinx.coroutines.default.parallelism
 extensionCallback
-AnnotateVersionCheck
 LONG_PRESS
-HAS_CHECKED_STATE
 DID_LOSE_ACCESSIBILITY_FOCUS
+HAS_CHECKED_STATE
 FlutterEngine
 flutter/keyevent
 phoneCountryCode
@@ -90,15 +88,15 @@ decimal
 AppLifecycleState.
 SystemChrome.setSystemUIOverlayStyle
 TextInput.setEditableSizeAndTransform
-enable_state_restoration
 COMPLETING_WAITING_CHILDREN
+enable_state_restoration
 ClassVerificationFailure
 _invoked
 locale
 SDK_INT
+KeyEmbedderResponder
 SET_SELECTION
 _delayed
-android.os.Build
 io.flutter.embedding.android.OldGenHe...
 BITMAP_MASKABLE
 MOVE_CURSOR_BACKWARD_BY_CHARACTER
@@ -117,7 +115,6 @@ HapticFeedbackType.lightImpact
 TextInputType.emailAddress
 creditCardExpirationDay
 ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE
-android.view.View$AttachInfo
 username
 FlutterActivity
 java.lang.Float
@@ -133,7 +130,6 @@ android.os.Build$VERSION
 SplitPairRule
 executor
 IS_TEXT_FIELD
-kotlinx.coroutines.internal.StackTrac...
 dev.flutter.pigeon.SharedPreferencesA...
 write
 TextInputType.none
@@ -145,34 +141,32 @@ getNextMatch
 splitRule
 resizeUp
 creditCardNumber
-DiscouragedApi
 onPostResume
-io.flutter.Entrypoint
 CLIP_RECT
+io.flutter.Entrypoint
 wait
 other
-birthDateYear
 FlutterActivityAndFragmentDelegate
+birthDateYear
 android.intent.extra.TEXT
 IS_LINK
 cell
 %s.%sParcelizer
 safeCast
 URI
-URL
 FlutterTextureView
+URL
 CHARACTERS
-io.flutter.embedding.android.EnableVu...
 top
+io.flutter.embedding.android.EnableVu...
 it.parameterTypes
-mNextServedView
 kotlin.Long
 POLL_FAILED
 Completing
 java.lang.String
 addressRegion
-TextInput.setClient
 resizeDown
+TextInput.setClient
 _resumed
 TextInputType.multiline
 getChildId
@@ -181,8 +175,8 @@ framework
 java.util.concurrent.ForkJoinPool
 LIGHT_IMPACT
 DESTROYED
-selectionExtent
 New
+selectionExtent
 SystemChrome.setEnabledSystemUIOverlays
 MouseCursorChannel
 ATOMIC
@@ -195,27 +189,25 @@ HapticFeedback.vibrate
 repeatCount
 noDrop
 $activityFilters
-flutter/keydata
-read
 void
+read
+flutter/keydata
 memoryPressure
-SurfaceTexturePlatformViewRenderTarget
 flutter/restoration
 touch
 onUserLeaveHint
-CommonPool
-mStableInsets
 _cur
+CommonPool
 onResume
-OFFER_SUCCESS
 java.util.List
+OFFER_SUCCESS
 hybrid
 UNEXPECTED:
 kotlin.Int
 basic
-collect
 kotlin.Throwable
 sidecarDisplayFeatures
+BackGestureChannel
 parkedWorkersStack
 IS_IMAGE
 PHONE
@@ -229,9 +221,9 @@ rect
 kotlinx.coroutines.DefaultExecutor.ke...
 kotlin.Annotation
 INVERT_COLORS
-LANDSCAPE_LEFT
-packageName
 synchronizeToNativeViewHierarchy
+packageName
+LANDSCAPE_LEFT
 info.displayFeatures
 direction
 BITMAP
@@ -240,8 +232,8 @@ newConfig
 resizeUpRight
 Array
 flutter/lifecycle
-TextInputType.number
 WindowServer
+TextInputType.number
 activities
 UNKNOWN
 ActivityFilter
@@ -255,9 +247,8 @@ android.widget.HorizontalScrollView
 password
 kotlinx.coroutines.scheduler.keep.ali...
 INCREASE
-VGhpcyBpcyB0aGUgcHJlZml4IGZvciBEb3VibGUu
 NO_TARGET
-jar
+VGhpcyBpcyB0aGUgcHJlZml4IGZvciBEb3VibGUu
 state
 secondaryActivityStack.activities
 CompanionObject
@@ -266,7 +257,6 @@ creditCardExpirationMonth
 cache
 deltaText
 zoomIn
-android.view.ViewRootImpl
 Destroying.
 input
 REMOVE_FROZEN
@@ -274,20 +264,20 @@ POSTURE_FLAT
 kotlin.collections.ListIterator
 oemFeature.bounds
 dev.flutter.pigeon.SharedPreferencesA...
-CUSTOM_ACTION
 getKeyboardState
+CUSTOM_ACTION
 TextInputClient.updateEditingStateWit...
 delimiters
 PROTECTED
-cached_engine_id
 STANDARD
+cached_engine_id
 setRemoveOnCancelPolicy
 newLayoutInfo
 forbidden
 IS_LIVE_REGION
 windowToken
-onTrimMemory
 blockingTasksInBuffer
+onTrimMemory
 getSourceNodeId
 streetAddress
 kotlin.Char
@@ -297,12 +287,12 @@ grab
 chars
 dimen
 java.util.ListIterator
-kotlinx.coroutines.android.AndroidDis...
+flutter/backgesture
 DefaultDispatcher
 SplitPlaceholderRule
 ALERT
-kotlin.Double
 source
+kotlin.Double
 onActivityResult
 LocalizationChannel
 view
@@ -311,7 +301,6 @@ java.lang.Short
 SystemChrome.systemUIChange
 android.widget.Button
 NewApi
-ViewCompat
 addressCity
 primaryActivityName
 includeSubdomains
@@ -330,15 +319,14 @@ getDescriptor
 keymap
 FlutterLoader
 string
-onRequestPermissionsResult
 deltaStart
-kotlin.coroutines.jvm.internal.BaseCo...
-platformViewId
+onRequestPermissionsResult
 android
+platformViewId
 java.lang.module.ModuleDescriptor
-EDGE_TO_EDGE
 description
 nameSuffix
+EDGE_TO_EDGE
 LEAN_BACK
 _isTerminated
 LifecycleChannel
@@ -355,9 +343,9 @@ Cancelled
 callbackWrapper
 getPosture
 pair
-DATETIME
 enableSuggestions
 primitiveFqNames.values
+DATETIME
 PASTE
 short
 IS_MULTILINE
@@ -372,9 +360,9 @@ VISIBLE_PASSWORD
 IS_FOCUSABLE
 TextInput.clearClient
 SCROLL_RIGHT
+textCapitalization
 android.widget.ImageView
 android.widget.RadioButton
-textCapitalization
 moduleName
 hybridFallback
 oemFeature
@@ -382,8 +370,8 @@ getBounds
 put
 TextInputType.text
 EmptyCoroutineContext
-ACTION_ARGUMENT_SELECTION_END_INT
 CPU_ACQUIRED
+ACTION_ARGUMENT_SELECTION_END_INT
 embeddingCallback
 SCROLL_LEFT
 HapticFeedbackType.heavyImpact
@@ -402,10 +390,9 @@ POSTAL_ADDRESS
 smsOTPCode
 SystemChannel
 flutter_deeplinking_enabled
-viewFocused
 HEAVY_IMPACT
-light
 kotlin.Short
+light
 dev.flutter.pigeon.SharedPreferencesA...
 bounds
 primaryActivityName.packageName
@@ -418,21 +405,18 @@ BOLD_TEXT
 Dispatchers.Unconfined
 WindowInfoTrackerCallbackAdapter.kt
 $splitsWithActivity
-PrivateApi
 flags
 SystemSound.play
-onPause
 SystemUiOverlay.bottom
+onPause
 ImageReaderSurfaceProducer
 enabled
 android.widget.SeekBar
 android.intent.action.RUN
 INITIALIZED
 LAZY
-mContentInsets
-android.support.v13.view.inputmethod....
 KeyEventChannel
-PlatformViewWrapper
+android.support.v13.view.inputmethod....
 producerIndex
 flutter/settings
 addressLocality
@@ -442,8 +426,8 @@ SendQueued
 display
 SpellCheck.initiateSpellCheck
 composingExtent
-DeviceOrientation.landscapeLeft
 callbackInterface
+DeviceOrientation.landscapeLeft
 birthDateDay
 .immediate
 TextInputAction.unspecified
@@ -456,15 +440,14 @@ kotlinx.coroutines.fast.service.loader
 TAP
 kotlin.Any
 Brightness.dark
-selectionBase
 SettingsChannel
+selectionBase
 plainCodePoint
 _reusableCancellableContinuation
-android.view.View
 TextInputAction.commitContent
+android.view.View
 inputType
 java.lang.Byte
-AppBundleLocaleChanges
 BOTH
 java.lang.Cloneable
 deltaEnd
@@ -474,10 +457,9 @@ SplitPairFilter
 io.flutter.embedding.android.EnableIm...
 _consensus
 SCROLL_UP
-WrongConstant
+dev.flutter.pigeon.SharedPreferencesA...
 CLOSED_EMPTY
 kotlin.collections.Iterator
-dev.flutter.pigeon.SharedPreferencesA...
 job
 TextInputClient.requestExistingInputS...
 setLocale
@@ -491,8 +473,8 @@ point
 onCloseHandler
 _removedRef
 kotlin.Enum
-alias
 PlatformViewsChannel
+alias
 deltas
 uniqueIdentifier
 kotlin.String.Companion
@@ -504,30 +486,28 @@ setPosture
 splitInfo.primaryActivityStack
 primaryActivityName.className
 windowMetrics
-WindowInsetsCompat
 android.intent.action.PROCESS_TEXT
 TEXTURE_WITH_VIRTUAL_FALLBACK
 systemNavigationBarDividerColor
-mAttachInfo
 CLIP_PATH
 suggestions
 $splitRule
 getModule
 extent
 resizeColumn
-java.specification.version
 sidecarCompat
+java.specification.version
 plugins
+tooltip
 kotlinx.coroutines.scheduler.blocking...
 kotlin.Cloneable
-tooltip
 IS_FOCUSED
 PlatformViewsController
 flutter/keyboard
 ReceiveQueued
 systemStatusBarContrastEnforced
-kotlin.reflect.jvm.internal.Reflectio...
 getSuppressed
+kotlin.reflect.jvm.internal.Reflectio...
 PARKING
 FOLD
 DartMessenger
@@ -535,12 +515,10 @@ HIGH_CONTRAST
 ON_ANY
 SystemNavigator.setFrameworkHandlesBack
 MOVE_CURSOR_BACKWARD_BY_WORD
-removeViewImmediate
 kotlinx.coroutines.scheduler.resoluti...
 kotlin.Unit
-removeView
-route
 ON_PAUSE
+route
 birthdayDay
 domain
 kotlin.jvm.internal.StringCompanionOb...
@@ -552,23 +530,22 @@ SidecarCompat
 DROP_LATEST
 transparent
 java.
-resizeUpDown
 SystemSoundType.click
+resizeUpDown
 popRoute
 background_mode
 NAMES_ROUTE
-defaultDisplay
 throwableMethods
+defaultDisplay
 completion
 dev.flutter.pigeon.SharedPreferencesA...
 clearFocus
 secondaryActivityIntent
 kUp
 FRAMEWORK_CLIENT
-LOCALE
 hintText
+LOCALE
 INACTIVE
-InlinedApi
 activityComponent.packageName
 personNamePrefix
 VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu
@@ -605,8 +582,8 @@ nodeId
 inputAction
 frame
 TERMINATED
-flutter/navigation
 Localization.getStringResource
+flutter/navigation
 extendedAddress
 content
 primaryActivity
@@ -616,12 +593,14 @@ ENQUEUE_FAILED
 ProcessText.queryTextActions
 cached_engine_group_id
 statusBarColor
+updateBackGestureProgress
 VGhpcyBpcyB0aGUgcHJlZml4IGZvciBCaWdJb...
 java.lang.Boolean
 contentCommitMimeTypes
 continuation
 DISABLE_ANIMATIONS
 DeviceOrientation.landscapeRight
+os.arch
 IconCompat
 false
 FlutterEngineCxnRegstry
@@ -635,9 +614,9 @@ io.flutter.embedding.android.LeakVM
 pushRouteInformation
 resize
 TextEditingDelta
+TextInputAction.next
 DEFAULT
 setInitialRoute
-TextInputAction.next
 DROP_OLDEST
 splitInfoList
 TEXT
@@ -653,8 +632,8 @@ endIndex
 context
 $newLayoutInfo
 action
-text
 id
+text
 birthdayYear
 kDirectionalPad
 SENTENCES
@@ -670,29 +649,28 @@ it
 PlatformChannel
 params
 UNDECIDED
-FlutterView
 announce
-TextInputType.address
+FlutterView
 PLAIN_TEXT
+TextInputType.address
 getResId
 TextInputType.url
-kotlin.jvm.internal.
 MOVE_CURSOR_FORWARD_BY_WORD
+kotlin.jvm.internal.
 AccessibilityChannel
 fullStreetAddress
 telephoneNumber
+cancelBackGesture
 secondaryActivityStack
 IS_EXPANDED
 RIGHT
-placeholderIntent
 CancellableContinuation
-mServedView
+placeholderIntent
 onDestroy
 IS_KEYBOARD_KEY
 personNameSuffix
 kotlin.jvm.functions.Function
 EmbeddingCompat
-addView
 uri
 off
 resizeLeftRight
@@ -701,22 +679,21 @@ splitInfo.secondaryActivityStack
 TextInputAction.done
 android.widget.ScrollView
 kotlin.internal.JRE8PlatformImplement...
-onSaveInstanceState
 io.flutter.EntrypointUri
-mH
+onSaveInstanceState
 VIRTUAL_DISPLAY_PLATFORM_VIEW
 newIndent
 IS_SLIDER
 resizeUpLeftDownRight
 KeyboardManager
 RESUMED
-flutter/processtext
 SpellCheckChannel
+flutter/processtext
 newUsername
 main
 activityFilters
 suffix
-mVisibleInsets
+commitBackGesture
 personMiddleInitial
 cleartextTrafficPermitted
 DID_GAIN_ACCESSIBILITY_FOCUS
@@ -745,24 +722,23 @@ featureBounds
 transformer
 statusBarIconBrightness
 ON_OFF_SWITCH_LABELS
-ClickableViewAccessibility
 asyncTraceEnd
 transform
 STARTED
 activity.windowManager.maximumWindowM...
 kotlin.Comparable
-consumer
 show_password
+consumer
 on
-baseKey
 nativeSpellCheckServiceDefined
+baseKey
 vm_snapshot_data
 currentDisplay
 Clipboard.getData
 longPress
 COROUTINE_SUSPENDED
-Trace
 ACCESSIBLE_NAVIGATION
+Trace
 Share.invoke
 flutter/textinput
 Completed
@@ -784,10 +760,9 @@ java.util.Map
 TextInputPlugin
 INTERNAL
 height
-CUT
 BOTTOM_OVERLAYS
+CUT
 _decision
-kotlinx.coroutines.flow.AbstractFlow
 input_method
 oldText
 Clipboard.hasStrings
@@ -800,6 +775,7 @@ RTL
 kJoystick
 long
 SystemUiMode.immersive
+startBackGesture
 kotlinx.coroutines.channels.defaultBu...
 HALF_OPENED
 activity.windowManager.currentWindowM...
@@ -812,9 +788,9 @@ kotlin.Enum.Companion
 RESOURCE
 creditCardExpirationDate
 obscureText
-secondaryActivityName.packageName
 texture
 WORDS
+secondaryActivityName.packageName
 SELECTION_CLICK
 windowMetricsCalculator
 kotlin.Float
@@ -822,13 +798,15 @@ androidx.core.view.inputmethod.Editor...
 systemNavigationBarIconBrightness
 contextMenu
 handled
+progress
 resizeRight
 SystemNavigator.pop
-autofill
 TextInputAction.newline
+autofill
 TextCapitalization.none
-operation
+io.flutter.embedding.android.EnableVu...
 _prev
+operation
 android.widget.EditText
 NO_DECISION
 secondaryActivity.intent
@@ -846,18 +824,17 @@ ruleComponent
 Dispatchers.Default
 kotlinx.coroutines.io.parallelism
 NUMBER
-java.util.Collection
 LIST_EMPTY
+java.util.Collection
 componentName.packageName
-collection
 HIDDEN
+collection
 android.view.DisplayInfo
 postalAddressExtendedPostalCode
 NOT_IN_STACK
 TextInputAction.previous
 CLICK
 _next
-TextInputClient.onConnectionClosed
 MULTILINE
 destination
 ON_DESTROY
@@ -867,7 +844,6 @@ flutter/mousecursor
 textservices
 EMPTY
 text/plain
-kotlinx.coroutines.test.internal.Test...
 CUTOUT
 creditCardExpirationYear
 flutter/system
@@ -875,18 +851,18 @@ BlockedPrivateApi
 SystemUiMode.leanBack
 filters
 HAS_IMPLICIT_SCROLLING
-onWindowLayoutChangeListenerRemoved
 Dispatchers.Main.immediate
+onWindowLayoutChangeListenerRemoved
 splitRules
 ON_CLOSE_HANDLER_INVOKED
 REMOVED_TASK
-location
 java.lang.Object
+location
 splitInfo
 SystemChrome.setSystemUIChangeListener
 base
-TextInput.setPlatformViewClient
 extendedPostalCode
+TextInput.setPlatformViewClient
 android.intent.extra.PROCESS_TEXT
 prefix
 kKeyboard
@@ -896,22 +872,19 @@ type
 actionLabel
 TextCapitalization.sentences
 IMMERSIVE_STICKY
-getViewRootImpl
 VERTICAL
 delimiter
-PrivateConstructorForUtilityClass
 HapticFeedbackType.mediumImpact
 NONE
 primaryActivityStack.activities
 ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT
 DeviceOrientation.portraitUp
 method
-CONSUMED
 hints
 systemNavigationBarContrastEnforced
 onWindowLayoutChangeListenerAdded
-java.util.Set
 keyup
+java.util.Set
 ACTION_ARGUMENT_SELECTION_START_INT
 push
 _state
@@ -924,16 +897,16 @@ gender
 java.lang.Double
 resizeRow
 range
-usesVirtualDisplay
 flutter/spellcheck
+usesVirtualDisplay
 IS_TOGGLED
 HAS_EXPANDED_STATE
 feature
 NO_THREAD_ELEMENTS
 get
-dark
 tracker
 oneTimeCode
+dark
 FLAT
 getDisplayInfo
 copy
@@ -943,12 +916,12 @@ BanUncheckedReflection
 resizeDownRight
 newLayout
 DARK
-IS_READ_ONLY
 COPY
+IS_READ_ONLY
 initializer
 token
-filter
 SystemChrome.setPreferredOrientations
+filter
 help
 phoneNumberDevice
 flutter/deferredcomponent
@@ -960,20 +933,19 @@ HAS_ENABLED_STATE
 android.widget.Switch
 data
 resizeUpRightDownLeft
-IS_ENABLED
 ON_RESUME
+IS_ENABLED
 float
 IS_BUTTON
 postalAddressExtended
-asyncTraceBegin
 TextCapitalization.characters
+asyncTraceBegin
 java.lang.Enum
 enableIMEPersonalizedLearning
 familyName
 create
 DETACHED
 TRANSFORM
-Flow.kt
 TextInputType.datetime
 TextInputAction.go
 tap
@@ -985,6 +957,7 @@ IS_HIDDEN
 io.flutter.InitialRoute
 controlState
 transition_animation_scale
+swipeEdge
 sequence
 keyCode
 Active
@@ -1018,10 +991,9 @@ opaque
 REUSABLE_CLAIMED
 java.util.Iterator
 0x%08x
+TextInputClient.performAction
 dart_entrypoint_args
 onWindowFocusChanged
-TextInputClient.performAction
-jar:file:
 addressState
 ON_STOP
 kotlin.CharSequence
@@ -1029,11 +1001,10 @@ intent
 int
 personName
 boolean
-ImageReaderPlatformViewRenderTarget
 com.google.android.inputmethod.latin
 emit
-AccessibilityBridge
 dev.flutter.pigeon.SharedPreferencesA...
+AccessibilityBridge
 SCROLL_DOWN
 Marking id:accessibility_action_clickable_span:2131034112 used because it matches string pool constant acc
 Marking id:accessibility_custom_action_0:2131034113 used because it matches string pool constant acc
@@ -1173,7 +1144,6 @@ Marking id:line3:2131034161 used because it matches string pool constant line
 @dimen/notification_large_icon_width : reachable=false
 @dimen/notification_main_column_padding_top : reachable=false
 @dimen/notification_media_narrow_margin : reachable=false
-    @dimen/notification_content_margin_start
 @dimen/notification_right_icon_size : reachable=false
 @dimen/notification_right_side_padding_top : reachable=false
 @dimen/notification_small_icon_background_padding : reachable=false
@@ -1268,7 +1238,7 @@ Marking id:line3:2131034161 used because it matches string pool constant line
 @id/tag_accessibility_actions : reachable=false
 @id/tag_accessibility_clickable_spans : reachable=false
 @id/tag_accessibility_heading : reachable=false
-@id/tag_accessibility_pane_title : reachable=true
+@id/tag_accessibility_pane_title : reachable=false
 @id/tag_on_apply_window_listener : reachable=false
 @id/tag_on_receive_content_listener : reachable=false
 @id/tag_on_receive_content_mime_types : reachable=false
@@ -1293,15 +1263,13 @@ Marking id:line3:2131034161 used because it matches string pool constant line
     @dimen/notification_action_icon_size
     @style/Widget_Compat_NotificationActionText
 @layout/notification_template_custom_big : reachable=false
+    @layout/notification_template_icon_group
     @dimen/notification_large_icon_width
     @dimen/notification_large_icon_height
-    @dimen/notification_main_column_padding_top
-    @dimen/notification_content_margin_start
     @dimen/notification_right_side_padding_top
     @layout/notification_template_part_time
     @layout/notification_template_part_chronometer
     @style/TextAppearance_Compat_Notification_Info
-    @layout/notification_template_icon_group
 @layout/notification_template_icon_group : reachable=false
     @dimen/notification_large_icon_width
     @dimen/notification_large_icon_height
@@ -1312,17 +1280,21 @@ Marking id:line3:2131034161 used because it matches string pool constant line
 @layout/notification_template_part_time : reachable=false
     @style/TextAppearance_Compat_Notification_Time
 @mipmap/ic_launcher : reachable=true
+    @mipmap/ic_launcher_background
+    @mipmap/ic_launcher_foreground
+    @mipmap/ic_launcher_monochrome
+@mipmap/ic_launcher_background : reachable=false
+@mipmap/ic_launcher_foreground : reachable=false
+@mipmap/ic_launcher_monochrome : reachable=false
 @string/status_bar_notification_info_overflow : reachable=false
 @style/LaunchTheme : reachable=true
     @drawable/launch_background
 @style/NormalTheme : reachable=true
 @style/TextAppearance_Compat_Notification : reachable=false
 @style/TextAppearance_Compat_Notification_Info : reachable=false
-    @style/TextAppearance_Compat_Notification
 @style/TextAppearance_Compat_Notification_Line2 : reachable=false
     @style/TextAppearance_Compat_Notification_Info
 @style/TextAppearance_Compat_Notification_Time : reachable=false
-    @style/TextAppearance_Compat_Notification
 @style/TextAppearance_Compat_Notification_Title : reachable=false
 @style/Widget_Compat_NotificationActionContainer : reachable=false
     @drawable/notification_action_background
@@ -1382,40 +1354,92 @@ The root reachable resources are:
  id:line1:2131034160
  id:line3:2131034161
  id:locale:2131034162
- id:tag_accessibility_pane_title:2131034174
  id:text:2131034184
  id:text2:2131034185
  mipmap:ic_launcher:2131230720
  style:LaunchTheme:2131361792
  style:NormalTheme:2131361793
-Skipped unused resource res/drawable/notification_bg.xml: 751 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/drawable/notification_bg_low.xml: 753 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/drawable/notification_icon_background.xml: 314 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/drawable/notification_tile_bg.xml: 319 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/drawable-v21/notification_action_background.xml: 2250 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/drawable-mdpi-v4/notification_bg_low_normal.9.png: 215 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-mdpi-v4/notification_bg_low_pressed.9.png: 223 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-mdpi-v4/notification_bg_normal.9.png: 215 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png: 223 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png: 98 bytes (replaced with small dummy file of size 67 bytes)
-Skipped unused resource res/drawable-hdpi-v4/notification_bg_low_normal.9.png: 212 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-hdpi-v4/notification_bg_low_pressed.9.png: 225 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-hdpi-v4/notification_bg_normal.9.png: 212 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png: 225 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png: 107 bytes (replaced with small dummy file of size 67 bytes)
-Skipped unused resource res/drawable-xhdpi-v4/notification_bg_low_normal.9.png: 221 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-xhdpi-v4/notification_bg_low_pressed.9.png: 252 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-xhdpi-v4/notification_bg_normal.9.png: 221 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png: 247 bytes (replaced with small dummy file of size 77 bytes)
-Skipped unused resource res/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png: 138 bytes (replaced with small dummy file of size 67 bytes)
-Skipped unused resource res/layout/custom_dialog.xml: 828 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout/notification_action.xml: 2458 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout/notification_action_tombstone.xml: 2919 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout-v16/notification_template_custom_big.xml: 9240 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout/notification_template_icon_group.xml: 577 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout/notification_template_part_chronometer.xml: 643 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout/notification_template_part_time.xml: 630 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout-v21/notification_action.xml: 2216 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout-v21/notification_action_tombstone.xml: 2677 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout-v21/notification_template_custom_big.xml: 6318 bytes (replaced with small dummy file of size 9 bytes)
-Skipped unused resource res/layout-v21/notification_template_icon_group.xml: 2432 bytes (replaced with small dummy file of size 9 bytes)
+Unused resources are: 
+ color:notification_action_color_filter:2130837506
+ color:notification_icon_bg_color:2130837507
+ dimen:compat_button_inset_horizontal_material:2130903040
+ dimen:compat_button_inset_vertical_material:2130903041
+ dimen:compat_button_padding_horizontal_material:2130903042
+ dimen:compat_button_padding_vertical_material:2130903043
+ dimen:compat_control_corner_material:2130903044
+ dimen:compat_notification_large_icon_max_height:2130903045
+ dimen:compat_notification_large_icon_max_width:2130903046
+ dimen:notification_action_icon_size:2130903047
+ dimen:notification_action_text_size:2130903048
+ dimen:notification_big_circle_margin:2130903049
+ dimen:notification_content_margin_start:2130903050
+ dimen:notification_large_icon_height:2130903051
+ dimen:notification_large_icon_width:2130903052
+ dimen:notification_main_column_padding_top:2130903053
+ dimen:notification_media_narrow_margin:2130903054
+ dimen:notification_right_icon_size:2130903055
+ dimen:notification_right_side_padding_top:2130903056
+ dimen:notification_small_icon_background_padding:2130903057
+ dimen:notification_small_icon_size_as_large:2130903058
+ dimen:notification_subtext_size:2130903059
+ dimen:notification_top_pad:2130903060
+ dimen:notification_top_pad_large_text:2130903061
+ drawable:notification_action_background:2130968577
+ drawable:notification_bg:2130968578
+ drawable:notification_bg_low:2130968579
+ drawable:notification_bg_low_normal:2130968580
+ drawable:notification_bg_low_pressed:2130968581
+ drawable:notification_bg_normal:2130968582
+ drawable:notification_bg_normal_pressed:2130968583
+ drawable:notification_icon_background:2130968584
+ drawable:notification_template_icon_bg:2130968585
+ drawable:notification_template_icon_low_bg:2130968586
+ drawable:notification_tile_bg:2130968587
+ drawable:notify_panel_notification_icon_bg:2130968588
+ id:async:2131034151
+ id:blocking:2131034152
+ id:chronometer:2131034153
+ id:dialog_button:2131034154
+ id:forever:2131034155
+ id:icon:2131034156
+ id:icon_group:2131034157
+ id:italic:2131034159
+ id:ltr:2131034163
+ id:normal:2131034164
+ id:notification_background:2131034165
+ id:notification_main_column:2131034166
+ id:notification_main_column_container:2131034167
+ id:right_icon:2131034168
+ id:right_side:2131034169
+ id:rtl:2131034170
+ id:tag_accessibility_actions:2131034171
+ id:tag_accessibility_clickable_spans:2131034172
+ id:tag_accessibility_heading:2131034173
+ id:tag_accessibility_pane_title:2131034174
+ id:tag_on_apply_window_listener:2131034175
+ id:tag_on_receive_content_listener:2131034176
+ id:tag_on_receive_content_mime_types:2131034177
+ id:tag_screen_reader_focusable:2131034178
+ id:tag_state_description:2131034179
+ id:tag_transition_group:2131034180
+ id:tag_unhandled_key_event_manager:2131034181
+ id:tag_unhandled_key_listeners:2131034182
+ id:tag_window_insets_animation_callback:2131034183
+ id:time:2131034186
+ id:title:2131034187
+ integer:status_bar_notification_info_maxnum:2131099648
+ layout:custom_dialog:2131165184
+ layout:notification_action:2131165185
+ layout:notification_action_tombstone:2131165186
+ layout:notification_template_custom_big:2131165187
+ layout:notification_template_icon_group:2131165188
+ layout:notification_template_part_chronometer:2131165189
+ layout:notification_template_part_time:2131165190
+ string:status_bar_notification_info_overflow:2131296256
+ style:TextAppearance_Compat_Notification:2131361794
+ style:TextAppearance_Compat_Notification_Info:2131361795
+ style:TextAppearance_Compat_Notification_Line2:2131361796
+ style:TextAppearance_Compat_Notification_Time:2131361797
+ style:TextAppearance_Compat_Notification_Title:2131361798
+ style:Widget_Compat_NotificationActionContainer:2131361799
+ style:Widget_Compat_NotificationActionText:2131361800

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "hymns_latest" "\0"
+            VALUE "CompanyName", "com.reyzie" "\0"
+            VALUE "FileDescription", "A minimal Hymns Book referred by CSI Churches." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "hymns_latest" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Reyzie. All rights reserved." "\0"
             VALUE "OriginalFilename", "hymns_latest.exe" "\0"
-            VALUE "ProductName", "hymns_latest" "\0"
+            VALUE "ProductName", "CSI Hymns and Lyrics" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'screens/settings_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CSI Hymns Book',
+      title: 'CSI Hymns and Lyrics',
       theme: ThemeData.light(), // Start with light theme
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system, // Start with system default
@@ -32,10 +32,10 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0; 
   ThemeMode _themeMode = ThemeMode.system; 
 
-  static const List<Widget> _screens = [
+  static final List<Widget> _screens = [
     HymnsScreen(),
-    KeerthaneScreen(),
-    SettingsScreen(),
+    const KeerthaneScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

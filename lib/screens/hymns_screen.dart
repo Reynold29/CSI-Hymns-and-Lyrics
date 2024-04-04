@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/search_bar.dart' as custom;
+import 'package:hymns_latest/hymns_def.dart';
+import 'package:hymns_latest/hymns_data.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:hymns_latest/hymn_detail_screen.dart';
 
 class HymnsScreen extends StatelessWidget {
-  const HymnsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,26 +16,30 @@ class HymnsScreen extends StatelessWidget {
             custom.SearchBar(
               hintText: 'Search Hymns',
               hintStyle: TextStyle(color: Colors.black),
-              ),
+            ),
             const SizedBox(height: 20),
-            const Expanded( 
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, 
-                  children: [
-                    Icon(Icons.music_note, size: 60, color: Colors.grey),
-                    SizedBox(height: 15),
-                    Text(
-                      'Hymns List Coming Soon!',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
+            Expanded( 
+              child: ListView.builder(
+                itemCount: hymnList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('Hymn ${hymnList[index].number}: ${hymnList[index].title}'), 
+                    onTap: () => navigateToHymnDetail(context, hymnList[index]),  
+                  );
+                },
               ),
             ),
           ],
         ),
       ), 
+    );
+  }
+
+  // Add the navigation function
+  void navigateToHymnDetail(BuildContext context, Hymn hymn) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HymnDetailScreen(hymn: hymn)),
     );
   }
 }

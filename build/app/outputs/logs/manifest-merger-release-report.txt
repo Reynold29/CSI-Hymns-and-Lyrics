@@ -1,16 +1,19 @@
 -- Merging decision tree log ---
 application
 INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:2:5-32:19
-MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
-MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
-MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:24:5-89
-MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:24:5-89
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-3/7187bfdfe973add326d134b18c9b11bc/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-3/7187bfdfe973add326d134b18c9b11bc/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:2:5-32:19
+MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-4/b4a5ac4a2b56e970ba3e1a05db54ed04/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-4/b4a5ac4a2b56e970ba3e1a05db54ed04/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+	android:extractNativeLibs
+		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
 	android:appComponentFactory
-		ADDED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
+		ADDED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:3:9-37
+		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:3:9-45
 	android:icon
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:5:9-43
 	android:name
@@ -21,38 +24,29 @@ ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymn
 INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
 INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
 INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
-MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/5256a8bb36b33b38b574f63fc884df7a/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
-MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/c0efc62e56417ddd895bcff749a0f87b/transformed/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/862a42d1a75f2d177c7f239b44ea867e/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/f15ce2f0990a58851e0c645c17930bd8/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/939233328d748677cc4dfdd942c17fd7/transformed/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/c36d6e9c1f7f0bfa0ca336d69518fe93/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:17:1-26:12
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-3/15f40df2a2fd99a715e9ed5e2683e7d2/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/0da740ec36138953380902108d0e01aa/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/a3286caaa4f0c7bf00ac1644fc3d35dd/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/9d61a5c6bb2d5bc51a72aa211fd112ee/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/2dc4fc4832d9f82ca07917492a9408c1/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/0f5bd4dc8ba07f4b988f13bb6c4463c7/transformed/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-3/7187bfdfe973add326d134b18c9b11bc/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-3/d45a387f9d06405b19bf75b2e758e97a/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/bbc79f9f275d67ece49c5ce1e2824f1e/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
+MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/34e3bf13a6b8ece9b41ed14cd196e401/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/e27c3f613523070ffd8ac1ef039b4af3/transformed/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/3fd6a914422ff65ffb4136f631169f88/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/e50151910de07f563270584c8d3098d2/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/8689dac2d62a1cfceeb86df57897ac25/transformed/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/685118b6e40543b992c725b3f9b4a3ab/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-4/6c6ab4e489338a6668ab484a2028c5aa/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/d60acf71305eaa05220a4454d61c5af5/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/4e61ff9a62be8de9dc2852f9100084ea/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/89f5640b7f6d5cbe83c9c8e8a84f4e30/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/5f222e732a8b489478d345ed5ecd040c/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/072f72149d66541626482bc206c8bcef/transformed/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-4/b4a5ac4a2b56e970ba3e1a05db54ed04/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-4/4a8fd4f733447a50b5df38eac86156fa/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/3a3482d1cb6fb03ae62d79f189f7eae2/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
 	package
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
 		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:1-44:12
 		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -68,57 +62,7 @@ data
 ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:41:13-50
 	android:mimeType
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:41:19-48
-uses-sdk
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-44
-MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/5256a8bb36b33b38b574f63fc884df7a/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
-MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/5256a8bb36b33b38b574f63fc884df7a/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
-MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/c0efc62e56417ddd895bcff749a0f87b/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/c0efc62e56417ddd895bcff749a0f87b/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/862a42d1a75f2d177c7f239b44ea867e/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/862a42d1a75f2d177c7f239b44ea867e/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/f15ce2f0990a58851e0c645c17930bd8/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/f15ce2f0990a58851e0c645c17930bd8/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/939233328d748677cc4dfdd942c17fd7/transformed/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/939233328d748677cc4dfdd942c17fd7/transformed/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/c36d6e9c1f7f0bfa0ca336d69518fe93/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/c36d6e9c1f7f0bfa0ca336d69518fe93/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-3/15f40df2a2fd99a715e9ed5e2683e7d2/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-3/15f40df2a2fd99a715e9ed5e2683e7d2/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/0da740ec36138953380902108d0e01aa/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/0da740ec36138953380902108d0e01aa/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/a3286caaa4f0c7bf00ac1644fc3d35dd/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/a3286caaa4f0c7bf00ac1644fc3d35dd/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/9d61a5c6bb2d5bc51a72aa211fd112ee/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/9d61a5c6bb2d5bc51a72aa211fd112ee/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/2dc4fc4832d9f82ca07917492a9408c1/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-3/2dc4fc4832d9f82ca07917492a9408c1/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/0f5bd4dc8ba07f4b988f13bb6c4463c7/transformed/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-3/0f5bd4dc8ba07f4b988f13bb6c4463c7/transformed/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-3/7187bfdfe973add326d134b18c9b11bc/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-3/7187bfdfe973add326d134b18c9b11bc/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-3/d45a387f9d06405b19bf75b2e758e97a/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-3/d45a387f9d06405b19bf75b2e758e97a/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/bbc79f9f275d67ece49c5ce1e2824f1e/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-3/bbc79f9f275d67ece49c5ce1e2824f1e/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-	android:targetSdkVersion
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-	android:minSdkVersion
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
-activity#com.example.hymns_latest.MainActivity
+activity#com.reyzie.hymns.MainActivity
 ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:6:9-26:20
 	android:launchMode
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:9:13-43
@@ -156,15 +100,59 @@ ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymn
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:31:13-30
 	android:name
 		ADDED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:30:13-44
+uses-sdk
+INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
+MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_android] /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/shared_preferences_android/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:5:5-44
+MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/34e3bf13a6b8ece9b41ed14cd196e401/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/34e3bf13a6b8ece9b41ed14cd196e401/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/e27c3f613523070ffd8ac1ef039b4af3/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/e27c3f613523070ffd8ac1ef039b4af3/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/3fd6a914422ff65ffb4136f631169f88/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/3fd6a914422ff65ffb4136f631169f88/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/e50151910de07f563270584c8d3098d2/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/e50151910de07f563270584c8d3098d2/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/8689dac2d62a1cfceeb86df57897ac25/transformed/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/8689dac2d62a1cfceeb86df57897ac25/transformed/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/685118b6e40543b992c725b3f9b4a3ab/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/685118b6e40543b992c725b3f9b4a3ab/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-4/75287cac846940a52f40b3b5f3fe6a55/transformed/core-1.6.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-4/6c6ab4e489338a6668ab484a2028c5aa/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/reyzie/.gradle/caches/transforms-4/6c6ab4e489338a6668ab484a2028c5aa/transformed/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/d60acf71305eaa05220a4454d61c5af5/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/d60acf71305eaa05220a4454d61c5af5/transformed/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/4e61ff9a62be8de9dc2852f9100084ea/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/4e61ff9a62be8de9dc2852f9100084ea/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/89f5640b7f6d5cbe83c9c8e8a84f4e30/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/89f5640b7f6d5cbe83c9c8e8a84f4e30/transformed/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/5f222e732a8b489478d345ed5ecd040c/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/reyzie/.gradle/caches/transforms-4/5f222e732a8b489478d345ed5ecd040c/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/072f72149d66541626482bc206c8bcef/transformed/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/reyzie/.gradle/caches/transforms-4/072f72149d66541626482bc206c8bcef/transformed/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-4/b4a5ac4a2b56e970ba3e1a05db54ed04/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/reyzie/.gradle/caches/transforms-4/b4a5ac4a2b56e970ba3e1a05db54ed04/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-4/4a8fd4f733447a50b5df38eac86156fa/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/reyzie/.gradle/caches/transforms-4/4a8fd4f733447a50b5df38eac86156fa/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/3a3482d1cb6fb03ae62d79f189f7eae2/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/reyzie/.gradle/caches/transforms-4/3a3482d1cb6fb03ae62d79f189f7eae2/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+	android:targetSdkVersion
+		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml
 uses-library#androidx.window.extensions
-ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
 	android:required
-		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
 	android:name
-		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
 uses-library#androidx.window.sidecar
-ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
 	android:required
-		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
 	android:name
-		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+		ADDED from [androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-4/8a60b7c9d5285a7c0866ae77f85d2cf2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
