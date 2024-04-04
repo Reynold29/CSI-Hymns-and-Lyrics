@@ -6,17 +6,17 @@ class KeerthaneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             custom.SearchBar(
               hintText: 'Search Keerthane',
               hintStyle: TextStyle(color: Colors.black),
               ),
-            const SizedBox(height: 20),
-            const Expanded( 
+            SizedBox(height: 20),
+            Expanded( 
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min, 

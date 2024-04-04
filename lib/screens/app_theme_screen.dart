@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppThemeScreen extends StatefulWidget {
   final bool initialDarkModeState;
 
-  const AppThemeScreen({Key? key, required this.initialDarkModeState}) : super(key: key); 
+  const AppThemeScreen({super.key, required this.initialDarkModeState}); 
 
   @override
   _AppThemeScreenState createState() => _AppThemeScreenState();

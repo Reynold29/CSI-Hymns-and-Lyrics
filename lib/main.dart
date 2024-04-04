@@ -103,8 +103,8 @@ class _MainScreenState extends State<MainScreen> {
       body: _screens[_selectedIndex], 
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor: _themeMode == ThemeMode.dark ? const Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(107, 178, 178, 178),  // Adjust colors as needed
-          labelTextStyle: MaterialStateProperty.all(
+          indicatorColor: _themeMode == ThemeMode.dark ? const Color.fromARGB(255, 255, 255, 255) : const Color.fromARGB(107, 178, 178, 178),  // Adjust colors as needed
+          labelTextStyle: WidgetStateProperty.all(
             const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),

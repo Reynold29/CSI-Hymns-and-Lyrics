@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
-    Key? key, 
+    super.key, 
     required this.hintText, 
     this.hintStyle,
-  }) : super(key: key);
+  });
 
   final String hintText;
   final TextStyle? hintStyle;

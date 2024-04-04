@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import '../widgets/search_bar.dart' as custom;
 import 'package:hymns_latest/hymns_def.dart';
 import 'package:hymns_latest/hymns_data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hymns_latest/hymn_detail_screen.dart';
 
 class HymnsScreen extends StatelessWidget {
+  const HymnsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +14,7 @@ class HymnsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            custom.SearchBar(
+            const custom.SearchBar(
               hintText: 'Search Hymns',
               hintStyle: TextStyle(color: Colors.black),
             ),
