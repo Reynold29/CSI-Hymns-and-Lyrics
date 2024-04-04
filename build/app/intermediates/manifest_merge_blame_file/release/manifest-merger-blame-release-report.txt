@@ -34,7 +34,7 @@
 26        android:name="android.app.Application"
 26-->/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:4:9-42
 27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-27-->[androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/2579a7de00054bf46a8dbc332552f622/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
+27-->[androidx.core:core:1.6.0] /Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
 28        android:icon="@mipmap/ic_launcher"
 28-->/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:5:9-43
 29        android:label="hymns_latest" >
@@ -92,17 +92,17 @@
 61-->/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/android/app/src/main/AndroidManifest.xml:31:13-30
 62
 63        <uses-library
-63-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+63-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
 64            android:name="androidx.window.extensions"
-64-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+64-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
 65            android:required="false" />
-65-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+65-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
 66        <uses-library
-66-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+66-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
 67            android:name="androidx.window.sidecar"
-67-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+67-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
 68            android:required="false" />
-68-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/032f4dff274e516110d9363a9793a3e3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+68-->[androidx.window:window:1.0.0-beta04] /Users/reyzie/.gradle/caches/transforms-3/a2785d0e22fb0d9bcd316828b2535621/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
 69    </application>
 70
 71</manifest>

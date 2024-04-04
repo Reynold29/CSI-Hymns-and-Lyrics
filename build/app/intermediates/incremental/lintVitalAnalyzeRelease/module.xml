@@ -4,7 +4,7 @@
     name=":app"
     type="APP"
     maven="android:app:"
-    gradle="7.3.0"
+    gradle="7.4.2"
     buildFolder="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app"
     bootClassPath="/Users/reyzie/Library/Android/sdk/platforms/android-34/android.jar:/Users/reyzie/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar"
     javaSourceLevel="1.8"

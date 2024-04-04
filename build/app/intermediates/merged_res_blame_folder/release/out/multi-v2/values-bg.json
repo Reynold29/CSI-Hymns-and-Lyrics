@@ -4,7 +4,7 @@
             "outputFile": "com.example.hymns_latest.app-mergeReleaseResources-9:/values-bg/values-bg.xml",
             "map": [
                 {
-                    "source": "/Users/reyzie/.gradle/caches/transforms-3/2579a7de00054bf46a8dbc332552f622/transformed/core-1.6.0/res/values-bg/values-bg.xml",
+                    "source": "/Users/reyzie/.gradle/caches/transforms-3/189b8f48d9f10008a34a5cd6c01ff57f/transformed/core-1.6.0/res/values-bg/values-bg.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

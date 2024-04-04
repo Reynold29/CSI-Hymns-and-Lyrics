@@ -7,17 +7,14 @@ class HymnsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('CSI Hymns Book'),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            custom.SearchBar(hintText: 'Search Hymns'),
+            custom.SearchBar(
+              hintText: 'Search Hymns',
+              hintStyle: TextStyle(color: Colors.black),
+              ),
             const SizedBox(height: 20),
             const Expanded( 
               child: Center(

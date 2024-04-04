@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'screens/settings_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CSI Hymns Book',
-      theme: ThemeData(useMaterial3: true), // Enable Material You
+      theme: ThemeData.light(), // Start with light theme
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system, // Start with system default
       home: const MainScreen(),
     );
   }
@@ -26,7 +29,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0; // Start with Hymns screen
+  int _selectedIndex = 0; 
+  ThemeMode _themeMode = ThemeMode.system; 
 
   static const List<Widget> _screens = [
     HymnsScreen(),
@@ -37,6 +41,21 @@ class _MainScreenState extends State<MainScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getThemeFromPreferences(); 
+  }
+
+  void _getThemeFromPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDarkMode = prefs.getBool('isDarkMode') ?? false; 
+
+    setState(() {
+      _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
     });
   }
 
@@ -84,9 +103,9 @@ class _MainScreenState extends State<MainScreen> {
       body: _screens[_selectedIndex], 
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor: Colors.blue.shade100,  // Example color
+          indicatorColor: _themeMode == ThemeMode.dark ? const Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(107, 178, 178, 178),  // Adjust colors as needed
           labelTextStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), 
+            const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
         child: NavigationBar(

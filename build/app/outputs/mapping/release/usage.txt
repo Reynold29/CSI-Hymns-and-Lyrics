@@ -2148,7 +2148,6 @@ io.flutter.embedding.engine.FlutterEngine:
     public io.flutter.embedding.engine.plugins.contentprovider.ContentProviderControlSurface getContentProviderControlSurface()
     public io.flutter.embedding.engine.systemchannels.DeferredComponentChannel getDeferredComponentChannel()
     public io.flutter.embedding.engine.systemchannels.LocalizationChannel getLocalizationChannel()
-    public io.flutter.embedding.engine.plugins.PluginRegistry getPlugins()
     public io.flutter.embedding.engine.plugins.service.ServiceControlSurface getServiceControlSurface()
     public void removeEngineLifecycleListener(io.flutter.embedding.engine.FlutterEngine$EngineLifecycleListener)
 io.flutter.embedding.engine.FlutterEngineCache:
@@ -2265,7 +2264,6 @@ io.flutter.embedding.engine.dart.DartExecutor$DartCallback
 io.flutter.embedding.engine.dart.DartExecutor$DefaultBinaryMessenger:
     public void disableBufferingIncomingMessages()
     public void enableBufferingIncomingMessages()
-    public io.flutter.plugin.common.BinaryMessenger$TaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
     public void send(java.lang.String,java.nio.ByteBuffer)
 io.flutter.embedding.engine.dart.DartExecutor:
     private static final java.lang.String TAG
@@ -2276,23 +2274,13 @@ io.flutter.embedding.engine.dart.DartExecutor:
     public io.flutter.plugin.common.BinaryMessenger getBinaryMessenger()
     public java.lang.String getIsolateServiceId()
     public int getPendingChannelResponseCount()
-    public io.flutter.plugin.common.BinaryMessenger$TaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
     public void send(java.lang.String,java.nio.ByteBuffer)
     public void setIsolateServiceIdListener(io.flutter.embedding.engine.dart.DartExecutor$IsolateServiceIdListener)
-io.flutter.embedding.engine.dart.DartMessenger$1
-io.flutter.embedding.engine.dart.DartMessenger$ConcurrentTaskQueue
-io.flutter.embedding.engine.dart.DartMessenger$DefaultTaskQueueFactory:
-    public io.flutter.embedding.engine.dart.DartMessenger$DartMessengerTaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
-io.flutter.embedding.engine.dart.DartMessenger$SerialTaskQueue
-io.flutter.embedding.engine.dart.DartMessenger$TaskQueueFactory:
-    public abstract io.flutter.embedding.engine.dart.DartMessenger$DartMessengerTaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
-io.flutter.embedding.engine.dart.DartMessenger$TaskQueueToken
 io.flutter.embedding.engine.dart.DartMessenger:
     private static final java.lang.String TAG
     public void disableBufferingIncomingMessages()
     public void enableBufferingIncomingMessages()
     public int getPendingChannelResponseCount()
-    public io.flutter.plugin.common.BinaryMessenger$TaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
     public void send(java.lang.String,java.nio.ByteBuffer)
 io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager:
     public abstract void loadAssets(int,java.lang.String)
@@ -2376,14 +2364,18 @@ io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterAssets:
     public abstract java.lang.String getAssetFilePathBySubpath(java.lang.String)
     public abstract java.lang.String getAssetFilePathBySubpath(java.lang.String,java.lang.String)
 io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding:
-    public android.content.Context getApplicationContext()
-    public io.flutter.plugin.common.BinaryMessenger getBinaryMessenger()
     public io.flutter.embedding.engine.FlutterEngineGroup getEngineGroup()
     public io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterAssets getFlutterAssets()
     public io.flutter.embedding.engine.FlutterEngine getFlutterEngine()
     public io.flutter.plugin.platform.PlatformViewRegistry getPlatformViewRegistry()
     public io.flutter.view.TextureRegistry getTextureRegistry()
-io.flutter.embedding.engine.plugins.PluginRegistry
+io.flutter.embedding.engine.plugins.PluginRegistry:
+    public abstract void add(java.util.Set)
+    public abstract io.flutter.embedding.engine.plugins.FlutterPlugin get(java.lang.Class)
+    public abstract boolean has(java.lang.Class)
+    public abstract void remove(java.lang.Class)
+    public abstract void remove(java.util.Set)
+    public abstract void removeAll()
 io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding:
     public abstract void addOnNewIntentListener(io.flutter.plugin.common.PluginRegistry$NewIntentListener)
     public abstract void addOnSaveStateListener(io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding$OnSaveInstanceStateListener)
@@ -2486,14 +2478,11 @@ io.flutter.plugin.common.BasicMessageChannel:
     public static void setWarnsOnChannelOverflow(io.flutter.plugin.common.BinaryMessenger,java.lang.String,boolean)
     public void setWarnsOnChannelOverflow(boolean)
 io.flutter.plugin.common.BinaryCodec
-io.flutter.plugin.common.BinaryMessenger$-CC:
-    public static io.flutter.plugin.common.BinaryMessenger$TaskQueue $default$makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger)
-io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions
+io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions:
+    public io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions setIsSerial(boolean)
 io.flutter.plugin.common.BinaryMessenger:
     public void disableBufferingIncomingMessages()
     public void enableBufferingIncomingMessages()
-    public io.flutter.plugin.common.BinaryMessenger$TaskQueue makeBackgroundTaskQueue()
-    public io.flutter.plugin.common.BinaryMessenger$TaskQueue makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
     public abstract void send(java.lang.String,java.nio.ByteBuffer)
 io.flutter.plugin.common.ErrorLogResult
 io.flutter.plugin.common.EventChannel$1
@@ -2609,6 +2598,29 @@ io.flutter.plugin.platform.VirtualDisplayController:
 io.flutter.plugin.text.ProcessTextPlugin:
     private static final java.lang.String TAG
     public void destroy()
+io.flutter.plugins.sharedpreferences.BuildConfig
+io.flutter.plugins.sharedpreferences.Messages$FlutterError:
+    public void <init>(java.lang.String,java.lang.String,java.lang.Object)
+io.flutter.plugins.sharedpreferences.Messages:
+    public void <init>()
+io.flutter.plugins.sharedpreferences.R$attr
+io.flutter.plugins.sharedpreferences.R$color
+io.flutter.plugins.sharedpreferences.R$dimen
+io.flutter.plugins.sharedpreferences.R$drawable
+io.flutter.plugins.sharedpreferences.R$id
+io.flutter.plugins.sharedpreferences.R$integer
+io.flutter.plugins.sharedpreferences.R$layout
+io.flutter.plugins.sharedpreferences.R$string
+io.flutter.plugins.sharedpreferences.R$style
+io.flutter.plugins.sharedpreferences.R$styleable
+io.flutter.plugins.sharedpreferences.R
+io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin:
+    private static final java.lang.String BIG_INTEGER_PREFIX
+    private static final java.lang.String DOUBLE_PREFIX
+    private static final java.lang.String LIST_IDENTIFIER
+    private static final java.lang.String SHARED_PREFERENCES_NAME
+    private static final java.lang.String TAG
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
 io.flutter.util.HandlerCompat:
     public void <init>()
 io.flutter.util.PathUtils:
@@ -8977,6 +8989,11 @@ androidx.fragment.app.Fragment$2:
     final synthetic androidx.fragment.app.Fragment this$0
 androidx.fragment.app.Fragment
 androidx.lifecycle.ClassesInfoCache$CallbackInfo
+androidx.lifecycle.FullLifecycleObserver
+androidx.lifecycle.FullLifecycleObserverAdapter:
+    private final androidx.lifecycle.FullLifecycleObserver mFullLifecycleObserver
+androidx.lifecycle.GeneratedAdapter:
+    public abstract void callMethods(androidx.lifecycle.LifecycleOwner,androidx.lifecycle.Lifecycle$Event,boolean,androidx.lifecycle.MethodCallsLogger)
 androidx.lifecycle.LiveData$LifecycleBoundObserver:
     final synthetic androidx.lifecycle.LiveData this$0
 androidx.lifecycle.LiveData$ObserverWrapper:
@@ -8987,15 +9004,21 @@ androidx.lifecycle.Observer
 androidx.lifecycle.ReflectiveGenericLifecycleObserver:
     private final androidx.lifecycle.ClassesInfoCache$CallbackInfo mInfo
     private final java.lang.Object mWrapped
+androidx.lifecycle.SingleGeneratedAdapterObserver:
+    private final androidx.lifecycle.GeneratedAdapter mGeneratedAdapter
 androidx.lifecycle.ViewModelStore
 androidx.savedstate.Recreator:
+    private final androidx.savedstate.SavedStateRegistryOwner mOwner
     private void reflectiveNew(java.lang.String)
 androidx.savedstate.SavedStateRegistry$1:
     final synthetic androidx.savedstate.SavedStateRegistry this$0
 androidx.savedstate.SavedStateRegistry$AutoRecreated
-androidx.savedstate.SavedStateRegistry:
-    boolean mAllowingSavingState
-    public android.os.Bundle consumeRestoredStateForKey(java.lang.String)
+androidx.savedstate.SavedStateRegistry
+androidx.savedstate.SavedStateRegistryOwner
+io.flutter.FlutterInjector$Builder:
+    private io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager deferredComponentManager
+io.flutter.FlutterInjector:
+    private io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager deferredComponentManager
 io.flutter.Log:
     public static int ASSERT
     public static int DEBUG
@@ -9011,12 +9034,29 @@ io.flutter.embedding.engine.FlutterEngineConnectionRegistry:
     private io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineBroadcastReceiverPluginBinding broadcastReceiverPluginBinding
     private io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineContentProviderPluginBinding contentProviderPluginBinding
     private io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineServicePluginBinding servicePluginBinding
+io.flutter.embedding.engine.dart.DartExecutor$IsolateServiceIdListener:
+    public abstract void onIsolateServiceIdAvailable(java.lang.String)
+io.flutter.embedding.engine.dart.DartExecutor:
+    private io.flutter.embedding.engine.dart.DartExecutor$IsolateServiceIdListener isolateServiceIdListener
+    static synthetic java.lang.String access$000(io.flutter.embedding.engine.dart.DartExecutor)
+io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager:
+    public abstract void destroy()
+    public abstract java.lang.String getDeferredComponentInstallState(int,java.lang.String)
+    public abstract void installDeferredComponent(int,java.lang.String)
+    public abstract void setDeferredComponentChannel(io.flutter.embedding.engine.systemchannels.DeferredComponentChannel)
+    public abstract boolean uninstallDeferredComponent(int,java.lang.String)
 io.flutter.embedding.engine.loader.ResourceExtractor:
     void waitForCompletion()
+io.flutter.embedding.engine.systemchannels.DeferredComponentChannel:
+    private io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager deferredComponentManager
+    static synthetic java.util.Map access$100(io.flutter.embedding.engine.systemchannels.DeferredComponentChannel)
+    public void setDeferredComponentManager(io.flutter.embedding.engine.deferredcomponents.DeferredComponentManager)
 io.flutter.embedding.engine.systemchannels.PlatformChannel$PlatformMessageHandler$-CC
 io.flutter.embedding.engine.systemchannels.SettingsChannel:
     static final synthetic boolean $assertionsDisabled
-io.flutter.plugin.common.BinaryMessenger$-CC
+io.flutter.plugin.common.BinaryMessenger$-CC:
+    public static io.flutter.plugin.common.BinaryMessenger$TaskQueue $default$makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger,io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
+    public static void $default$setMessageHandler(io.flutter.plugin.common.BinaryMessenger,java.lang.String,io.flutter.plugin.common.BinaryMessenger$BinaryMessageHandler,io.flutter.plugin.common.BinaryMessenger$TaskQueue)
 io.flutter.plugin.platform.PlatformPlugin$PlatformPluginDelegate$-CC
 io.flutter.plugin.platform.PlatformView$-CC
 io.flutter.plugin.platform.VirtualDisplayController:

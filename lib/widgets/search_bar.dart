@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({super.key, required this.hintText});
+  const SearchBar({
+    Key? key, 
+    required this.hintText, 
+    this.hintStyle,
+  }) : super(key: key);
 
   final String hintText;
+  final TextStyle? hintStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class SearchBar extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText,
+          hintStyle: hintStyle ?? const TextStyle(),
           icon: const Icon(Icons.search),
         ),
       ),

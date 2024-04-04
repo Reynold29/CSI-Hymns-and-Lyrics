@@ -6,7 +6,7 @@
     shrinking="true"
     mergedManifest="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/merged_manifest/release/AndroidManifest.xml"
     manifestMergeReport="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/outputs/logs/manifest-merger-release-report.txt"
-    proguardFiles="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.3.0:/Users/reyzie/Documents/Hymns App Flutter/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
+    proguardFiles="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.4.2:/Users/reyzie/Documents/Hymns App Flutter/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
     partialResultsDir="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/lint_vital_partial_results/release/out">
   <buildFeatures
       namespacing="REQUIRED"/>

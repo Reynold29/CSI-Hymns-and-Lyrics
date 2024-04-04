@@ -1,0 +1,42 @@
+# Miscellaneous
+*.log
+*.DS_Store
+
+# Build directories
+/build/
+/ios/Flutter/App.framework/
+/ios/Flutter/Flutter.framework/
+/android/build/
+/web/build/
+
+# Generated files
+.dart_tool/
+.flutter-plugins
+.packages
+.pub/
+.idea/
+.vscode/
+
+# Gradle files
+**/gradle-wrapper.jar
+**/gradlew
+**/gradlew.bat
+
+# Android files
+/local.properties
+/.idea/libraries
+/.idea/caches
+/.idea/modules.xml
+/.idea/workspace.xml
+/android/key.properties
+
+# iOS files
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.xcworkspace/
+*.xcuserdatad/
+

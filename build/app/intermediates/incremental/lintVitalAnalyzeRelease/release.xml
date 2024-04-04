@@ -5,9 +5,9 @@
     targetSdkVersion="33"
     shrinking="true"
     mergedManifest="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/merged_manifest/release/AndroidManifest.xml"
-    proguardFiles="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.3.0:/Users/reyzie/Documents/Hymns App Flutter/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
+    proguardFiles="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.4.2:/Users/reyzie/Documents/Hymns App Flutter/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
     partialResultsDir="/Users/reyzie/Documents/Hymns App Flutter/Hymns App/Hymns Latest/hymns_latest/build/app/intermediates/lint_vital_partial_results/release/out"
-    desugaredMethodsFiles="/Users/reyzie/.gradle/caches/transforms-3/8283f5794c62863648c0e1ed4eb1d383/transformed/D8BackportedDesugaredMethods.txt">
+    desugaredMethodsFiles="/Users/reyzie/.gradle/caches/transforms-3/0f0d78292ae524db93a994f9930233c1/transformed/D8BackportedDesugaredMethods.txt">
   <buildFeatures
       namespacing="REQUIRED"/>
   <sourceProviders>
