@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({
+
+  final  ValueChanged<String>? onChanged;
+
+  SearchBar({
     super.key, 
     required this.hintText, 
     this.hintStyle,
+    this.onChanged
   });
 
   final String hintText;
@@ -20,12 +24,16 @@ class SearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: TextField(
+        onChanged: onChanged,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText,
-          hintStyle: hintStyle ?? const TextStyle(),
-          icon: const Icon(Icons.search),
+          hintStyle: hintStyle ?? TextStyle(),
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
         ),
+
+        style: TextStyle(color: Colors.black),
       ),
     );
   }
