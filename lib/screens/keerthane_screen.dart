@@ -19,7 +19,11 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   @override
   void initState() {
     super.initState();
-    loadKeerthane().then((data) => setState(() => keerthane = data));
+    loadKeerthane().then((data) => setState(() {
+      keerthane = data;
+      keerthane.sort((a, b) => a.number.compareTo(b.number));
+      filteredKeerthane = keerthane;
+    }));
   }
 
   void _sortKeerthane() {
@@ -87,7 +91,13 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
                 itemBuilder: (context, index) {
                   final Keerthane = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
                   return ListTile(
-                    title: Text('Keerthane ${Keerthane.number}: ${Keerthane.title}'), 
+                    leading: SizedBox(
+                      width: 50,
+                      height: 40,
+                      child: Image.asset('lib/assets/icons/keerthane.png') 
+                      ),
+                    title: Text('Keerthane ${Keerthane.number}: ${Keerthane.title}'),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                     onTap: () => navigateToKeerthaneDetail(context, Keerthane), 
                   );
                 },

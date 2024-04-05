@@ -19,7 +19,11 @@ class _HymnsScreenState extends State<HymnsScreen> {
   @override
   void initState() {
     super.initState();
-    loadHymns().then((data) => setState(() => hymns = data));
+    loadHymns().then((data) => setState(() {
+      hymns = data;
+      hymns.sort((a, b) => a.number.compareTo(b.number));
+      filteredHymns = hymns;
+    }));
   }
 
   void _sortHymns() {
@@ -87,7 +91,13 @@ class _HymnsScreenState extends State<HymnsScreen> {
                 itemBuilder: (context, index) {
                   final hymn = _searchQuery != null ? filteredHymns[index] : hymns[index];
                   return ListTile(
-                    title: Text('Hymn ${hymn.number}: ${hymn.title}'), 
+                    leading: SizedBox(
+                      width: 45,
+                      height: 40,
+                      child: Image.asset('lib/assets/icons/hymn.png') 
+                      ),
+                    title: Text('Hymn ${hymn.number}: ${hymn.title}'),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                     onTap: () => navigateToHymnDetail(context, hymn), 
                   );
                 },
