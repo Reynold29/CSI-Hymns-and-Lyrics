@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hymns_latest/theme_state.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hymns_latest/screens/app_theme_screen.dart';
 
@@ -12,13 +14,20 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isDarkMode = false;
 
-  // Load saved theme preference
-  void _loadThemePreference() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isDarkMode = prefs.getBool('isDarkMode') ?? false; 
-    });
+@override 
+  void initState() { 
+    super.initState();
+    _loadThemePreference();
   }
+
+  void _loadThemePreference() async {
+  final prefs = await SharedPreferences.getInstance();
+  setState(() {
+    // Check for preference, or default to system theme
+    _isDarkMode = prefs.getBool('isDarkMode') ?? 
+                  MediaQuery.of(context).platformBrightness == Brightness.dark; 
+  });
+}
 
   // Save theme preference
   void _saveThemePreference() async {
@@ -45,7 +54,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             },
           ),
-          // ... Other settings options
+          ListTile(
+            title: const Text('Dark Mode'),
+            trailing: Switch(
+              value: _isDarkMode,
+              onChanged: (newValue) {
+                setState(() {
+                  _isDarkMode = newValue;
+                });
+                Provider.of<ThemeState>(context, listen: false)
+                    .setThemeMode(newValue ? ThemeMode.dark : ThemeMode.light);
+                _saveThemePreference(); // Save the preference
+              },
+            ),
+          ),
         ],
       ),
     );

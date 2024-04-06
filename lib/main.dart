@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'screens/settings_screen.dart';
+import 'theme_state.dart';
+import 'screens/changelog_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  ChangeNotifierProvider(
+    create: (context) => ThemeState(),
+    child: const MyApp(),
+  ),
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static BuildContext of(BuildContext context) {
+    return context;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Consumer<ThemeState>(
+      builder: (context, themeState, child) {
+      return MaterialApp(
       title: 'CSI Hymns and Lyrics',
-      theme: ThemeData.light(), // Start with light theme
+      theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system, // Start with system default
+      themeMode: themeState.themeMode,
       home: const MainScreen(),
+    );
+  }
     );
   }
 }
@@ -63,8 +79,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: const Text('Hymns App'),
-      leading: Builder( // Add this Builder
+      title: const Text('CSI Kannada Hymns'),
+      leading: Builder(
         builder: (context) {
           return IconButton(
             icon: const Icon(Icons.menu),
@@ -81,18 +97,21 @@ class _MainScreenState extends State<MainScreen> {
             decoration: BoxDecoration(
               color: Colors.blue, 
             ),
-            child: Text('Hymns App'), 
-          ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('About Developer'),
-            onTap: () {
-              // Handle navigation or action when tapped
-            },
+            child: Text('CSI Kannada and English Hymns and Lyrics'), 
           ),
           ListTile(
             leading: const Icon(Icons.update),
             title: const Text("What's New?"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChangelogScreen()), // Navigate!
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text("About Developer"),
             onTap: () {
               // Handle navigation or action when tapped
             },
