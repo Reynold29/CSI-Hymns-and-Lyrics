@@ -29,7 +29,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   });
 }
 
-  // Save theme preference
   void _saveThemePreference() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('isDarkMode', _isDarkMode);
@@ -40,12 +39,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
        appBar: AppBar(
         leading: null,
-        title: const Text('Settings', style: TextStyle(fontSize: 35.0),),
+        title: const Text('Settings', style: TextStyle(fontSize: 35.0),
+        ),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: const Text('Themes', style: TextStyle(fontSize: 20.0),),
+            title: const Text('Themes', style: TextStyle(fontSize: 25.0),
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -64,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 });
                 Provider.of<ThemeState>(context, listen: false)
                     .setThemeMode(newValue ? ThemeMode.dark : ThemeMode.light);
-                _saveThemePreference(); // Save the preference
+                _saveThemePreference();
               },
             ),
           ),

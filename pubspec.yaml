@@ -33,11 +33,15 @@ dependencies:
   shared_preferences: ^2.2.2
   provider: ^6.0.4
   http: ^1.2.1
-  flutter_markdown: ^0.6.22+1
+  url_launcher: ^6.2.5
+  font_awesome_flutter: ^10.7.0
+  json_serializable: ^6.7.1
+  json_annotation: ^4.8.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +65,13 @@ flutter:
     - lib/assets/keerthane_data.json
     - lib/assets/icons/hymn.png
     - lib/assets/icons/keerthane.png
+    - lib/assets/changelog.json
+    - lib/assets/profile.png
+
+  fonts:
+    - family: plusJakartaSans
+      fonts:
+        - asset: lib/assets/fonts/Plus-Jakarta-Sans.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

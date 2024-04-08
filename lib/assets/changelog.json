@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Second Beta Version Released!",
+        "version": "2.0.0-beta",
+        "date": "06-04-2024",
+        "changes": [
+            "Bump version to 2.0.0-beta",
+            "Added Filter option:",
+            "   -> Sort by Hymn Number",
+            "   -> Sort by Alphabetical Order",
+            "APKs / AABs from this release are signed"
+        ]
+    },
+    { 
+        "title": "First Beta Version Released!",
+        "version": "1.0.1-beta",
+        "date": "05-04-2024",
+        "changes": [ 
+            "Two separate categories for Hymns and Lyrics (Keerthane)",
+            "Added Dark Mode support",
+            "Added 1 song per category for testing purposes for now",
+            "Material You Theming included",
+            "More changes, features, songs and quality of life updates coming soon!"
+        ]
+    }
+]
