@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
- 
+
 import 'theme_state.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/settings_screen.dart';
-import 'screens/keerthane_screen.dart';  
-import 'screens/changelog_screen.dart';
-import 'screens/about_developer_screen.dart';
+import 'screens/keerthane_screen.dart';
+import 'widgets/sidebar.dart';
 
 void main() => runApp(
   ChangeNotifierProvider(
@@ -42,13 +41,38 @@ class MyApp extends StatelessWidget {
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   ThemeMode _themeMode = ThemeMode.system;
+  late AnimationController _animationController;
+
+  bool _isDrawerOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300), 
+    );
+    _getThemeFromPreferences();
+  }
+
+  void _toggleDrawer() {
+    setState(() {
+      _isDrawerOpen = !_isDrawerOpen; 
+      if (_isDrawerOpen) {
+        _animationController.forward(); 
+      } else {
+        _animationController.reverse(); 
+      }
+    });
+  }
 
   static final List<Widget> _screens = [
     const HymnsScreen(),
@@ -79,12 +103,6 @@ class _MainScreenState extends State<MainScreen> {
     "Prayer before Food",
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _getThemeFromPreferences();
-  }
-
   void _getThemeFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final isDarkMode = prefs.getBool('isDarkMode') ?? false;
@@ -98,126 +116,21 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CSI Kannada Hymns'),
+        title: const Text('CSI  Kannada  Hymns',
+        style: TextStyle(fontWeight: FontWeight.w600, fontFamily: 'plusJakartaSans'),
+        ),
         leading: Builder(
           builder: (context) {
             return IconButton(
               icon: const Icon(Icons.menu),
-              onPressed: () => Scaffold.of(context).openDrawer(),
+              onPressed: () { 
+                Scaffold.of(context).openDrawer();
+              },
             );
           },
         ),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Expanded( // Make the scrollable portion take up available space
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, 
-                  children: [
-                    // Top Section
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: const Column( // Wrap title and divider in a Column
-                        children: [
-                          Text(
-                            'CSI Hymns and Lyrics',
-                            style: TextStyle(
-                              fontSize: 22,
-                              height: 5.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue, // Example color change
-                            ),
-                          ),
-                          Divider( // Add the divider line
-                            height: 15.0, // Adjust divider height as needed
-                            thickness: 1.0, // Adjust divider thickness as needed
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.category),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Categories',
-                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible( 
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: categories.length, 
-                        itemBuilder: (context, index) {
-                          return Padding( 
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: ListTile(
-                              leading: const Icon(Icons.library_books),
-                              title: Text(categories[index]),
-                              onTap: (){
-                                // ... Your category tap functionality
-                              },
-                            )
-                          );
-                        }
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // Static Bottom Block (Outside the scrollable area)
-            Container(
-              padding: const EdgeInsets.all(1.0),
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: Colors.grey.shade300)),
-              ),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.settings), 
-                    title: const Text("Settings"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SettingsScreen()), 
-                      );
-                    }
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.update), 
-                    title: const Text("What's New?"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ChangelogScreen()), 
-                      );
-                    }
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.info), 
-                    title: const Text("About Developer"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const AboutDeveloper()), 
-                      );
-                    }
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+      drawer: Sidebar(animationController: _animationController),
       body: _screens[_selectedIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -236,3 +149,5 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+
