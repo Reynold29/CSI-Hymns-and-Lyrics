@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ 
 import 'theme_state.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/settings_screen.dart';
@@ -43,7 +43,6 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _MainScreenState createState() => _MainScreenState();
 }
 
@@ -62,6 +61,23 @@ class _MainScreenState extends State<MainScreen> {
       _selectedIndex = index;
     });
   }
+
+  final List<String> categories = [
+    "Jesus' Birth",
+    "Jesus' Passion and Death",
+    "Jesus' Resurrection",
+    "Jesus' Ascension and His Kingdom",
+    "Jesus' Coming Again",
+    "New Year Songs",
+    "Marriage Songs",
+    "Birthday Songs",
+    "Prayer for House Warming",
+    "Prayer for Travelling",
+    "Prayer for Rain",
+    "Prayer in Trouble Times",
+    "Prayer for Healing Sickness",
+    "Prayer before Food",
+  ];
 
   @override
   void initState() {
@@ -93,23 +109,72 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       drawer: Drawer(
-        child: Column( 
+        child: Column(
           children: [
-            // Top Section
-            Container(
-              child: const Padding(
-                padding: EdgeInsets.only(left: 0.0),
-                child: Text('CSI Hymns and Lyrics', style: TextStyle(fontSize: 18, height: 8.0, fontWeight: FontWeight.bold)), 
+            Expanded( // Make the scrollable portion take up available space
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, 
+                  children: [
+                    // Top Section
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: const Column( // Wrap title and divider in a Column
+                        children: [
+                          Text(
+                            'CSI Hymns and Lyrics',
+                            style: TextStyle(
+                              fontSize: 22,
+                              height: 5.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue, // Example color change
+                            ),
+                          ),
+                          Divider( // Add the divider line
+                            height: 15.0, // Adjust divider height as needed
+                            thickness: 1.0, // Adjust divider thickness as needed
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.category),
+                          SizedBox(width: 8.0),
+                          Text(
+                            'Categories',
+                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible( 
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: categories.length, 
+                        itemBuilder: (context, index) {
+                          return Padding( 
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.library_books),
+                              title: Text(categories[index]),
+                              onTap: (){
+                                // ... Your category tap functionality
+                              },
+                            )
+                          );
+                        }
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Expanded(
-              child: ListView(
-                children: [
-                    // Categories Coming Soon!;
-                ],
-              ),
-            ),
-            // Bottom Block
+            // Static Bottom Block (Outside the scrollable area)
             Container(
               padding: const EdgeInsets.all(1.0),
               decoration: BoxDecoration(
@@ -117,25 +182,31 @@ class _MainScreenState extends State<MainScreen> {
               ),
               child: Column(
                 children: [
-                  ListTile(leading: const Icon(Icons.settings), title: const Text("Settings"),
-                  onTap: () {
-                    Navigator.push(
+                  ListTile(
+                    leading: const Icon(Icons.settings), 
+                    title: const Text("Settings"),
+                    onTap: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const SettingsScreen()), 
                       );
                     }
                   ),
-                  ListTile(leading: const Icon(Icons.update), title: const Text("What's New?"),
-                  onTap: () {
-                    Navigator.push(
+                  ListTile(
+                    leading: const Icon(Icons.update), 
+                    title: const Text("What's New?"),
+                    onTap: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const ChangelogScreen()), 
                       );
                     }
                   ),
-                  ListTile(leading: const Icon(Icons.info), title: const Text("About Developer"),
-                  onTap: () {
-                    Navigator.push(
+                  ListTile(
+                    leading: const Icon(Icons.info), 
+                    title: const Text("About Developer"),
+                    onTap: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const AboutDeveloper()), 
                       );
