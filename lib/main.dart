@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hymns_latest/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'theme_state.dart';
+import 'package:hymns_latest/widgets/gesture_control.dart';
+import 'theme_state.dart'; 
 import 'screens/hymns_screen.dart';
-import 'screens/settings_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'widgets/sidebar.dart';
 
@@ -18,10 +18,6 @@ void main() => runApp(
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static BuildContext of(BuildContext context) {
-    return context;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeState>(
@@ -32,6 +28,9 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           themeMode: themeState.themeMode,
           home: const MainScreen(),
+          routes: {
+            '/settings': (context) => const SettingsScreen(), 
+          },
         );
       },
     );
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -50,6 +48,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   int _selectedIndex = 0;
   ThemeMode _themeMode = ThemeMode.system;
   late AnimationController _animationController;
+  late PageController _pageController;
 
   bool _isDrawerOpen = false;
 
@@ -60,7 +59,15 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 300), 
     );
+    _pageController = PageController();
     _getThemeFromPreferences();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _animationController.dispose();
+    super.dispose();
   }
 
   void _toggleDrawer() {
@@ -77,31 +84,14 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   static final List<Widget> _screens = [
     const HymnsScreen(),
     const KeerthaneScreen(),
-    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+    _pageController.jumpToPage(index);
   }
-
-  final List<String> categories = [
-    "Jesus' Birth",
-    "Jesus' Passion and Death",
-    "Jesus' Resurrection",
-    "Jesus' Ascension and His Kingdom",
-    "Jesus' Coming Again",
-    "New Year Songs",
-    "Marriage Songs",
-    "Birthday Songs",
-    "Prayer for House Warming",
-    "Prayer for Travelling",
-    "Prayer for Rain",
-    "Prayer in Trouble Times",
-    "Prayer for Healing Sickness",
-    "Prayer before Food",
-  ];
 
   void _getThemeFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
@@ -131,7 +121,19 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         ),
       ),
       drawer: Sidebar(animationController: _animationController),
-      body: _screens[_selectedIndex],
+      body: GestureControl( 
+        child: PageView( 
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _selectedIndex = index);
+          },
+          children: _screens, 
+        ),
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
+          _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut); 
+        }, 
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: _themeMode == ThemeMode.dark ? Colors.white : const Color.fromARGB(107, 178, 178, 178), 
@@ -149,5 +151,3 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     );
   }
 }
-
-

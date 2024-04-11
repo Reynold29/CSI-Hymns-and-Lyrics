@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hymns_latest/screens/category_screen.dart';
+import 'package:hymns_latest/categories/category1.dart';
+import 'package:hymns_latest/categories/category2.dart';
+import 'package:hymns_latest/categories/category3.dart';
+import 'package:hymns_latest/categories/category4.dart';
+import 'package:hymns_latest/categories/category5.dart';
+import 'package:hymns_latest/categories/category6.dart';
 
 class SidebarOptions {
   static List<Widget> getOptions(BuildContext context) {
@@ -8,7 +13,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "Jesus' Birth",)),
+            MaterialPageRoute(builder: (context) => Category1Screen()),
           );
         },
         leading: const SizedBox(
@@ -25,7 +30,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "Jesus' Passion and Death")),
+            MaterialPageRoute(builder: (context) => Category2Screen()),
           );
         },
         leading: const SizedBox(
@@ -42,7 +47,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "Jesus' Resurrection")),
+            MaterialPageRoute(builder: (context) => Category3Screen()),
           );
         },
         leading: const SizedBox(
@@ -59,7 +64,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "Jesus' Ascension and His Kingdom")),
+            MaterialPageRoute(builder: (context) => Category4Screen()),
           );
         },
         leading: const SizedBox(
@@ -76,7 +81,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "Jesus' Coming Again")),
+            MaterialPageRoute(builder: (context) => Category5Screen()),
           );
         },
         leading: const SizedBox(
@@ -93,7 +98,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CategoryScreen(category: "All Categories")),
+            MaterialPageRoute(builder: (context) => Category6Screen()),
           );
         },
         leading: const SizedBox(
