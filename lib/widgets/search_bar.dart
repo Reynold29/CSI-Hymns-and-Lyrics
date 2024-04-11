@@ -4,8 +4,7 @@ class SearchBar extends StatelessWidget {
 
   final ValueChanged<String>? onChanged;
 
-  SearchBar({
-    Key? key, 
+  const SearchBar({super.key, 
     required this.hintText, 
     this.hintStyle,
     this.onChanged

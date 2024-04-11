@@ -91,6 +91,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
             ),
+            const Divider(),
+            ListTile(
+              title: const Text(
+                'Updates',
+                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25.0),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppThemeScreen(initialDarkModeState: _isDarkMode)),
+                );
+              },
+            ),
             ListTile(
             title: const Text('Check for Updates'),
             onTap: () {
