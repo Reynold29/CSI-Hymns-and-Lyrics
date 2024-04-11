@@ -12,6 +12,19 @@ class HymnDetailScreen extends StatefulWidget {
 
 class _HymnDetailScreenState extends State<HymnDetailScreen> {
   String selectedLanguage = 'Kannada';
+  double _fontSize = 18.0;
+
+  void _increaseFontSize() {
+    setState(() {
+      _fontSize = (_fontSize + 2).clamp(16.0, 40.0); 
+    });
+  }
+
+  void _decreaseFontSize() {
+    setState(() {
+      _fontSize = (_fontSize - 2).clamp(16.0, 40.0); 
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +37,34 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: [
-            Row( // Row for top position
-              children: [
-                Spacer(), // Pushes chips to the right
+            Row(
+              children: [ 
+                InkWell( 
+                  onTap: _decreaseFontSize, 
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle, 
+                      color: Color.fromARGB(138, 247, 229, 255),
+                    ),
+                    child: const Icon(Icons.remove), 
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text('Font Size', style: TextStyle(fontSize: 16)),
+                const SizedBox(width: 8), 
+                InkWell(
+                  onTap: _increaseFontSize, 
+                  child: Container( 
+                    padding: const EdgeInsets.all(5.0), 
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle, 
+                      color: Color.fromARGB(138, 247, 229, 255),
+                    ),
+                    child: const Icon(Icons.add), 
+                  ),
+                ),
+                const Spacer(),
                 ChoiceChip(
                   label: const Text('English'),
                   selected: selectedLanguage == 'English',
@@ -52,9 +90,9 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16), // Space below the chips 
+            const SizedBox(height: 16),
             Text(
-              'Hymn ${widget.hymn.number}', // Number in the left corner
+              'Hymn ${widget.hymn.number}',
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -68,7 +106,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                 selectedLanguage == 'English' 
                   ? widget.hymn.lyrics 
                   : (widget.hymn.kannadaLyrics ?? 'Kannada Lyrics unavailable'), 
-                style: const TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: _fontSize),
               ),
             ),
           ],
