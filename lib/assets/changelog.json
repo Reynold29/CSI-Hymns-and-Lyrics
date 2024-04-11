@@ -1,4 +1,16 @@
 [
+    { 
+        "title": "Third and Final BETA Released!",
+        "version": "3.0.0-beta",
+        "date": "11-04-2024",
+        "changes": [ 
+            "NEW Font Size selection Button for every lyrics.",
+            "NEW Sidebar Menu with Categories according to events.",
+            "Now, you can swipe between the Hymns and Keerthane screens to switch between them.",
+            "Added Flaticon icons for song lists in both categories.",
+            "For more info on changes, visit https://github.com/Reynold29/CSI-Hymns-and-Lyrics/commits/main/"
+        ]
+    },
     {
         "title": "Second Beta Version Released!",
         "version": "2.0.0-beta",
