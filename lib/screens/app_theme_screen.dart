@@ -42,7 +42,6 @@ class _AppThemeScreenState extends State<AppThemeScreen> {
               onChanged: (newValue) {
                 setState(() {
                   _isDarkMode = newValue;
-                  // Add theme switching logic here, e.g., using ThemeData
                 });
               },
             ),

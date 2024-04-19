@@ -47,7 +47,7 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
           children: [
             Expanded(child: custom.SearchBar(
               hintText: 'Search Keerthane',
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: const TextStyle(color: Colors.black),
               onChanged: (searchQuery) {
                 setState(() {
                   _searchQuery = searchQuery;
@@ -71,11 +71,11 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
               },
               itemBuilder: (BuildContext context) {
                 return [
-                  PopupMenuItem(child: Text("Order by Keerthane No."), value: "number"),
-                  PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
+                  const PopupMenuItem(child: Text("Order by Keerthane No."), value: "number"),
+                  const PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
                 ];
               },
-              icon: Icon(Icons.filter_list), 
+              icon: const Icon(Icons.filter_list), 
             ),
           ],
         ),
@@ -90,15 +90,30 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
                 itemCount: _searchQuery != null ? filteredKeerthane.length : keerthane.length,
                 itemBuilder: (context, index) {
                   final Keerthane = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
-                  return ListTile(
-                    leading: SizedBox(
-                      width: 50,
-                      height: 40,
-                      child: Image.asset('lib/assets/icons/keerthane.png') 
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                    elevation: 2.0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    child: ListTile(
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: SizedBox(
+                          width: 50,
+                          height: 40,
+                          child: Semantics(
+                            label: 'Keerthane icon', 
+                            child: Image.asset(
+                              'lib/assets/icons/keerthane.png', 
+                            ),
+                          ), 
+                        ),
                       ),
-                    title: Text('Keerthane ${Keerthane.number}: ${Keerthane.title}'),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                    onTap: () => navigateToKeerthaneDetail(context, Keerthane), 
+                      title: Text('Keerthane ${Keerthane.number}: ${Keerthane.title}',
+                      style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                      onTap: () => navigateToKeerthaneDetail(context, Keerthane), 
+                    ),
                   );
                 },
               ),

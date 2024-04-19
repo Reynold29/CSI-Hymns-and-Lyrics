@@ -13,7 +13,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category1Screen()),
+            MaterialPageRoute(builder: (context) => const Category1Screen()),
           );
         },
         leading: const SizedBox(
@@ -30,7 +30,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category2Screen()),
+            MaterialPageRoute(builder: (context) => const Category2Screen()),
           );
         },
         leading: const SizedBox(
@@ -47,7 +47,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category3Screen()),
+            MaterialPageRoute(builder: (context) => const Category3Screen()),
           );
         },
         leading: const SizedBox(
@@ -64,7 +64,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category4Screen()),
+            MaterialPageRoute(builder: (context) => const Category4Screen()),
           );
         },
         leading: const SizedBox(
@@ -81,7 +81,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category5Screen()),
+            MaterialPageRoute(builder: (context) => const Category5Screen()),
           );
         },
         leading: const SizedBox(
@@ -98,7 +98,7 @@ class SidebarOptions {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Category6Screen()),
+            MaterialPageRoute(builder: (context) => const Category6Screen()),
           );
         },
         leading: const SizedBox(

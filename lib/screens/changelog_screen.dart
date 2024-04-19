@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:hymns_latest/models/changelog_model.dart';
 
 class ChangelogScreen extends StatefulWidget {
@@ -70,6 +70,6 @@ Widget build(BuildContext context) {
               );
             },
           ),
-  );
-}
+    );
+  }
 }

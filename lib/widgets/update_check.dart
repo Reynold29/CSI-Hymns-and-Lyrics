@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert'; 
-import 'package:url_launcher/url_launcher.dart';
 
 class UpdateManager {
   Future<void> checkForUpdates(BuildContext context) async {
@@ -22,60 +19,38 @@ class UpdateManager {
     );
 
     try {
-      final response = await http.get(
-          Uri.parse('https://api.github.com/repos/Reynold29/CSI-Hymns-and-Lyrics/releases/latest'));
+      final latestVersion = await fetchLatestVersionFromServer(); 
+      const currentVersion = '1.0.0'; 
 
-      if (response.statusCode == 200) {
-        final releaseData = jsonDecode(response.body);
-        final latestVersion = releaseData['v3-beta'];
-
-        const currentVersion = '2.0.1';
-
-        if (latestVersion != currentVersion) {
-          Navigator.pop(context); 
-
-          await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('New Update Available!'),
-              content: Text('Version $latestVersion is available.'), 
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    final downloadUrl = releaseData['html_url'];
-                    await launchUrl(Uri.parse(downloadUrl));
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Download'),
-                ),
-              ],
-            ),
-          );
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('No updates available!'),
-              content: const Text("No updates were found! You're Up-To-Date! ;)"),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Close'),
-                ),
-              ],
-            ),
-          );
-        }
-      } else {
-        showDialog(
+      if (latestVersion != currentVersion) {
+        Navigator.pop(context);
+        await showDialog( 
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Network Error'),
-            content: const Text('Network error detected! Try again after some time.'),
+            title: const Text('New Update Available!'),
+            content: Text('Version $latestVersion is available. Would you like to update now?'), 
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Not Now'),
+              ),
+              TextButton(
+                onPressed: () {
+                  print('Initiate Play Store Update'); 
+                  Navigator.pop(context); 
+                },
+                child: const Text('Update'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        Navigator.pop(context);
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('No Updates Available!'),
+            content: const Text("You're already on the latest version!"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -86,21 +61,12 @@ class UpdateManager {
         );
       }
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text('An error occurred: $e'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
-            ),
-          ],
-        ),
-      );
-    } finally {
       Navigator.pop(context);
-    }
+      print('Error checking for updates: $e'); 
+    } 
+  }
+
+  Future<String> fetchLatestVersionFromServer() async {
+    return '1.0.0'; 
   }
 }

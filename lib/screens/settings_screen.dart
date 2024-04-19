@@ -1,9 +1,10 @@
+import 'about_app.dart';
 import 'package:flutter/material.dart';
-import 'package:hymns_latest/theme_state.dart';
 import 'package:provider/provider.dart';
+import 'package:hymns_latest/theme_state.dart';
 import 'package:hymns_latest/widgets/update_check.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hymns_latest/screens/app_theme_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -50,17 +51,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.only(top: 15),
         child: ListView(
           children: [
-            ListTile(
-              title: const Text(
+            const ListTile(
+              leading: FaIcon(FontAwesomeIcons.palette),
+              title: Text(
                 'Themes',
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25.0),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AppThemeScreen(initialDarkModeState: _isDarkMode)),
-                );
-              },
             ),
             ListTile(
               title: const Text('Dark Mode'),
@@ -80,29 +76,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: const Text("This feature is currently not available!",
               style: TextStyle(fontStyle: FontStyle.italic),
               ),
-              trailing: Switch(
-                value: _isBlackMode,
-                onChanged: (newValue) {
-                  setState(() {
-                    _isBlackMode = newValue;
-                  });
-                  Provider.of<ThemeState>(context, listen: false).setBlackThemeEnabled(newValue);
-                  _saveThemePreference();
-                },
+              trailing: IgnorePointer(
+                ignoring: true,
+                child: Switch(
+                  value: _isBlackMode,
+                  onChanged: (newValue) {
+                    // ------------- //
+                  },
+                ),
               ),
             ),
             const Divider(),
-            ListTile(
-              title: const Text(
+            const ListTile(
+              leading: FaIcon(FontAwesomeIcons.cloudArrowDown),
+              title: Text(
                 'Updates',
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25.0),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AppThemeScreen(initialDarkModeState: _isDarkMode)),
-                );
-              },
             ),
             ListTile(
             title: const Text('Check for Updates'),
@@ -111,9 +101,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               updateManager.checkForUpdates(context);
             },
           ),
+          const Divider(),
+            const ListTile(
+              leading: FaIcon(FontAwesomeIcons.circleInfo),
+              title: Text(
+                'About App',
+                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25.0),
+              ),
+            ),
+          ListTile(
+            title: const Text('Learn More about the app!'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutApp()),
+              );
+            },
+          ),
         ],
       ),
     ),
   );
-}
+ }
 }

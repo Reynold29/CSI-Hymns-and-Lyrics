@@ -4,7 +4,7 @@ class GestureControl extends StatelessWidget {
   final Widget child;
   final Function(int)? onPageChanged;  
 
-  const GestureControl({Key? key, required this.child, this.onPageChanged}) : super(key: key);
+  const GestureControl({super.key, required this.child, this.onPageChanged});
 
   @override
   Widget build(BuildContext context) {

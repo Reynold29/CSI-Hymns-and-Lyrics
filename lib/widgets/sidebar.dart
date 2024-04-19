@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hymns_latest/category.dart';
-import 'package:hymns_latest/screens/about_developer_screen.dart';
+import 'package:hymns_latest/screens/about_app.dart';
 import 'package:hymns_latest/screens/settings_screen.dart';
 import 'package:hymns_latest/screens/changelog_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hymns_latest/screens/about_developer_screen.dart';
 
 class Sidebar extends StatefulWidget {
   final AnimationController animationController;
 
-  const Sidebar({Key? key, required this.animationController}) : super(key: key);
+  const Sidebar({super.key, required this.animationController});
 
   @override
   _SidebarState createState() => _SidebarState();
@@ -32,20 +33,20 @@ class _SidebarState extends State<Sidebar> {
           child: SafeArea(
             child: Column(
               children: [
-                const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 21, vertical: 16),
-                  leading: CircleAvatar(
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 21, vertical: 16),
+                  leading: const CircleAvatar(
                     backgroundColor: Colors.blue,
                     child: FaIcon(
                       FontAwesomeIcons.church,
                       size: 30,
                     ),
                   ),
-                  title: Text(
+                  title: const Text(
                     "CSI Hymns and Lyrics",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'plusJakartaSans', color: Colors.white),
                   ),
-                  subtitle: Text(
+                  subtitle: const Text(
                     "Praise The Lord!",
                     style: TextStyle(
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -53,6 +54,12 @@ class _SidebarState extends State<Sidebar> {
                       fontFamily: 'plusJakartaSans',
                     ),
                   ),
+                  onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AboutApp()),
+                  );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 34),
@@ -62,7 +69,7 @@ class _SidebarState extends State<Sidebar> {
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -74,7 +81,7 @@ class _SidebarState extends State<Sidebar> {
                   title: const Text("HOME", style: TextStyle(color: Colors.white)),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   onTap: () {
                     setState(() {
                       _showOptions = !_showOptions;
@@ -92,6 +99,7 @@ class _SidebarState extends State<Sidebar> {
                       Icon(
                         _showOptions ? Icons.expand_less : Icons.expand_more,
                         color: Colors.white,
+                      semanticLabel: _showOptions ? 'Collapse Categories' : 'Expand Categories',
                       ),
                     ],
                   ),
@@ -101,7 +109,7 @@ class _SidebarState extends State<Sidebar> {
                     color: const Color.fromARGB(0, 188, 188, 188),
                     child: InkWell(
                       onTap: () {
-                        // Handle tap action
+                        // Handle tap action //
                       },
                       child: option,
                     ),
@@ -124,21 +132,10 @@ class _SidebarState extends State<Sidebar> {
                     width: 34,
                     child: FaIcon(FontAwesomeIcons.gear),
                   ),
-                  title: const Text("Settings", style: TextStyle(color: Colors.white)),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ChangelogScreen()),
-                    );
-                  },
-                  leading: const SizedBox(
-                    height: 34,
-                    width: 34,
-                    child: FaIcon(FontAwesomeIcons.scroll),
+                  title: Semantics(
+                    label: 'Open app settings', 
+                    child: const Text("Settings", style: TextStyle(color: Colors.white)), 
                   ),
-                  title: const Text("What's New?", style: TextStyle(color: Colors.white)),
                 ),
                 ListTile(
                   onTap: () {
@@ -152,7 +149,27 @@ class _SidebarState extends State<Sidebar> {
                     width: 34,
                     child: FaIcon(FontAwesomeIcons.circleUser),
                   ),
-                  title: const Text("About Developer", style: TextStyle(color: Colors.white)),
+                  title: Semantics(
+                    label: "About Develoepr",
+                    child: const Text("About Developer", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChangelogScreen()),
+                    );
+                  },
+                  leading: const SizedBox(
+                    height: 34,
+                    width: 34,
+                    child: FaIcon(FontAwesomeIcons.scroll),
+                  ),
+                  title: Semantics(
+                    label: 'What are the new changes',
+                    child: const Text("What's New?", style: TextStyle(color: Colors.white)),
+                  ),
                 ),
               ],
             ),
