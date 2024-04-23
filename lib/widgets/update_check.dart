@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateManager {
   Future<void> checkForUpdates(BuildContext context) async {
@@ -22,7 +23,7 @@ class UpdateManager {
       final latestVersion = await fetchLatestVersionFromServer(); 
       const currentVersion = '1.0.0'; 
 
-      if (latestVersion != currentVersion) {
+      if (latestVersion != currentVersion && await _shouldCheckForUpdate()) {
         Navigator.pop(context);
         await showDialog( 
           context: context,
@@ -68,5 +69,18 @@ class UpdateManager {
 
   Future<String> fetchLatestVersionFromServer() async {
     return '1.0.0'; 
+  }
+
+  Future<bool> _shouldCheckForUpdate() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastCheckTime = prefs.getInt('last_update_check');
+    final now = DateTime.now();
+
+    if (lastCheckTime == null || now.difference(DateTime.fromMillisecondsSinceEpoch(lastCheckTime)).inDays >= 5) {
+      await prefs.setInt('last_update_check', now.millisecondsSinceEpoch);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  any:
+    dependency: "direct main"
+    description:
+      name: any
+      sha256: "2e1a4af23aa7b745a79a2f13a1990e1ed278ff52bf6c963f0533374a1d714d96"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.0"
   args:
     dependency: transitive
     description:
@@ -208,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  in_app_update:
+    dependency: "direct main"
+    description:
+      name: in_app_update
+      sha256: b6ccb757281a96a4b18536f68fe2567aeca865134218719364212da8fe94615c
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   json_annotation:
     dependency: "direct main"
     description:
@@ -464,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  simple_animations:
+    dependency: "direct main"
+    description:
+      name: simple_animations
+      sha256: "1ea7b93fb98e2a611b6865d632de55607b766328d14700143353129ee0559d3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -613,6 +637,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_detector:
+    dependency: "direct main"
+    description:
+      name: visibility_detector
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+2"
   vm_service:
     dependency: transitive
     description:

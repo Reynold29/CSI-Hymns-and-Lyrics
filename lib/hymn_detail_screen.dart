@@ -1,8 +1,6 @@
 import 'hymns_def.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:showcaseview/showcaseview.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HymnDetailScreen extends StatefulWidget {
   final Hymn hymn;
@@ -14,7 +12,6 @@ class HymnDetailScreen extends StatefulWidget {
 }
 
 class _HymnDetailScreenState extends State<HymnDetailScreen> {
-  final GlobalKey _feedbackButtonKey = GlobalKey(); 
   String selectedLanguage = 'Kannada';
   double _fontSize = 18.0;
 
@@ -70,27 +67,9 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   );
 }
 
-  Future<void> _checkFirstRunAndShowCase() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstRun = (prefs.getBool('isFirstRun') ?? true);
-
-  if (isFirstRun) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ShowCaseWidget.of(context).startShowCase([ _feedbackButtonKey ]); 
-    });
-    prefs.setBool('isFirstRun', false);
-  }
-}
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      ShowCaseWidget.of(context).startShowCase([
-        _feedbackButtonKey
-      ]);
-      _checkFirstRunAndShowCase();
-    });
   }
 
   @override
@@ -105,7 +84,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: [
             Row(
-              children: [ 
+              children: [
                 InkWell( 
                   onTap: _decreaseFontSize, 
                   child: Container(
@@ -157,12 +136,28 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Hymn ${widget.hymn.number}',
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            const Divider(),
+            Row(
+              children: [
+                Text(
+                  'Hymn ${widget.hymn.number}',
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: SizedBox(
+                    width: 50.0, 
+                    height: 50.0,
+                    child: FloatingActionButton(
+                      onPressed: _showFeedbackDialog,
+                      tooltip: 'Report Lyrics Issue',
+                      child: const Icon(Icons.bug_report),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
             Text(
               widget.hymn.signature,
               style: const TextStyle(fontStyle: FontStyle.italic),
@@ -177,19 +172,6 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
               ),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: Showcase(
-        key: _feedbackButtonKey,
-        title: 'Wrong Lyrics?',
-        description: 'Press here to report issues.',
-        targetShapeBorder: const CircleBorder(),
-        overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
-        titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-        child: FloatingActionButton(
-          onPressed: _showFeedbackDialog,
-          tooltip: 'Report Lyrics Issue',
-          child: const Icon(Icons.bug_report),
         ),
       ),
     );

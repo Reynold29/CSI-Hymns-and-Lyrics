@@ -5,6 +5,7 @@ import 'screens/keerthane_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:hymns_latest/widgets/gesture_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,6 +45,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
+  // ignore: unused_field
+  int _counter = 0;
   final GlobalKey _menuButtonKey = GlobalKey();
   int _selectedIndex = 0;
   ThemeMode _themeMode = ThemeMode.system;
@@ -54,17 +57,39 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-
-    /*Future.delayed(const Duration(seconds: 2), () =>
-      ShowCaseWidget.of(context).startShowCase([ _menuButtonKey ]),
-    );*/
-
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300),
     ); 
     _pageController = PageController();
     _getThemeFromPreferences();
+    checkForUpdate();
+  }
 
-    // _checkFirstRunAndShowCase();
+  Future<void> checkForUpdate() async {
+    print('Checking for Updates...');
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        if (info.updateAvailability == UpdateAvailability.updateAvailable) {
+          print('Update Available!');
+          update();
+        }
+      });
+    }).catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  void update() async {
+    print('Updating...');
+    await InAppUpdate.startFlexibleUpdate();
+    InAppUpdate.completeFlexibleUpdate().then((_) {}).catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  void _incrementCounter() {
+    setState(() {
+    _counter++;
+    });
   }
 
   @override

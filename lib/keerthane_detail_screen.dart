@@ -1,8 +1,6 @@
 import 'keerthanes_def.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart'; 
-import 'package:showcaseview/showcaseview.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class KeerthaneDetailScreen extends StatefulWidget {
   final Keerthane keerthane;
@@ -14,19 +12,18 @@ class KeerthaneDetailScreen extends StatefulWidget {
 }
 
 class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
-  GlobalKey _feedbackButtonKey = GlobalKey();
   String selectedLanguage = 'Kannada';
   double _fontSize = 18.0;
 
   void _increaseFontSize() {
     setState(() {
-      _fontSize = (_fontSize + 2).clamp(16.0, 40.0); 
+      _fontSize = (_fontSize + 2).clamp(16.0, 40.0);
     });
   }
 
   void _decreaseFontSize() {
     setState(() {
-      _fontSize = (_fontSize - 2).clamp(16.0, 40.0); 
+      _fontSize = (_fontSize - 2).clamp(16.0, 40.0);
     });
   }
 
@@ -35,10 +32,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Find something wrong in the lyrics? ',
+        title: const Text('Something wrong with the lyrics? ',
         style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text('Help me fix it by sending an E-Mail! \n\nSend E-Mail?',
+        content: const Text('\nHelp me fix it by sending an E-Mail! \n\nSend E-Mail?',
         style:TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
         ), 
         actions: <Widget>[
@@ -70,28 +67,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   );
 }
 
-@override
+  @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      ShowCaseWidget.of(context).startShowCase([
-        _feedbackButtonKey
-      ]);
-      _checkFirstRunAndShowCase();
-    });
   }
-
-  Future<void> _checkFirstRunAndShowCase() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstRun = (prefs.getBool('isFirstRun') ?? true);
-
-  if (isFirstRun) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ShowCaseWidget.of(context).startShowCase([ _feedbackButtonKey ]); 
-    });
-    prefs.setBool('isFirstRun', false);
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -157,39 +136,42 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Keerthane ${widget.keerthane.number}',
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            const Divider(),
+            Row(
+              children: [
+                Text(
+                  'Keerthane ${widget.keerthane.number}',
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: SizedBox(
+                    width: 50.0, 
+                    height: 50.0,
+                    child: FloatingActionButton(
+                      onPressed: _showFeedbackDialog,
+                      tooltip: 'Report Lyrics Issue',
+                      child: const Icon(Icons.bug_report),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
             Text(
               widget.keerthane.signature,
               style: const TextStyle(fontStyle: FontStyle.italic),
             ),
             const SizedBox(height: 16),
-            Center( 
+            Center(
               child: Text(
-                selectedLanguage == 'English' 
-                  ? widget.keerthane.lyrics 
-                  : (widget.keerthane.kannadaLyrics ?? 'Kannada Lyrics unavailable'), 
+                selectedLanguage == 'English'
+                    ? widget.keerthane.lyrics
+                    : (widget.keerthane.kannadaLyrics ?? 'Kannada Lyrics unavailable'),
                 style: TextStyle(fontSize: _fontSize),
               ),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: Showcase(
-        key: _feedbackButtonKey,
-        title: 'Wrong Lyrics?',
-        description: 'Press here to report issues.',
-        targetShapeBorder: const CircleBorder(),
-        overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
-        titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-        child: FloatingActionButton(
-          onPressed: _showFeedbackDialog,
-          tooltip: 'Report Lyrics Issue',
-          child: const Icon(Icons.bug_report),
         ),
       ),
     );
