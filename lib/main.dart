@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:hymns_latest/widgets/gesture_control.dart';
+import 'package:hymns_latest/screens/favorites_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(ShowCaseWidget(
@@ -113,9 +114,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   static final List<Widget> _screens = [
     const HymnsScreen(),
     const KeerthaneScreen(),
+    const FavoritesScreen(),
   ];
 
   void _onItemTapped(int index) {
+    print('Tapped index: $index'); 
     setState(() {
       _selectedIndex = index;
     });
@@ -202,6 +205,14 @@ Widget build(BuildContext context) {
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
                 child: const Icon(Icons.library_music_outlined),
+              ),
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.favorite_border_outlined),
+              label: 'Favorites',
+              selectedIcon: Container( 
+                margin: const EdgeInsets.only(bottom: 6.0),
+                child: const Icon(Icons.favorite_border_outlined),
               ),
             ), 
           ],

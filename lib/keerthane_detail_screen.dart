@@ -1,6 +1,7 @@
-import 'keerthanes_def.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hymns_latest/keerthanes_def.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KeerthaneDetailScreen extends StatefulWidget {
   final Keerthane keerthane;
@@ -13,6 +14,7 @@ class KeerthaneDetailScreen extends StatefulWidget {
 
 class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   String selectedLanguage = 'Kannada';
+  bool _isFavorite = false;
   double _fontSize = 18.0;
 
   void _increaseFontSize() {
@@ -27,15 +29,39 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkIsFavorite(); 
+  }
+
+  Future<void> _checkIsFavorite() async {
+    final favoriteIds = await _retrieveFavorites();
+    setState(() {
+      _isFavorite = favoriteIds.contains(widget.keerthane.number); 
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    if (_isFavorite) {
+      await _removeFromFavorites(widget.keerthane); 
+    } else {
+      await _saveToFavorites(widget.keerthane); 
+    }
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+  }
+
   void _showFeedbackDialog() {
   showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Something wrong with the lyrics? ',
+        title: const Text('Find something wrong in the lyrics? ',
         style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text('\nHelp me fix it by sending an E-Mail! \n\nSend E-Mail?',
+        content: const Text('Help me fix it by sending an E-Mail! \n\nSend E-Mail?',
         style:TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
         ), 
         actions: <Widget>[
@@ -67,9 +93,25 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   );
 }
 
-  @override
-  void initState() {
-    super.initState();
+Future<void> _saveToFavorites(Keerthane keerthane) async {
+  final prefs = await SharedPreferences.getInstance();
+  final storedIds = prefs.getStringList('favoriteKeerthaneIds') ?? [];
+  storedIds.add(keerthane.number.toString());
+  await prefs.setStringList('favoriteKeerthaneIds', storedIds);
+}
+
+Future<void> _removeFromFavorites(Keerthane keerthane) async {
+  final prefs = await SharedPreferences.getInstance();
+  final storedIds = prefs.getStringList('favoriteKeerthaneIds') ?? [];
+
+  storedIds.remove(keerthane.number.toString());
+  await prefs.setStringList('favoriteKeerthaneIds', storedIds); 
+}
+
+Future<List<int>> _retrieveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedData = prefs.getStringList('favoriteKeerthaneIds');
+    return storedData?.map((idStr) => int.parse(idStr)).toList() ?? []; 
   }
 
   @override
@@ -85,7 +127,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
           children: [
             Row(
               children: [
-                InkWell( 
+                InkWell(
                   onTap: _decreaseFontSize, 
                   child: Container(
                     padding: const EdgeInsets.all(5.0),
@@ -142,6 +184,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                 Text(
                   'Keerthane ${widget.keerthane.number}',
                   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                ElevatedButton( 
+                  onPressed: _toggleFavorite,
+                  child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
                 ),
                 const Spacer(),
                 Padding(

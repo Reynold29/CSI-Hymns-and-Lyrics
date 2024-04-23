@@ -1,5 +1,5 @@
-import 'dart:convert'; 
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; 
+import 'dart:convert';
 
 class Hymn {
   final int number;
@@ -15,17 +15,28 @@ class Hymn {
     required this.lyrics,
     this.kannadaLyrics,
   });
+
+  Map<String, dynamic> toJson() => {
+    'number': number,
+    'title': title,
+    'signature': signature,
+    'lyrics': lyrics,
+    'kannadaLyrics': kannadaLyrics 
+  }; 
+
+  factory Hymn.fromJson(Map<String, dynamic> json) => Hymn(
+    number: json['number'],
+    title: json['title'],
+    signature: json['signature'],
+    lyrics: json['lyrics'],
+    kannadaLyrics: json['kannadaLyrics'] 
+  );
 }
 
 Future<List<Hymn>> loadHymns() async {
   final String jsonData = await rootBundle.loadString('lib/assets/hymns_data.json');
   final data = jsonDecode(jsonData) as List<dynamic>;
 
-  return data.map((item) => Hymn(
-       number: item['number'],
-       title: item['title'],
-       signature: item['signature'],
-       lyrics: item['lyrics'],
-       kannadaLyrics: item['kannadaLyrics'] 
-    )).toList();
+  return data.map((item) => Hymn.fromJson(item)).toList();
 }
+

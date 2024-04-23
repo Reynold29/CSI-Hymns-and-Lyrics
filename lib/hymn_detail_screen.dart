@@ -1,6 +1,7 @@
 import 'hymns_def.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HymnDetailScreen extends StatefulWidget {
   final Hymn hymn;
@@ -13,6 +14,7 @@ class HymnDetailScreen extends StatefulWidget {
 
 class _HymnDetailScreenState extends State<HymnDetailScreen> {
   String selectedLanguage = 'Kannada';
+  bool _isFavorite = false;
   double _fontSize = 18.0;
 
   void _increaseFontSize() {
@@ -24,6 +26,30 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   void _decreaseFontSize() {
     setState(() {
       _fontSize = (_fontSize - 2).clamp(16.0, 40.0);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIsFavorite(); 
+  }
+
+  Future<void> _checkIsFavorite() async {
+    final favoriteIds = await _retrieveFavorites();
+    setState(() {
+      _isFavorite = favoriteIds.contains(widget.hymn.number); 
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    if (_isFavorite) {
+      await _removeFromFavorites(widget.hymn); 
+    } else {
+      await _saveToFavorites(widget.hymn); 
+    }
+    setState(() {
+      _isFavorite = !_isFavorite;
     });
   }
 
@@ -67,9 +93,26 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   );
 }
 
-  @override
-  void initState() {
-    super.initState();
+Future<void> _saveToFavorites(Hymn hymn) async {
+  final prefs = await SharedPreferences.getInstance();
+  final storedIds = prefs.getStringList('favoriteHymnIds') ?? [];
+
+  storedIds.add(hymn.number.toString());
+  await prefs.setStringList('favoriteHymnIds', storedIds);
+}
+
+Future<void> _removeFromFavorites(Hymn hymn) async {
+  final prefs = await SharedPreferences.getInstance();
+  final storedIds = prefs.getStringList('favoriteHymnIds') ?? [];
+
+  storedIds.remove(hymn.number.toString());
+  await prefs.setStringList('favoriteHymnIds', storedIds); 
+}
+
+Future<List<int>> _retrieveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedData = prefs.getStringList('favoriteHymnIds');
+    return storedData?.map((idStr) => int.parse(idStr)).toList() ?? []; 
   }
 
   @override
@@ -85,7 +128,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
           children: [
             Row(
               children: [
-                InkWell( 
+                InkWell(
                   onTap: _decreaseFontSize, 
                   child: Container(
                     padding: const EdgeInsets.all(5.0),
@@ -142,6 +185,11 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                 Text(
                   'Hymn ${widget.hymn.number}',
                   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                ElevatedButton( 
+                  onPressed: _toggleFavorite,
+                  child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
                 ),
                 const Spacer(),
                 Padding(
