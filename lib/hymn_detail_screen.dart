@@ -1,5 +1,6 @@
 import 'hymns_def.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,6 +49,11 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
     await _removeFromFavorites(widget.hymn);
   } else {
     await _saveToFavorites(widget.hymn);
+  }
+
+  bool? hasVibrator = await Vibration.hasVibrator();
+  if (hasVibrator != null && hasVibrator) {
+    Vibration.vibrate(duration: 100);
   }
 
   await _checkIsFavorite();

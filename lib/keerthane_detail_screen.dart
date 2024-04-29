@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hymns_latest/keerthanes_def.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -48,6 +49,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     await _removeFromFavorites(widget.keerthane);
   } else {
     await _saveToFavorites(widget.keerthane);
+  }
+
+  bool? hasVibrator = await Vibration.hasVibrator();
+  if (hasVibrator != null && hasVibrator) {
+    Vibration.vibrate(duration: 100);
   }
 
   await _checkIsFavorite();
