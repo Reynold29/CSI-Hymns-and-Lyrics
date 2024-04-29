@@ -28,13 +28,6 @@ class _HymnsScreenState extends State<HymnsScreen> {
           hymns.sort((a, b) => a.number.compareTo(b.number));
           filteredHymns = hymns;
         }));
-      /* Future.delayed(const Duration(seconds: 7), () {
-      ShowCaseWidget.of(context).startShowCase([
-        _searchKey,
-        _filterKey,
-      ]);
-      _checkFirstRun();
-    });*/
   }
 
   void _sortHymns() {
@@ -49,18 +42,6 @@ class _HymnsScreenState extends State<HymnsScreen> {
     });
   }
 
-  /*Future<void> _checkFirstRun() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstRun = (prefs.getBool('isFirstRun') ?? true);
-
-  if (isFirstRun) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ShowCaseWidget.of(context).startShowCase([ _searchKey, _filterKey ]); 
-    });
-    prefs.setBool('isFirstRun', false);
-  }
-}*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,53 +50,52 @@ class _HymnsScreenState extends State<HymnsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: Showcase(
-                    key: _searchKey,
-                    title: 'Search Hymns',
-                    description: 'Find hymns by Title or Number',
-                    targetShapeBorder: const CircleBorder(),
-                    overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
-                    titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-                    child: custom.SearchBar(
-                      hintText: 'Search Hymns',
-                      hintStyle: const TextStyle(color: Colors.black),
-                      onChanged: (searchQuery) {
-                        setState(() {
-                          _searchQuery = searchQuery;
-                          if (searchQuery.isEmpty) {
-                            filteredHymns = hymns;
-                          } else {
-                            filteredHymns = hymns.where((hymn) =>
-                                hymn.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                hymn.number.toString().contains(searchQuery.toLowerCase())).toList();
-                          }
-                        }
-                      );
-                    },
-                  )
-                )
-              ),
-              Showcase(
-                key: _filterKey,
-                title: 'Filter Hymns',
-                description: 'Sort hymns by number or title.',
+              child: Showcase(
+                key: _searchKey,
+                title: 'Search Hymns',
+                description: 'Find hymns by Title or Number',
                 targetShapeBorder: const CircleBorder(),
                 overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
                 titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-                child: PopupMenuButton<String>( 
-                  onSelected: (selectedOrder) {
+                child: custom.SearchBar(
+                  hintText: 'Search Hymns',
+                  hintStyle: const TextStyle(color: Colors.black),
+                  onChanged: (searchQuery) {
+                    setState(() {
+                      _searchQuery = searchQuery;
+                      if (searchQuery.isEmpty) {
+                        filteredHymns = hymns;
+                      } else {
+                        filteredHymns = hymns.where((hymn) =>
+                            hymn.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
+                            hymn.number.toString().contains(searchQuery.toLowerCase())).toList();
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            Showcase(
+              key: _filterKey,
+              title: 'Filter Hymns',
+              description: 'Sort hymns by number or title.',
+              targetShapeBorder: const CircleBorder(),
+              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
+              titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
+              child: PopupMenuButton<String>( 
+                onSelected: (selectedOrder) {
                   setState(() {
-                  _selectedOrder = selectedOrder;
-                  _sortHymns();
-                });
-              },
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem(child: Text("Order by Hymn No."), value: "number"),
-                  const PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
-                ];
-              },
-              icon: const Icon(Icons.filter_list),
+                    _selectedOrder = selectedOrder;
+                    _sortHymns();
+                  });
+                },
+                itemBuilder: (BuildContext context) {
+                  return [
+                    const PopupMenuItem(child: Text("Order by Hymn No."), value: "number"),
+                    const PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
+                  ];
+                },
+                icon: const Icon(Icons.filter_list),
               ),
             ),
           ],

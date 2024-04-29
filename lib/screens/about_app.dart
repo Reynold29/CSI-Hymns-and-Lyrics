@@ -23,8 +23,11 @@ class AboutApp extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: GestureDetector(
-          onTap: () {
-            // Play Store Link //
+          onTap: () async { 
+            const url = 'https://play.google.com/store/apps/details?id=com.reyzie.hymns';
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            }
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,6 +129,18 @@ class _ContributeSection extends StatelessWidget {
               FaIcon(FontAwesomeIcons.github),
               SizedBox(width: 10),
               Text('View on GitHub'), 
+            ],
+          ),
+        ),
+        const SizedBox(height: 5), 
+        ElevatedButton(
+          onPressed: () => _launchURL('https://play.google.com/store/apps/details?id=com.reyzie.hymns'), 
+          child: const Row( 
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FaIcon(FontAwesomeIcons.googlePlay),
+              SizedBox(width: 10),
+              Text('View on PlayStore'), 
             ],
           ),
         ),

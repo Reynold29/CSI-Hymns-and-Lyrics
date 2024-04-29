@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hymns_latest/category.dart';
 import 'package:hymns_latest/screens/about_app.dart';
+import 'package:hymns_latest/screens/praise_app.dart';
 import 'package:hymns_latest/screens/settings_screen.dart';
 import 'package:hymns_latest/screens/changelog_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -71,14 +72,17 @@ class _SidebarState extends State<Sidebar> {
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PraiseAppScreen()),
+                    );
                   },
                   leading: const SizedBox(
                     height: 34,
                     width: 34,
-                    child: FaIcon(FontAwesomeIcons.house),
+                    child: FaIcon(FontAwesomeIcons.googlePlay),
                   ),
-                  title: const Text("HOME", style: TextStyle(color: Colors.white)),
+                  title: const Text("Praise and Worship App", style: TextStyle(color: Colors.white)),
                 ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),

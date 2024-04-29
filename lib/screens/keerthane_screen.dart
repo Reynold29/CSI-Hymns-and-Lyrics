@@ -34,7 +34,7 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
       } else if (_selectedOrder == 'title') {
         keerthane.sort((a, b) => a.title.compareTo(b.title));
       }
-      filteredKeerthane = keerthane;
+      filteredKeerthane = List.from(keerthane);
     });
   }
 
@@ -45,23 +45,25 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: custom.SearchBar(
-              hintText: 'Search Keerthane',
-              hintStyle: const TextStyle(color: Colors.black),
-              onChanged: (searchQuery) {
-                setState(() {
-                  _searchQuery = searchQuery;
-                  if (searchQuery.isEmpty) {
-                    filteredKeerthane = keerthane; 
-                  } else {
-                    filteredKeerthane = keerthane.where((Keerthane) =>
-                        Keerthane.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
-                        Keerthane.number.toString().contains(searchQuery.toLowerCase())
-                    ).toList();
-                  }
-                });
-              },
-            )),
+            Expanded(
+              child: custom.SearchBar(
+                hintText: 'Search Keerthane',
+                hintStyle: const TextStyle(color: Colors.black),
+                onChanged: (searchQuery) {
+                  setState(() {
+                    _searchQuery = searchQuery;
+                    if (searchQuery.isEmpty) {
+                      filteredKeerthane = List.from(keerthane);
+                    } else {
+                      filteredKeerthane = keerthane.where((keerthane) =>
+                        keerthane.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
+                        keerthane.number.toString().contains(searchQuery.toLowerCase())
+                      ).toList();
+                    }
+                  });
+                },
+              ),
+            ),
             PopupMenuButton<String>( 
               onSelected: (selectedOrder) {
                 setState(() {
@@ -89,7 +91,7 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
               child: ListView.builder(
                 itemCount: _searchQuery != null ? filteredKeerthane.length : keerthane.length,
                 itemBuilder: (context, index) {
-                  final Keerthane = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
+                  final keerthaneItem = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 5.0),
                     elevation: 2.0,
@@ -108,11 +110,11 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
                           ), 
                         ),
                       ),
-                      title: Text('Keerthane ${Keerthane.number}: ${Keerthane.title}',
-                      style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
+                      title: Text('Keerthane ${keerthaneItem.number}: ${keerthaneItem.title}',
+                        style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
                       ),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                      onTap: () => navigateToKeerthaneDetail(context, Keerthane), 
+                      onTap: () => navigateToKeerthaneDetail(context, keerthaneItem), 
                     ),
                   );
                 },
