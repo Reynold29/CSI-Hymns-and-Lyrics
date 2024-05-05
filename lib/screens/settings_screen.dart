@@ -71,21 +71,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
             ),
-            ListTile(
-              title: const Text('Black Theme'),
-              subtitle: const Text("This feature is currently not available!",
-              style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-              trailing: IgnorePointer(
-                ignoring: true,
-                child: Switch(
-                  value: _isBlackMode,
-                  onChanged: (newValue) {
-                    // ------------- //
-                  },
-                ),
-              ),
-            ),
             const Divider(),
             const ListTile(
               leading: FaIcon(FontAwesomeIcons.cloudArrowDown),
