@@ -83,8 +83,8 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                   path: 'reynold29clare@gmail.com',
                   query: 'subject=keerthane%20Lyrics%20Issue%20-%20keerthane%20${widget.keerthane.number}&body=Requesting%20lyrics%20check!',
                 );
-                if (await canLaunchUrl(emailLaunchUri.toString() as Uri)) {
-                  await launchUrl(emailLaunchUri.toString() as Uri);
+                if (await canLaunchUrl(emailLaunchUri)) {
+                  await launchUrl(emailLaunchUri);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Unable to open email app. Do you have Gmail installed?')));
