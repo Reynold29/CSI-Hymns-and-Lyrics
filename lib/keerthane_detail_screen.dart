@@ -81,7 +81,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                 final Uri emailLaunchUri = Uri(
                   scheme: 'mailto',
                   path: 'reynold29clare@gmail.com',
-                  query: 'subject=keerthane%20Lyrics%20Issue%20-%20keerthane%20${widget.keerthane.number}&body=Requesting%20lyrics%20check!',
+                  query: 'subject=Keerthane%20Lyrics%20Issue%20-%20Keerthane%20${widget.keerthane.number}&body=Requesting%20lyrics%20check!',
                 );
                 if (await canLaunchUrl(emailLaunchUri)) {
                   await launchUrl(emailLaunchUri);
@@ -150,7 +150,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Text('Font Size', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                const Text('Font', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(width: 8),
                 InkWell(
                   onTap: _increaseFontSize,
@@ -175,7 +175,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                     }
                   },
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 ChoiceChip(
                   label: const Padding(
                     padding: EdgeInsets.only(top: 4.0),
