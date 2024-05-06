@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HymnDetailScreen extends StatefulWidget {
   final Hymn hymn;
 
-  const HymnDetailScreen({Key? key, required this.hymn}) : super(key: key);
+  const HymnDetailScreen({super.key, required this.hymn});
 
   @override
   _HymnDetailScreenState createState() => _HymnDetailScreenState();
@@ -150,7 +150,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Text('Font Size', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                const Text('Font', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(width: 8),
                 InkWell(
                   onTap: _increaseFontSize,
@@ -175,9 +175,14 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                     }
                   },
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 ChoiceChip(
-                  label: const Text('Kannada'),
+                  label: const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Text('ಕನ್ನಡ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   selected: selectedLanguage == 'Kannada',
                   onSelected: (bool selected) {
                     if (selected) {
@@ -230,11 +235,14 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
             ),
             const SizedBox(height: 16),
             Center(
-              child: Text(
-                selectedLanguage == 'English'
-                    ? widget.hymn.lyrics
-                    : (widget.hymn.kannadaLyrics ?? 'Kannada Lyrics unavailable'),
-                style: TextStyle(fontSize: _fontSize),
+              child: SingleChildScrollView(
+                child: Text(
+                  selectedLanguage == 'English'
+                      ? widget.hymn.lyrics
+                      : (widget.hymn.kannadaLyrics ?? 'Kannada Lyrics unavailable'),
+                  style: TextStyle(fontSize: _fontSize),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],

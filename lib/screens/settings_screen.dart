@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hymns_latest/theme_state.dart';
 import 'package:hymns_latest/widgets/update_check.dart';
+import 'package:hymns_latest/screens/changelog_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -84,6 +85,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () {
               final updateManager = UpdateManager();
               updateManager.checkForUpdates(context);
+            },
+          ),
+          const Divider(),
+          const ListTile(
+            leading: FaIcon(FontAwesomeIcons.scroll),
+            title: Text(
+            "What's New?",
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25.0)
+            ),
+          ),
+          ListTile(
+            title: const Text('Have a look at the Changelog!'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChangelogScreen()),
+              );
             },
           ),
           const Divider(),

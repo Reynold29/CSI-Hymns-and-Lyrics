@@ -177,7 +177,12 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                 ),
                 const SizedBox(width: 8),
                 ChoiceChip(
-                  label: const Text('Kannada'),
+                  label: const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Text('ಕನ್ನಡ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   selected: selectedLanguage == 'Kannada',
                   onSelected: (bool selected) {
                     if (selected) {
@@ -230,11 +235,14 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
             ),
             const SizedBox(height: 16),
             Center(
-              child: Text(
-                selectedLanguage == 'English'
-                    ? widget.keerthane.lyrics
-                    : (widget.keerthane.kannadaLyrics ?? 'Kannada Lyrics unavailable'),
-                style: TextStyle(fontSize: _fontSize),
+              child: SingleChildScrollView(
+                child: Text(
+                  selectedLanguage == 'English'
+                      ? widget.keerthane.lyrics
+                      : (widget.keerthane.kannadaLyrics ?? 'Kannada Lyrics unavailable'),
+                  style: TextStyle(fontSize: _fontSize),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],

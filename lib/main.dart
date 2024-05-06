@@ -66,24 +66,20 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   }
 
   Future<void> checkForUpdate() async {
-    print('Checking for Updates...');
     InAppUpdate.checkForUpdate().then((info) {
       setState(() {
         if (info.updateAvailability == UpdateAvailability.updateAvailable) {
-          print('Update Available!');
           update();
         }
       });
     }).catchError((e) {
-      print(e.toString());
+      //---print(e.toString());---//
     });
   }
 
   void update() async {
-    print('Updating...');
     await InAppUpdate.startFlexibleUpdate();
     InAppUpdate.completeFlexibleUpdate().then((_) {}).catchError((e) {
-      print(e.toString());
     });
   }
 
@@ -118,7 +114,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   ];
 
   void _onItemTapped(int index) {
-    print('Tapped index: $index'); 
+    //---print('Tapped index: $index');---//
     setState(() {
       _selectedIndex = index;
     });
@@ -150,7 +146,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text('CSI Kannada Hymns Books',
+      title: const Text('CSI Kannada Hymns Book',
       style: TextStyle(fontFamily: 'plusJakartaSans', fontWeight: FontWeight.bold),
       ), 
       leading: Builder(
@@ -192,7 +188,7 @@ Widget build(BuildContext context) {
         child: NavigationBar(
           destinations: [
             NavigationDestination(
-              icon: Icon(Icons.music_note_outlined), 
+              icon: const Icon(Icons.music_note_outlined), 
               label: 'Hymns',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
@@ -200,7 +196,7 @@ Widget build(BuildContext context) {
               ),
             ),
             NavigationDestination(
-              icon: Icon(Icons.library_music_outlined),
+              icon: const Icon(Icons.library_music_outlined),
               label: 'Keerthane',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
@@ -208,7 +204,7 @@ Widget build(BuildContext context) {
               ),
             ),
             NavigationDestination(
-              icon: Icon(Icons.favorite_border_outlined),
+              icon: const Icon(Icons.favorite_border_outlined),
               label: 'Favorites',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),

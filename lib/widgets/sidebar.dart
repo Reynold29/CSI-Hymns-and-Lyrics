@@ -3,7 +3,6 @@ import 'package:hymns_latest/category.dart';
 import 'package:hymns_latest/screens/about_app.dart';
 import 'package:hymns_latest/screens/praise_app.dart';
 import 'package:hymns_latest/screens/settings_screen.dart';
-import 'package:hymns_latest/screens/changelog_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hymns_latest/screens/about_developer_screen.dart';
 
@@ -156,23 +155,6 @@ class _SidebarState extends State<Sidebar> {
                   title: Semantics(
                     label: "About Develoepr",
                     child: const Text("About Developer", style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ChangelogScreen()),
-                    );
-                  },
-                  leading: const SizedBox(
-                    height: 34,
-                    width: 34,
-                    child: FaIcon(FontAwesomeIcons.scroll),
-                  ),
-                  title: Semantics(
-                    label: 'What are the new changes',
-                    child: const Text("What's New?", style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],

@@ -119,19 +119,19 @@ class _ContributeSection extends StatelessWidget {
           "This app is Open Source!  Contribute to the project's code and let's enhance it !   ;) ",
           style: TextStyle(fontSize: 15, fontFamily: 'plusJakartaSans'),
         ),
-        const SizedBox(height: 12), 
+        const SizedBox(height: 14), 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
           children: [
             ElevatedButton.icon( 
               icon: const FaIcon(FontAwesomeIcons.github),
-              label: const Text('View on GitHub'), 
+              label: const Text('GitHub'), 
               onPressed: () => _launchURL('https://github.com/Reynold29/CSI-Hymns-and-Lyrics/'), 
             ),
             const SizedBox(width: 5), 
             ElevatedButton.icon(
               icon: const FaIcon(FontAwesomeIcons.googlePlay),
-              label: const Text('View on PlayStore'), 
+              label: const Text('PlayStore'), 
               onPressed: () => _launchURL('https://play.google.com/store/apps/details?id=com.reyzie.hymns'), 
             ),
           ]
@@ -168,7 +168,7 @@ class _Support extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         const Text(
-          "Get Support Here or Find how we prioritize Privacy and Data!",
+          "Get Support Here and also find out how we Prioritize User Privacy and Data!",
           style: TextStyle(fontSize: 15, fontFamily: 'plusJakartaSans'),
         ),
         const SizedBox(height: 12), 

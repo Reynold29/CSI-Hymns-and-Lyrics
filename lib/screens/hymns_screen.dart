@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hymns_latest/hymns_def.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/search_bar.dart' as custom;
 import 'package:showcaseview/showcaseview.dart';
 import 'package:hymns_latest/hymn_detail_screen.dart';
 
 class HymnsScreen extends StatefulWidget {
-  const HymnsScreen({Key? key}) : super(key: key);
+  const HymnsScreen({super.key});
 
   @override
   _HymnsScreenState createState() => _HymnsScreenState();
 }
 
 class _HymnsScreenState extends State<HymnsScreen> {
-  GlobalKey _searchKey = GlobalKey();
-  GlobalKey _filterKey = GlobalKey();
+  final GlobalKey _searchKey = GlobalKey();
+  final GlobalKey _filterKey = GlobalKey();
   List<Hymn> hymns = [];
   List<Hymn> filteredHymns = [];
   String? _selectedOrder = 'number';
@@ -91,8 +90,8 @@ class _HymnsScreenState extends State<HymnsScreen> {
                 },
                 itemBuilder: (BuildContext context) {
                   return [
-                    const PopupMenuItem(child: Text("Order by Hymn No."), value: "number"),
-                    const PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
+                    const PopupMenuItem(value: "number", child: Text("Order by Hymn No.")),
+                    const PopupMenuItem(value: "title", child: Text("Order by Alphabetical"))
                   ];
                 },
                 icon: const Icon(Icons.filter_list),

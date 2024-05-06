@@ -73,8 +73,8 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
               },
               itemBuilder: (BuildContext context) {
                 return [
-                  const PopupMenuItem(child: Text("Order by Keerthane No."), value: "number"),
-                  const PopupMenuItem(child: Text("Order by Alphabetical"), value: "title")
+                  const PopupMenuItem(value: "number", child: Text("Order by Keerthane No.")),
+                  const PopupMenuItem(value: "title", child: Text("Order by Alphabetical"))
                 ];
               },
               icon: const Icon(Icons.filter_list), 
