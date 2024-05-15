@@ -15,6 +15,7 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   List<Keerthane> filteredKeerthane = [];
   String? _selectedOrder = 'number';
   String? _searchQuery;
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -60,6 +61,16 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
                         keerthane.number.toString().contains(searchQuery.toLowerCase())
                       ).toList();
                     }
+                  });
+                }, 
+                focusNode: _searchFocusNode,
+                onQueryCleared: () {
+                  setState(() {
+                    _searchQuery = null; 
+                    filteredKeerthane = List.from(keerthane); 
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      _searchFocusNode.unfocus();
+                    });
                   });
                 },
               ),

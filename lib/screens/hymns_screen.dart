@@ -16,28 +16,74 @@ class _HymnsScreenState extends State<HymnsScreen> {
   final GlobalKey _filterKey = GlobalKey();
   List<Hymn> hymns = [];
   List<Hymn> filteredHymns = [];
+  Map<String, List<Hymn>> groupedHymns = {};
   String? _selectedOrder = 'number';
   String? _searchQuery;
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     loadHymns().then((data) => setState(() {
           hymns = data;
-          hymns.sort((a, b) => a.number.compareTo(b.number));
-          filteredHymns = hymns;
+          _sortHymns();
         }));
   }
 
   void _sortHymns() {
     setState(() {
-      _searchQuery = null;
       if (_selectedOrder == 'number') {
         hymns.sort((a, b) => a.number.compareTo(b.number));
+        filteredHymns = hymns;
       } else if (_selectedOrder == 'title') {
         hymns.sort((a, b) => a.title.compareTo(b.title));
+        filteredHymns = hymns;
+      } else if (_selectedOrder == 'time_signature') {
+        hymns.sort((a, b) => a.signature.compareTo(b.signature));
+        _groupHymnsBySignature();
       }
-      filteredHymns = hymns;
+      _filterHymns();
+    });
+  }
+
+  void _groupHymnsBySignature() {
+    groupedHymns.clear();
+    for (var hymn in hymns) {
+      if (!groupedHymns.containsKey(hymn.signature)) {
+        groupedHymns[hymn.signature] = [];
+      }
+      groupedHymns[hymn.signature]!.add(hymn);
+    }
+  }
+
+  void _filterHymns() {
+    setState(() {
+      if (_searchQuery == null || _searchQuery!.isEmpty) {
+        filteredHymns = hymns;
+      } else {
+        final query = _searchQuery!.toLowerCase().trim(); 
+        if (_selectedOrder == 'time_signature') {
+          groupedHymns = Map.fromEntries(
+            groupedHymns.entries.where((entry) {
+              // ignore: unused_local_variable
+              final signature = entry.key.toLowerCase();
+              final hymnsInSignature = entry.value.where((hymn) => 
+                hymn.title.toLowerCase().contains(query) ||
+                hymn.number.toString().contains(query) ||
+                hymn.signature.toLowerCase().contains(query)
+              ).toList();
+              return hymnsInSignature.isNotEmpty;
+            })
+          );
+        } else {
+          filteredHymns = hymns.where((hymn) {
+            final hymnSignature = hymn.signature.toLowerCase();
+            return hymn.title.toLowerCase().contains(query) ||
+                  hymn.number.toString().contains(query) ||
+                  hymnSignature == query; 
+          }).toList();
+        }
+      }
     });
   }
 
@@ -52,9 +98,9 @@ class _HymnsScreenState extends State<HymnsScreen> {
               child: Showcase(
                 key: _searchKey,
                 title: 'Search Hymns',
-                description: 'Find hymns by Title or Number',
+                description: 'Find hymns by Title, Number, or Time Signature',
                 targetShapeBorder: const CircleBorder(),
-                overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
+                overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
                 titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
                 child: custom.SearchBar(
                   hintText: 'Search Hymns',
@@ -62,13 +108,18 @@ class _HymnsScreenState extends State<HymnsScreen> {
                   onChanged: (searchQuery) {
                     setState(() {
                       _searchQuery = searchQuery;
-                      if (searchQuery.isEmpty) {
-                        filteredHymns = hymns;
-                      } else {
-                        filteredHymns = hymns.where((hymn) =>
-                            hymn.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
-                            hymn.number.toString().contains(searchQuery.toLowerCase())).toList();
-                      }
+                      _filterHymns();
+                    });
+                  }, 
+                  focusNode: _searchFocusNode,
+                  onQueryCleared: () {
+                    setState(() {
+                      _searchQuery = null; 
+                      filteredHymns = hymns;
+                      _groupHymnsBySignature();
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        _searchFocusNode.unfocus();
+                      });
                     });
                   },
                 ),
@@ -77,11 +128,11 @@ class _HymnsScreenState extends State<HymnsScreen> {
             Showcase(
               key: _filterKey,
               title: 'Filter Hymns',
-              description: 'Sort hymns by number or title.',
+              description: 'Sort hymns by number, title, or time signature.',
               targetShapeBorder: const CircleBorder(),
-              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
+              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
               titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-              child: PopupMenuButton<String>( 
+              child: PopupMenuButton<String>(
                 onSelected: (selectedOrder) {
                   setState(() {
                     _selectedOrder = selectedOrder;
@@ -91,7 +142,8 @@ class _HymnsScreenState extends State<HymnsScreen> {
                 itemBuilder: (BuildContext context) {
                   return [
                     const PopupMenuItem(value: "number", child: Text("Order by Hymn No.")),
-                    const PopupMenuItem(value: "title", child: Text("Order by Alphabetical"))
+                    const PopupMenuItem(value: "title", child: Text("Order by Alphabetical")),
+                    const PopupMenuItem(value: "time_signature", child: Text("Order by Time Signature"))
                   ];
                 },
                 icon: const Icon(Icons.filter_list),
@@ -107,40 +159,88 @@ class _HymnsScreenState extends State<HymnsScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: _searchQuery != null ? filteredHymns.length : hymns.length,
+                itemCount: _selectedOrder == 'time_signature'
+                    ? groupedHymns.keys.length
+                    : filteredHymns.length,
                 itemBuilder: (context, index) {
-                  final hymn = _searchQuery != null ? filteredHymns[index] : hymns[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 5.0),
-                    elevation: 2.0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                    child: ListTile(
-                      leading: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: SizedBox(
-                          width: 45,
-                          height: 40,
-                          child: Semantics(
-                            label: 'Hymn icon',
-                            child: Image.asset(
-                              'lib/assets/icons/hymn.png',
+                  if (_selectedOrder == 'time_signature') {
+                    String signature = groupedHymns.keys.elementAt(index);
+                    List<Hymn> hymnsInSignature = groupedHymns[signature]!;
+                    if (_searchQuery != null && _searchQuery!.isNotEmpty) {
+                      hymnsInSignature = hymnsInSignature.where((hymn) =>
+                          hymn.title.toLowerCase().contains(_searchQuery!.toLowerCase()) ||
+                          hymn.number.toString().contains(_searchQuery!.toLowerCase()) ||
+                          hymn.signature.toLowerCase().contains(_searchQuery!.toLowerCase())).toList();
+                    }
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              signature,
+                              style: TextStyle(
+                                fontSize: 18, 
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).textTheme.bodyLarge?.color, 
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 8),
+
+                            for (var hymn in hymnsInSignature)
+                              _buildHymnListTile(hymn),
+                          ],
                         ),
                       ),
-                      title: Text(
-                        'Hymn ${hymn.number}: ${hymn.title}',
-                        style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                      onTap: () => navigateToHymnDetail(context, hymn),
-                    ),
-                  );
+                    );
+
+                  } else {
+                    final hymn = filteredHymns[index];
+                    return _buildHymnListTile(hymn); 
+                  }
                 },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHymnListTile(Hymn hymn) {
+    return Card(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: ListTile(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            width: 45,
+            height: 40,
+            child: Semantics(
+              label: 'Hymn icon',
+              child: Image.asset(
+                'lib/assets/icons/hymn.png',
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          'Hymn ${hymn.number}: ${hymn.title}',
+          style: TextStyle(
+            fontSize: 16.5,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).brightness == Brightness.light
+              ? Colors.black
+              : Theme.of(context).textTheme.bodyLarge?.color,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0), 
+        onTap: () => navigateToHymnDetail(context, hymn),
       ),
     );
   }
