@@ -1,5 +1,18 @@
 [
     { 
+        "title": "Public Stable Version Released!",
+        "version": "2.2.0-stable",
+        "date": "16-05-2024",
+        "changes": [ 
+            "Included All Hymns and Keerthane.",
+            "Built-In Favorites Button.",
+            "Filter Button Added with options to Order Hymns by Number, Alphabetical Order and Signatures.",
+            "Included Button to Report Wrong Lyrics.",
+            "Fixed UI Overflow Issues, enhancing smaller phones user experience",
+            "Improve Search Bar Operations. ( Now you can search using Signatures Too!! )",
+            "For more info on changes, visit https://github.com/Reynold29/CSI-Hymns-and-Lyrics/commits/main/"
+        ]
+    },{
         "title": "Third and Final BETA Released!",
         "version": "3.0.0-beta",
         "date": "11-04-2024",
