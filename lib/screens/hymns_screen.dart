@@ -21,12 +21,15 @@ class _HymnsScreenState extends State<HymnsScreen> {
   String? _searchQuery;
   final FocusNode _searchFocusNode = FocusNode();
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     loadHymns().then((data) => setState(() {
           hymns = data;
           _sortHymns();
+          _scrollController.addListener(_scrollListener);
         }));
   }
 
@@ -46,20 +49,13 @@ class _HymnsScreenState extends State<HymnsScreen> {
     });
   }
 
-  void _groupHymnsBySignature() {
-    groupedHymns.clear();
-    for (var hymn in hymns) {
-      if (!groupedHymns.containsKey(hymn.signature)) {
-        groupedHymns[hymn.signature] = [];
-      }
-      groupedHymns[hymn.signature]!.add(hymn);
-    }
-  }
-
   void _filterHymns() {
     setState(() {
       if (_searchQuery == null || _searchQuery!.isEmpty) {
-        filteredHymns = hymns;
+        filteredHymns = List.from(hymns);
+        if (_selectedOrder == 'time_signature') {
+          _groupHymnsBySignature();
+        }
       } else {
         final query = _searchQuery!.toLowerCase().trim(); 
         if (_selectedOrder == 'time_signature') {
@@ -75,16 +71,50 @@ class _HymnsScreenState extends State<HymnsScreen> {
               return hymnsInSignature.isNotEmpty;
             })
           );
+          filteredHymns = groupedHymns.values.expand((x) => x).toList();
         } else {
           filteredHymns = hymns.where((hymn) {
             final hymnSignature = hymn.signature.toLowerCase();
             return hymn.title.toLowerCase().contains(query) ||
-                  hymn.number.toString().contains(query) ||
-                  hymnSignature == query; 
+                   hymn.number.toString().contains(query) ||
+                   hymnSignature == query; 
           }).toList();
         }
       }
     });
+  }
+
+  void _groupHymnsBySignature() {
+    groupedHymns.clear();
+    for (var hymn in hymns) {
+      if (!groupedHymns.containsKey(hymn.signature)) {
+        groupedHymns[hymn.signature] = [];
+      }
+      groupedHymns[hymn.signature]!.add(hymn);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  bool _showScrollToTopButton = false;
+
+  void _scrollListener() {
+    setState(() {
+      _showScrollToTopButton = _scrollController.offset >= 400;
+    });
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -115,7 +145,7 @@ class _HymnsScreenState extends State<HymnsScreen> {
                   onQueryCleared: () {
                     setState(() {
                       _searchQuery = null; 
-                      filteredHymns = hymns;
+                      _filterHymns();
                       _groupHymnsBySignature();
                       Future.delayed(const Duration(milliseconds: 100), () {
                         _searchFocusNode.unfocus();
@@ -143,7 +173,7 @@ class _HymnsScreenState extends State<HymnsScreen> {
                   return [
                     const PopupMenuItem(value: "number", child: Text("Order by Hymn No.")),
                     const PopupMenuItem(value: "title", child: Text("Order by Alphabetical")),
-                    const PopupMenuItem(value: "time_signature", child: Text("Order by Time Signature"))
+                    const PopupMenuItem(value: "time_signature", child: Text("Order by Tune Meter"))
                   ];
                 },
                 icon: const Icon(Icons.filter_list),
@@ -158,51 +188,69 @@ class _HymnsScreenState extends State<HymnsScreen> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: _selectedOrder == 'time_signature'
-                    ? groupedHymns.keys.length
-                    : filteredHymns.length,
-                itemBuilder: (context, index) {
-                  if (_selectedOrder == 'time_signature') {
-                    String signature = groupedHymns.keys.elementAt(index);
-                    List<Hymn> hymnsInSignature = groupedHymns[signature]!;
-                    if (_searchQuery != null && _searchQuery!.isNotEmpty) {
-                      hymnsInSignature = hymnsInSignature.where((hymn) =>
-                          hymn.title.toLowerCase().contains(_searchQuery!.toLowerCase()) ||
-                          hymn.number.toString().contains(_searchQuery!.toLowerCase()) ||
-                          hymn.signature.toLowerCase().contains(_searchQuery!.toLowerCase())).toList();
-                    }
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              signature,
-                              style: TextStyle(
-                                fontSize: 18, 
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).textTheme.bodyLarge?.color, 
-                              ),
+              child: Stack(
+                children: [
+                  ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _selectedOrder == 'time_signature'
+                        ? groupedHymns.keys.length
+                        : filteredHymns.length,
+                    itemBuilder: (context, index) {
+                      if (_selectedOrder == 'time_signature') {
+                        String signature = groupedHymns.keys.elementAt(index);
+                        List<Hymn> hymnsInSignature = groupedHymns[signature]!;
+                        if (_searchQuery != null && _searchQuery!.isNotEmpty) {
+                          hymnsInSignature = hymnsInSignature.where((hymn) =>
+                              hymn.title.toLowerCase().contains(_searchQuery!.toLowerCase()) ||
+                              hymn.number.toString().contains(_searchQuery!.toLowerCase()) ||
+                              hymn.signature.toLowerCase().contains(_searchQuery!.toLowerCase())).toList();
+                        }
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  signature,
+                                  style: TextStyle(
+                                    fontSize: 18, 
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).textTheme.bodyLarge?.color, 
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                  
+                                for (var hymn in hymnsInSignature)
+                                  _buildHymnListTile(hymn),
+                              ],
                             ),
-                            const SizedBox(height: 8),
-
-                            for (var hymn in hymnsInSignature)
-                              _buildHymnListTile(hymn),
-                          ],
-                        ),
+                          ),
+                        );
+                  
+                      } else {
+                        final hymn = filteredHymns[index];
+                        return _buildHymnListTile(hymn); 
+                      }
+                    },
+                  ),
+                  if (_showScrollToTopButton)
+                    Positioned(
+                      bottom: 20,
+                      right: 20,
+                      child: FloatingActionButton(
+                        mini: true,
+                        onPressed: _scrollToTop,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        elevation: 6.0,
+                        child: const Icon(Icons.arrow_upward),
                       ),
-                    );
-
-                  } else {
-                    final hymn = filteredHymns[index];
-                    return _buildHymnListTile(hymn); 
-                  }
-                },
+                    ),
+                ],
               ),
             ),
           ],

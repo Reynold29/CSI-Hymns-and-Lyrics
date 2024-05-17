@@ -17,6 +17,8 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   String? _searchQuery;
   final FocusNode _searchFocusNode = FocusNode();
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +26,7 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
       keerthane = data;
       keerthane.sort((a, b) => a.number.compareTo(b.number));
       filteredKeerthane = keerthane;
+      _scrollController.addListener(_scrollListener);
     }));
   }
 
@@ -37,6 +40,30 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
       }
       filteredKeerthane = List.from(keerthane);
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // ignore: unused_field
+  bool _showScrollToTopButton = false;
+
+  void _scrollListener() {
+    setState(() {
+      _showScrollToTopButton = _scrollController.offset >= 400;
+    });
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -99,36 +126,54 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
         child: Column(
           children: [
             Expanded( 
-              child: ListView.builder(
-                itemCount: _searchQuery != null ? filteredKeerthane.length : keerthane.length,
-                itemBuilder: (context, index) {
-                  final keerthaneItem = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 5.0),
-                    elevation: 2.0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                    child: ListTile(
-                      leading: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: SizedBox(
-                          width: 50,
-                          height: 40,
-                          child: Semantics(
-                            label: 'Keerthane icon', 
-                            child: Image.asset(
-                              'lib/assets/icons/keerthane.png', 
+              child: Stack(
+                children: [
+                  ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _searchQuery != null ? filteredKeerthane.length : keerthane.length,
+                    itemBuilder: (context, index) {
+                      final keerthaneItem = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 5.0),
+                        elevation: 2.0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: SizedBox(
+                              width: 50,
+                              height: 40,
+                              child: Semantics(
+                                label: 'Keerthane icon', 
+                                child: Image.asset(
+                                  'lib/assets/icons/keerthane.png', 
+                                ),
+                              ), 
                             ),
-                          ), 
+                          ),
+                          title: Text('Keerthane ${keerthaneItem.number}: ${keerthaneItem.title}',
+                            style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                          onTap: () => navigateToKeerthaneDetail(context, keerthaneItem), 
                         ),
+                      );
+                    },
+                  ),
+                  if (_showScrollToTopButton)
+                    Positioned(
+                      bottom: 20,
+                      right: 20,
+                      child: FloatingActionButton(
+                        mini: true,
+                        onPressed: _scrollToTop,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        elevation: 6.0,
+                        child: const Icon(Icons.arrow_upward),
                       ),
-                      title: Text('Keerthane ${keerthaneItem.number}: ${keerthaneItem.title}',
-                        style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                      onTap: () => navigateToKeerthaneDetail(context, keerthaneItem), 
                     ),
-                  );
-                },
+                ],
               ),
             ),
           ],
