@@ -1,8 +1,11 @@
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:hymns_latest/hymns_def.dart';
 import '../widgets/search_bar.dart' as custom;
 import 'package:showcaseview/showcaseview.dart';
 import 'package:hymns_latest/hymn_detail_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HymnsScreen extends StatefulWidget {
   const HymnsScreen({super.key});
@@ -13,13 +16,13 @@ class HymnsScreen extends StatefulWidget {
 
 class _HymnsScreenState extends State<HymnsScreen> {
   final GlobalKey _searchKey = GlobalKey();
-  final GlobalKey _filterKey = GlobalKey();
   List<Hymn> hymns = [];
   List<Hymn> filteredHymns = [];
   Map<String, List<Hymn>> groupedHymns = {};
   String? _selectedOrder = 'number';
   String? _searchQuery;
   final FocusNode _searchFocusNode = FocusNode();
+  bool _isLoading = true;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -31,6 +34,164 @@ class _HymnsScreenState extends State<HymnsScreen> {
           _sortHymns();
           _scrollController.addListener(_scrollListener);
         }));
+
+    checkAndUpdateLyricsOnOpen();
+  }
+
+  Future<void> checkAndUpdateLyricsOnOpen() async { // Auto Lyrics Update Check
+    final prefs = await SharedPreferences.getInstance();
+    final lastUpdateTimestamp = prefs.getInt('lastLyricsUpdate') ?? 0;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final updateInterval = const Duration(days: 3).inMilliseconds;
+
+    if (now - lastUpdateTimestamp >= updateInterval) {
+      try {
+        final response = await http.get(Uri.parse('https://raw.githubusercontent.com/Reynold29/csi-hymns-vault/main/hymns_data.json'));
+
+        if (response.statusCode == 200) {
+          final List<Hymn> updatedHymns = await loadHymnsFromNetwork(response.body);
+
+          setState(() {
+            hymns = updatedHymns;
+            _sortHymns();
+          });
+
+          await prefs.setInt('lastLyricsUpdate', now);
+
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Lyrics updated successfully!'),
+          ));
+        } else {
+          throw Exception('Failed to fetch data from GitHub');
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Failed to update lyrics. Please try again later.'),
+        ));
+      }
+    }
+  }
+
+  Future<void> checkAndUpdateLyrics() async { // Manual Lyrics Update Check
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Refresh Lyrics?'),
+          content: const Text('Do you want to check for updated lyrics?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('YES'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      _showUpdateDialog();
+    }
+  }
+
+  void _showUpdateDialog() {
+  setState(() {
+    _isLoading = true;
+  });
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setDialogState) {
+          return AlertDialog(
+            title: const Text('Updating Lyrics...'),
+            content: SizedBox(
+              height: 100,
+              width: 100,
+              child: Center(
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : Lottie.asset('lib/assets/icons/tick-animation.json'),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  fetchAndUpdateLyrics().then((_) {
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    
+    Navigator.of(context).pop();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Lyrics Updated!'),
+          content: SizedBox(
+            height: 100,
+            width: 100,
+            child: Lottie.asset('lib/assets/icons/tick-animation.json'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }).catchError((error) {
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    
+    Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Update Failed'),
+            content: const Text('Failed to update lyrics. Please try again later.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+
+  Future<void> fetchAndUpdateLyrics() async {
+    try {
+      final hymnsResponse = await http.get(Uri.parse('https://raw.githubusercontent.com/Reynold29/csi-hymns-vault/main/hymns_data.json'));
+      if (hymnsResponse.statusCode == 200) {
+        hymns = await loadHymnsFromNetwork(hymnsResponse.body);
+      } else {
+        throw Exception('Failed to fetch hymns data');
+      }
+    } catch (e) {
+      print('Error updating lyrics: $e');
+      rethrow;
+    }
   }
 
   void _sortHymns() {
@@ -101,6 +262,25 @@ class _HymnsScreenState extends State<HymnsScreen> {
     super.dispose();
   }
 
+  void _showFilterMenu(BuildContext context) {
+    showMenu<String>(
+      context: context,
+      position: const RelativeRect.fromLTRB(100, 100, 0, 0),
+      items: [
+        const PopupMenuItem<String>(value: "number", child: Text("Order by Hymn Number")),
+        const PopupMenuItem<String>(value: "title", child: Text("Order in Alphabetical Order")),
+        const PopupMenuItem<String>(value: "time_signature", child: Text("Order by Tune Meter")),
+      ],
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _selectedOrder = value;
+          _sortHymns();
+        });
+      }
+    });
+  }
+
   bool _showScrollToTopButton = false;
 
   void _scrollListener() {
@@ -121,67 +301,87 @@ class _HymnsScreenState extends State<HymnsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Column(
           children: [
-            Expanded(
-              child: Showcase(
-                key: _searchKey,
-                title: 'Search Hymns',
-                description: 'Find hymns by Title, Number, or Time Signature',
-                targetShapeBorder: const CircleBorder(),
-                overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
-                titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-                child: custom.SearchBar(
-                  hintText: 'Search Hymns',
-                  hintStyle: const TextStyle(color: Colors.black),
-                  onChanged: (searchQuery) {
-                    setState(() {
-                      _searchQuery = searchQuery;
-                      _filterHymns();
-                    });
-                  }, 
-                  focusNode: _searchFocusNode,
-                  onQueryCleared: () {
-                    setState(() {
-                      _searchQuery = null; 
-                      _filterHymns();
-                      _groupHymnsBySignature();
-                      Future.delayed(const Duration(milliseconds: 100), () {
-                        _searchFocusNode.unfocus();
-                      });
-                    });
-                  },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Showcase(
+                    key: _searchKey,
+                    title: 'Search Hymns',
+                    description: 'Find hymns by Title, Number, or Time Signature',
+                    targetShapeBorder: const CircleBorder(),
+                    overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
+                    titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
+                    child: custom.SearchBar(
+                      hintText: 'Search Hymns',
+                      hintStyle: const TextStyle(color: Colors.black),
+                      onChanged: (searchQuery) {
+                        setState(() {
+                          _searchQuery = searchQuery;
+                          _filterHymns();
+                        });
+                      },
+                      focusNode: _searchFocusNode,
+                      onQueryCleared: () {
+                        setState(() {
+                          _searchQuery = null;
+                          _filterHymns();
+                          _groupHymnsBySignature();
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            _searchFocusNode.unfocus();
+                          });
+                        });
+                      },
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-            Showcase(
-              key: _filterKey,
-              title: 'Filter Hymns',
-              description: 'Sort hymns by number, title, or time signature.',
-              targetShapeBorder: const CircleBorder(),
-              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
-              titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-              child: PopupMenuButton<String>(
-                onSelected: (selectedOrder) {
-                  setState(() {
-                    _selectedOrder = selectedOrder;
-                    _sortHymns();
-                  });
-                },
-                itemBuilder: (BuildContext context) {
-                  return [
-                    const PopupMenuItem(value: "number", child: Text("Order by Hymn No.")),
-                    const PopupMenuItem(value: "title", child: Text("Order by Alphabetical")),
-                    const PopupMenuItem(value: "time_signature", child: Text("Order by Tune Meter"))
-                  ];
-                },
-                icon: const Icon(Icons.filter_list),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    minimumSize: const Size(0, 40),
+                  ),
+                  onPressed: () {
+                    _showFilterMenu(context);
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(Icons.filter_list),
+                      SizedBox(width: 8),
+                      Text('Filter',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    minimumSize: const Size(0, 40),
+                  ),
+                  onPressed: checkAndUpdateLyrics,
+                  child: const Row(
+                    children: [
+                      Icon(Icons.refresh),
+                      SizedBox(width: 8),
+                      Text('Refresh Lyrics',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        toolbarHeight: 100,
+        toolbarHeight: 130,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -230,10 +430,9 @@ class _HymnsScreenState extends State<HymnsScreen> {
                             ),
                           ),
                         );
-                  
                       } else {
                         final hymn = filteredHymns[index];
-                        return _buildHymnListTile(hymn); 
+                        return _buildHymnListTile(hymn);
                       }
                     },
                   ),

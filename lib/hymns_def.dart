@@ -1,5 +1,5 @@
-import 'package:flutter/services.dart'; 
 import 'dart:convert';
+import 'package:flutter/services.dart'; 
 
 class Hymn {
   final int number;
@@ -36,7 +36,10 @@ class Hymn {
 Future<List<Hymn>> loadHymns() async {
   final String jsonData = await rootBundle.loadString('lib/assets/hymns_data.json');
   final data = jsonDecode(jsonData) as List<dynamic>;
-
   return data.map((item) => Hymn.fromJson(item)).toList();
 }
 
+Future<List<Hymn>> loadHymnsFromNetwork(String jsonData) async {
+  final data = jsonDecode(jsonData) as List<dynamic>;
+  return data.map((item) => Hymn.fromJson(item)).toList();
+}
