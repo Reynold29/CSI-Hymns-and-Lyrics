@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 class Hymn {
   final int number;
@@ -34,9 +35,17 @@ class Hymn {
 }
 
 Future<List<Hymn>> loadHymns() async {
-  final String jsonData = await rootBundle.loadString('lib/assets/hymns_data.json');
-  final data = jsonDecode(jsonData) as List<dynamic>;
-  return data.map((item) => Hymn.fromJson(item)).toList();
+  final prefs = await SharedPreferences.getInstance();
+  final jsonData = prefs.getString('hymnsData');
+
+  if (jsonData != null) {
+    final data = jsonDecode(jsonData) as List<dynamic>;
+    return data.map((item) => Hymn.fromJson(item)).toList();
+  } else {
+    final String jsonData = await rootBundle.loadString('lib/assets/hymns_data.json');
+    final data = jsonDecode(jsonData) as List<dynamic>;
+    return data.map((item) => Hymn.fromJson(item)).toList();
+  }
 }
 
 Future<List<Hymn>> loadHymnsFromNetwork(String jsonData) async {

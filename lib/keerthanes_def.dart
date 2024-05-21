@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Keerthane {
   final int number;
@@ -34,9 +35,17 @@ class Keerthane {
 }
 
 Future<List<Keerthane>> loadKeerthane() async {
-  final String jsonData = await rootBundle.loadString('lib/assets/keerthane_data.json');
-  final data = jsonDecode(jsonData) as List<dynamic>;
-  return data.map((item) => Keerthane.fromJson(item)).toList();
+  final prefs = await SharedPreferences.getInstance();
+  final jsonData = prefs.getString('keerthaneData');
+
+  if (jsonData != null) {
+    final data = jsonDecode(jsonData) as List<dynamic>;
+    return data.map((item) => Keerthane.fromJson(item)).toList();
+  } else {
+    final String jsonData = await rootBundle.loadString('lib/assets/keerthane_data.json');
+    final data = jsonDecode(jsonData) as List<dynamic>;
+    return data.map((item) => Keerthane.fromJson(item)).toList();
+  }
 }
 
 Future<List<Keerthane>> loadKeerthaneFromNetwork(String jsonData) async {

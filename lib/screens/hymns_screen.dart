@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -183,10 +184,20 @@ class _HymnsScreenState extends State<HymnsScreen> {
   Future<void> fetchAndUpdateLyrics() async {
     try {
       final hymnsResponse = await http.get(Uri.parse('https://raw.githubusercontent.com/Reynold29/csi-hymns-vault/main/hymns_data.json'));
+      
       if (hymnsResponse.statusCode == 200) {
-        hymns = await loadHymnsFromNetwork(hymnsResponse.body);
+        final updatedHymns = await loadHymnsFromNetwork(hymnsResponse.body);
+
+        // Store updated data in SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('hymnsData', jsonEncode(updatedHymns));
+
+        setState(() {
+          hymns = updatedHymns;
+          _sortHymns();
+        });
       } else {
-        throw Exception('Failed to fetch hymns data');
+        throw Exception('Failed to fetch data from GitHub');
       }
     } catch (e) {
       print('Error updating lyrics: $e');

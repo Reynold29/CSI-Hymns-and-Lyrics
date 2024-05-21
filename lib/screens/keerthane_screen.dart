@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -180,11 +181,20 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   Future<void> fetchAndUpdateLyrics() async {
     try {
       final keerthaneResponse = await http.get(Uri.parse('https://raw.githubusercontent.com/Reynold29/csi-hymns-vault/main/keerthane_data.json'));
+
       if (keerthaneResponse.statusCode == 200) {
-        keerthane = await loadKeerthaneFromNetwork(keerthaneResponse.body);
-        _sortKeerthane();
+        final updatedKeerthanas = await loadKeerthaneFromNetwork(keerthaneResponse.body);
+
+        // Store updated data in SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('keerthaneData', jsonEncode(updatedKeerthanas));
+
+        setState(() {
+          keerthane = updatedKeerthanas;
+          _sortKeerthane();
+        });
       } else {
-        throw Exception('Failed to fetch keerthane data');
+        throw Exception('Failed to fetch data from GitHub');
       }
     } catch (e) {
       print('Error updating lyrics: $e');
