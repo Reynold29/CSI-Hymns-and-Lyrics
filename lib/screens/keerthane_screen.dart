@@ -76,7 +76,18 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Refresh Lyrics?'),
-          content: const Text('Do you want to check for updated lyrics?'),
+          content: const Text.rich(
+            TextSpan(
+              text: 'Do you want to check for updated lyrics?\n\n',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: 'Pressing "YES" will ensure you have the latest and most accurate corrected lyrics every week.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, false),

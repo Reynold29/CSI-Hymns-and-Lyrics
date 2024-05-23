@@ -73,13 +73,24 @@ class _HymnsScreenState extends State<HymnsScreen> {
     }
   }
 
-  Future<void> checkAndUpdateLyrics() async { // Manual Lyrics Update Check
+  Future<void> checkAndUpdateLyrics() async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Refresh Lyrics?'),
-          content: const Text('Do you want to check for updated lyrics?'),
+          content: const Text.rich(
+            TextSpan(
+              text: 'Do you want to check for updated lyrics?\n\n',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: 'Pressing "YES" will ensure you have the latest and most accurate corrected lyrics every week.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, false),
