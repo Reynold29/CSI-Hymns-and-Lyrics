@@ -85,7 +85,7 @@ class _HymnsScreenState extends State<HymnsScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
               children: [
                 TextSpan(
-                  text: 'Pressing "YES" will ensure you have the latest and most accurate corrected lyrics every week.',
+                  text: 'Pressing "YES" every once a week or 3 days will ensure you have the latest, most accurate and corrected lyrics.',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
