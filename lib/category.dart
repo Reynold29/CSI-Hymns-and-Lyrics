@@ -22,7 +22,7 @@ class SidebarOptions {
           child: Icon(Icons.collections_bookmark),
         ),
         title: const Text(
-          "Jesus' Birth",
+          "Christmas",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -39,7 +39,7 @@ class SidebarOptions {
           child: Icon(Icons.collections_bookmark),
         ),
         title: const Text(
-          "Jesus' Passion and Death",
+          "Lent and Good Friday",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -56,7 +56,7 @@ class SidebarOptions {
           child: Icon(Icons.collections_bookmark),
         ),
         title: const Text(
-          "Jesus' Resurrection",
+          "Easter",
           style: TextStyle(color: Colors.white),
         ),
       ),

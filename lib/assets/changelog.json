@@ -1,5 +1,17 @@
 [
     { 
+        "title": "Second Public Stable Version Released!",
+        "version": "2.3.0-stable",
+        "date": "24-05-2024",
+        "changes": [ 
+            "NEW Refresh Lyrics Button \n\n-> The Lyrics can now be dynamically updated, by fetching the latest updated changes from GitHub Repo. \n-> Why this change? Cuz now, there's no need to update the app each time some lyrics are corrected.\n",
+            "NEW Time Metric Filter Option",
+            "Simplify Categories List Labels",
+            "Improve UI Layout",
+            "Added a Top Nav Icon to Navigate to the Top.",
+            "For more info on changes, visit https://github.com/Reynold29/CSI-Hymns-and-Lyrics/commits/main/"
+        ]
+    },{ 
         "title": "Public Stable Version Released!",
         "version": "2.2.0-stable",
         "date": "16-05-2024",

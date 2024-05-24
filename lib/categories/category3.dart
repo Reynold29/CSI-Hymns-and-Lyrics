@@ -28,7 +28,7 @@ class _Category3ScreenState extends State<Category3Screen> {
       length: 2, 
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Jesus' Resurrection"),
+          title: const Text("Easter"),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Hymns'), 
