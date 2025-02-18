@@ -1,11 +1,11 @@
 {
-    "name": "hymns_latest",
-    "short_name": "hymns_latest",
+    "name": "CSI Hymns Book",
+    "short_name": "Hymns and Lyrics",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A CSI Hymns and Lyrics Book Project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

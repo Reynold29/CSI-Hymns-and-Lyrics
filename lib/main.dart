@@ -10,14 +10,14 @@ import 'package:hymns_latest/widgets/gesture_control.dart';
 import 'package:hymns_latest/screens/favorites_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(ShowCaseWidget(
-  builder: Builder(
+void main() => runApp(
+  ShowCaseWidget(
     builder: (context) => ChangeNotifierProvider(
       create: (context) => ThemeState(),
       child: const MyApp(),
     ),
   ),
-));
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

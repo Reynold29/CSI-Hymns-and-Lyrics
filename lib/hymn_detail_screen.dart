@@ -1,6 +1,7 @@
 import 'hymns_def.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,11 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   bool _isFavorite = false;
   double _fontSize = 18.0;
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  final Duration _skipDuration = const Duration(seconds: 5);
+
   void _increaseFontSize() {
     setState(() {
       _fontSize = (_fontSize + 2).clamp(16.0, 40.0);
@@ -35,6 +41,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   void initState() {
     super.initState();
     _checkIsFavorite();
+    _initAudioPlayer(); 
   }
 
   Future<void> _checkIsFavorite() async {
@@ -52,12 +59,40 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   }
 
   bool? hasVibrator = await Vibration.hasVibrator();
-  if (hasVibrator != null && hasVibrator) {
-    Vibration.vibrate(duration: 100);
+    if (hasVibrator != null && hasVibrator) {
+      Vibration.vibrate(duration: 100);
+    }
+
+    await _checkIsFavorite();
   }
 
-  await _checkIsFavorite();
-}
+  Future<void> _initAudioPlayer() async {
+    String hymnNumber = widget.hymn.number.toString();
+    String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Hymn_$hymnNumber.ogg';
+
+    try {
+      await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+    } catch (e) {
+      print('Error loading audio: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void _toggleAudioPlayback() {
+    setState(() {
+      if (_isPlaying) {
+        _audioPlayer.pause();
+      } else {
+        _audioPlayer.play();
+      }
+      _isPlaying = !_isPlaying;
+    });
+  }
 
   void _showFeedbackDialog() {
     showDialog(
@@ -80,7 +115,7 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
               onPressed: () async {
                 final Uri emailLaunchUri = Uri(
                   scheme: 'mailto',
-                  path: 'reynold29clare@gmail.com',
+                  path: 'reyziecrafts@gmail.com',
                   query: 'subject=Hymn%20Lyrics%20Issue%20-%20Hymn%20${widget.hymn.number}&body=Requesting%20lyrics%20check!',
                 );
                 if (await canLaunchUrl(emailLaunchUri)) {
@@ -138,6 +173,66 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
           children: [
             Row(
               children: [
+                Text(
+                  'Hymn ${widget.hymn.number}',
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 15),
+                StatefulBuilder(
+                  builder: (context, setState) {
+                    return FavoriteButton(
+                      key: ValueKey(_isFavorite),
+                      isFavorite: _isFavorite,
+                      valueChanged: (isFavorite) {
+                        _toggleFavorite();
+                        setState(() {});
+                      },
+                      iconSize: 38,
+                    );
+                  },
+                ),
+                const Spacer(),
+                ChoiceChip(
+                  label: const Text('English'),
+                  selected: selectedLanguage == 'English',
+                  onSelected: (bool selected) {
+                    if (selected) {
+                      setState(() {
+                        selectedLanguage = 'English';
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(width: 6),
+                ChoiceChip(
+                  label: const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      'ಕನ್ನಡ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  selected: selectedLanguage == 'Kannada',
+                  onSelected: (bool selected) {
+                    if (selected) {
+                      setState(() {
+                        selectedLanguage = 'Kannada';
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+            if (widget.hymn.signature.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                widget.hymn.signature,
+                style: const TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ],
+            const Divider(),
+            Row(
+              children: [
                 InkWell(
                   onTap: _decreaseFontSize,
                   child: Container(
@@ -164,57 +259,37 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                   ),
                 ),
                 const Spacer(),
-                ChoiceChip(
-                  label: const Text('English'),
-                  selected: selectedLanguage == 'English',
-                  onSelected: (bool selected) {
-                    if (selected) {
-                      setState(() {
-                        selectedLanguage = 'English';
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(width: 6),
-                ChoiceChip(
-                  label: const Padding(
-                    padding: EdgeInsets.only(top: 4.0),
-                    child: Text('ಕನ್ನಡ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.replay_5_rounded),
+                      onPressed: () {
+                        Duration newPosition = _audioPlayer.position - _skipDuration;
+                        if (newPosition < Duration.zero) {
+                          newPosition = Duration.zero;
+                        }
+                        _audioPlayer.seek(newPosition);
+                      },
                     ),
-                  ),
-                  selected: selectedLanguage == 'Kannada',
-                  onSelected: (bool selected) {
-                    if (selected) {
-                      setState(() {
-                        selectedLanguage = 'Kannada';
-                      });
-                    }
-                  },
+                    IconButton(
+                      icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
+                      onPressed: _toggleAudioPlayback,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.forward_5_rounded),
+                      onPressed: () async {
+                        final currentPosition = _audioPlayer.position;
+                        final newPosition = currentPosition + _skipDuration;
+                        if (newPosition > (_audioPlayer.duration)!) {
+                          _audioPlayer.stop();
+                        } else {
+                          _audioPlayer.seek(newPosition);
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const Divider(),
-            Row(
-              children: [
-                Text(
-                  'Hymn ${widget.hymn.number}',
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 15),
-                StatefulBuilder(
-                  builder: (context, setState) {
-                  return FavoriteButton(
-                    key: ValueKey(_isFavorite),
-                    isFavorite: _isFavorite,
-                    valueChanged: (isFavorite) {
-                      _toggleFavorite();
-                      setState(() {});
-                    },
-                    iconSize: 38,
-                  );
-                }),
-                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: SizedBox(
@@ -228,10 +303,6 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
                   ),
                 ),
               ],
-            ),
-            Text(
-              widget.hymn.signature,
-              style: const TextStyle(fontStyle: FontStyle.italic),
             ),
             const SizedBox(height: 16),
             Center(

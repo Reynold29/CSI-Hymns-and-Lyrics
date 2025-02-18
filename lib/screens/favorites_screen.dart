@@ -6,7 +6,7 @@ import 'package:hymns_latest/keerthane_detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoritesScreen extends StatefulWidget {
-  const FavoritesScreen({Key? key});
+  const FavoritesScreen({super.key});
 
   @override
   _FavoritesScreenState createState() => _FavoritesScreenState();
