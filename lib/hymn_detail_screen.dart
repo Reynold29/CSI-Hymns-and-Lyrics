@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'hymns_def.dart';
+import 'audio_error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:just_audio/just_audio.dart';
@@ -78,9 +79,15 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
       await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
       print('Error loading audio source: $e');
+      showDialog(
+          context: context,
+          builder: (context) => AudioErrorDialog(
+              itemNumber: widget.hymn.number,
+              itemType: 'Hymn',
+          ),
+      );
     }
   }
-
 
   Future<void> _checkIsFavorite() async {
     final favoriteIds = await _retrieveFavorites();
@@ -189,23 +196,41 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
   }
 
   void _toggleMiniPlayerVisibility() async {
+    if (!_isMiniPlayerVisible) {
+        if (_audioPlayer.audioSource == null) {
+            String hymnNumber = widget.hymn.number.toString();
+            String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Hymn_$hymnNumber.ogg';
+
+            try {
+                await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+            } catch (e) {
+                print('Error loading audio source: $e');
+                showDialog(
+                    context: context,
+                    builder: (context) => AudioErrorDialog(
+                        itemNumber: widget.hymn.number,
+                        itemType: 'Hymn',
+                    ),
+                );
+                return;
+            }
+        }
+    } else {
+        await _audioPlayer.pause();
+    }
     setState(() {
-      _isMiniPlayerVisible = !_isMiniPlayerVisible;
+        _isMiniPlayerVisible = !_isMiniPlayerVisible;
     });
 
-    if (!_isMiniPlayerVisible && _isPlaying) {
-      await _audioPlayer.pause();
-    }
-
     if (_isMiniPlayerVisible) {
-      _playbackSpeed = 1.0;
-      try {
-        if (_audioPlayer.audioSource != null) {
-          await _audioPlayer.setSpeed(_playbackSpeed);
+        _playbackSpeed = 1.0;
+        try {
+            if (_audioPlayer.audioSource != null) {
+                await _audioPlayer.setSpeed(_playbackSpeed);
+            }
+        } catch (e) {
+            print("Error resetting playback speed: $e");
         }
-      } catch (e) {
-        print("Error resetting playback speed: $e");
-      }
     }
   }
 

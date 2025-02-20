@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'audio_error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:just_audio/just_audio.dart';
@@ -78,9 +79,15 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
       await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
       print('Error loading audio source: $e');
+      showDialog(
+          context: context,
+          builder: (context) => AudioErrorDialog(
+              itemNumber: widget.keerthane.number,
+              itemType: 'Keerthane',
+          ),
+      );
     }
   }
-
 
   Future<void> _checkIsFavorite() async {
     final favoriteIds = await _retrieveFavorites();
@@ -189,23 +196,41 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   }
 
   void _toggleMiniPlayerVisibility() async {
-    setState(() {
-      _isMiniPlayerVisible = !_isMiniPlayerVisible;
-    });
+    if (!_isMiniPlayerVisible) {
+        if (_audioPlayer.audioSource == null) {
+            String keerthaneNumber = widget.keerthane.number.toString();
+            String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Keerthane_$keerthaneNumber.ogg';
 
-    if (!_isMiniPlayerVisible && _isPlaying) {
-      await _audioPlayer.pause();
-    }
-
-    if (_isMiniPlayerVisible) {
-      _playbackSpeed = 1.0;
-      try {
-        if (_audioPlayer.audioSource != null) {
-          await _audioPlayer.setSpeed(_playbackSpeed);
+            try {
+                await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+            } catch (e) {
+                print('Error loading audio source: $e');
+                showDialog(
+                    context: context,
+                    builder: (context) => AudioErrorDialog(
+                        itemNumber: widget.keerthane.number,
+                        itemType: 'Keerthane',
+                    ),
+                );
+                return;
+            }
         }
-      } catch (e) {
-        print("Error resetting playback speed: $e");
-      }
+    } else {
+        await _audioPlayer.pause();
+    }
+    setState(() {
+        _isMiniPlayerVisible = !_isMiniPlayerVisible;
+    });
+    
+    if (_isMiniPlayerVisible) {
+        _playbackSpeed = 1.0;
+        try {
+            if (_audioPlayer.audioSource != null) {
+                await _audioPlayer.setSpeed(_playbackSpeed);
+            }
+        } catch (e) {
+            print("Error resetting playback speed: $e");
+        }
     }
   }
 
