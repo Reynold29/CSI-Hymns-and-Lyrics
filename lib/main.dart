@@ -1,9 +1,11 @@
 import 'theme_state.dart';
 import 'widgets/sidebar.dart';
+import 'screens/categories.dart';
 import 'screens/hymns_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:hymns_latest/widgets/gesture_control.dart';
@@ -110,10 +112,15 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   static final List<Widget> _screens = [
     const HymnsScreen(),
     const KeerthaneScreen(),
+    const Categories(),
     const FavoritesScreen(),
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     //---print('Tapped index: $index');---//
     setState(() {
       _selectedIndex = index;
@@ -167,13 +174,17 @@ Widget build(BuildContext context) {
       ),
     ),
       drawer: Sidebar(animationController: _animationController),
-      body: GestureControl( 
-        child: PageView( 
+      body: GestureControl(
+        child: PageView(
           controller: _pageController,
-          onPageChanged: (index) {
+          onPageChanged: (int index) async {
             setState(() => _selectedIndex = index);
+            bool? hasVibrator = await Vibration.hasVibrator();
+              if (hasVibrator) {
+                Vibration.vibrate(duration: 30);
+              }
           },
-          children: _screens, 
+          children: _screens,
         ),
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
@@ -192,7 +203,7 @@ Widget build(BuildContext context) {
               label: 'Hymns',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.music_note_outlined),
+                child: const Icon(Icons.music_note_rounded),
               ),
             ),
             NavigationDestination(
@@ -200,17 +211,25 @@ Widget build(BuildContext context) {
               label: 'Keerthane',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.library_music_outlined),
+                child: const Icon(Icons.library_music_rounded),
               ),
             ),
             NavigationDestination(
-              icon: const Icon(Icons.favorite_border_outlined),
+              icon: const Icon(Icons.category_outlined),
+              label: 'Categories',
+              selectedIcon: Container( 
+                margin: const EdgeInsets.only(bottom: 6.0),
+                child: const Icon(Icons.category_rounded),
+              ),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.star_border),
               label: 'Favorites',
               selectedIcon: Container( 
                 margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.favorite_border_outlined),
+                child: const Icon(Icons.star_border_purple500_rounded),
               ),
-            ), 
+            ),
           ],
           selectedIndex: _selectedIndex,
           onDestinationSelected: _onItemTapped,

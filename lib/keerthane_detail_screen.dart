@@ -35,13 +35,21 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   final _debugButtonHeroTag = const Symbol('debugButtonHeroTag');
   late StreamSubscription<PlayerState> _playerStateSubscription;
 
-  void _increaseFontSize() {
+  void _increaseFontSize() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     setState(() {
       _fontSize = (_fontSize + 2).clamp(16.0, 40.0);
     });
   }
 
-  void _decreaseFontSize() {
+  void _decreaseFontSize() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     setState(() {
       _fontSize = (_fontSize - 2).clamp(16.0, 40.0);
     });
@@ -79,13 +87,15 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
       await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
       print('Error loading audio source: $e');
-      showDialog(
+      if (mounted) {
+        showDialog(
           context: context,
           builder: (context) => AudioErrorDialog(
-              itemNumber: widget.keerthane.number,
-              itemType: 'Keerthane',
+            itemNumber: widget.keerthane.number,
+            itemType: 'Keerthane',
           ),
-      );
+        );
+      }
     }
   }
 
@@ -104,7 +114,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     }
 
     bool? hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator != null && hasVibrator) {
+    if (hasVibrator) {
       Vibration.vibrate(duration: 100);
     }
 
@@ -118,7 +128,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     super.dispose();
   }
 
-  void _toggleAudioPlayback() {
+  void _toggleAudioPlayback() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     setState(() {
       if (_isPlaying) {
         _audioPlayer.pause();
@@ -129,7 +143,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     });
   }
 
-  void _showFeedbackDialog() {
+  void _showFeedbackDialog() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     showDialog(
       context: context,
       builder: (context) {
@@ -196,6 +214,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   }
 
   void _toggleMiniPlayerVisibility() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     if (!_isMiniPlayerVisible) {
         if (_audioPlayer.audioSource == null) {
             String keerthaneNumber = widget.keerthane.number.toString();
@@ -221,7 +243,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     setState(() {
         _isMiniPlayerVisible = !_isMiniPlayerVisible;
     });
-    
+
     if (_isMiniPlayerVisible) {
         _playbackSpeed = 1.0;
         try {
@@ -251,7 +273,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     }
   }
 
-  void _toggleLoop() {
+  void _toggleLoop() async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     setState(() {
         _isLooping = !_isLooping;
     });
@@ -259,6 +285,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   }
 
   void _setPlaybackSpeed(double speed) async {
+    bool? hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator) {
+      Vibration.vibrate(duration: 30);
+    }
     print("setPlaybackSpeed called with speed: $speed (Simplified Navigation)");
     setState(() {
         _playbackSpeed = speed;
@@ -315,7 +345,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                       ChoiceChip(
                         label: const Text('English'),
                         selected: selectedLanguage == 'English',
-                        onSelected: (bool selected) {
+                        onSelected: (bool selected) async {
+                            bool? hasVibrator = await Vibration.hasVibrator();
+                            if (hasVibrator) {
+                              Vibration.vibrate(duration: 30);
+                            }
                           if (selected) {
                             setState(() {
                               selectedLanguage = 'English';
@@ -333,7 +367,11 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                           ),
                         ),
                         selected: selectedLanguage == 'Kannada',
-                        onSelected: (bool selected) {
+                        onSelected: (bool selected) async {
+                            bool? hasVibrator = await Vibration.hasVibrator();
+                            if (hasVibrator) {
+                              Vibration.vibrate(duration: 30);
+                            }
                           if (selected) {
                             setState(() {
                               selectedLanguage = 'Kannada';
