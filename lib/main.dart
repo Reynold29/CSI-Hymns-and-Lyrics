@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'theme_state.dart';
 import 'widgets/sidebar.dart';
 import 'screens/categories.dart';
@@ -8,18 +9,25 @@ import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:hymns_latest/widgets/gesture_control.dart';
 import 'package:hymns_latest/screens/favorites_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(
-  ShowCaseWidget(
-    builder: (context) => ChangeNotifierProvider(
-      create: (context) => ThemeState(),
-      child: const MyApp(),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(
+    ShowCaseWidget(
+      builder: (context) => ChangeNotifierProvider(
+        create: (context) => ThemeState(),
+        child: const MyApp(),
+      ),
     ),
-  ),
-);
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -60,11 +68,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300),
-    ); 
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300),);
     _pageController = PageController();
     _getThemeFromPreferences();
     checkForUpdate();
+    _initOneSignal();
   }
 
   Future<void> checkForUpdate() async {
@@ -81,13 +89,34 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
   void update() async {
     await InAppUpdate.startFlexibleUpdate();
-    InAppUpdate.completeFlexibleUpdate().then((_) {}).catchError((e) {
-    });
+    InAppUpdate.completeFlexibleUpdate().then((_) {}).catchError((e) {});
   }
 
   void _incrementCounter() {
     setState(() {
-    _counter++;
+      _counter++;
+    });
+  }
+
+  Future<void> _initOneSignal() async {
+    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+    OneSignal.initialize("29f2a6ba-3f56-4ffe-8075-3b70d7440b13");
+
+    // -- iOS settings --
+    OneSignal.Notifications.requestPermission(true);
+
+    // -- Android settings --
+    OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+      print("FOREGROUND WILL DISPLAY LISTENER: Notification Received");
+    });
+
+    OneSignal.Notifications.addClickListener((event) {
+      print('NOTIFICATION CLICK LISTENER: ${jsonEncode(event.notification.jsonRepresentation())}');
+    });
+
+    // iOS-only event listener for notification permissions
+    OneSignal.Notifications.addPermissionObserver((state) {
+      print("Notification permission status: ${state.toString()}");
     });
   }
 
@@ -100,11 +129,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
   void _toggleDrawer() {
     setState(() {
-      _isDrawerOpen = !_isDrawerOpen; 
+      _isDrawerOpen = !_isDrawerOpen;
       if (_isDrawerOpen) {
-        _animationController.forward(); 
+        _animationController.forward();
       } else {
-        _animationController.reverse(); 
+        _animationController.reverse();
       }
     });
   }
@@ -137,42 +166,41 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     });
   }
 
-  Future<void> _checkFirstRunAndShowCase() async { 
+  Future<void> _checkFirstRunAndShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = (prefs.getBool('isFirstRun') ?? true);
 
     if (isFirstRun) {
-      Future.delayed(const Duration(seconds: 1), () => 
-        ShowCaseWidget.of(context).startShowCase([ _menuButtonKey ])
-      );
+      Future.delayed(const Duration(seconds: 1), () =>
+          ShowCaseWidget.of(context).startShowCase([_menuButtonKey]));
       prefs.setBool('isFirstRun', false);
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('CSI Kannada Hymns Book',
-      style: TextStyle(fontFamily: 'plusJakartaSans', fontWeight: FontWeight.bold),
-      ), 
-      leading: Builder(
-        builder: (context) {
-          return Showcase(
-            key: _menuButtonKey,
-            title: 'Sidebar',
-            description: 'Tap here to open the menu for categories and settings.',
-            targetShapeBorder: const CircleBorder(),
-            overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),  
-            titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
-            child: IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
-          );
-        },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('CSI Kannada Hymns Book',
+          style: TextStyle(fontFamily: 'plusJakartaSans', fontWeight: FontWeight.bold),
+        ),
+        leading: Builder(
+          builder: (context) {
+            return Showcase(
+              key: _menuButtonKey,
+              title: 'Sidebar',
+              description: 'Tap here to open the menu for categories and settings.',
+              targetShapeBorder: const CircleBorder(),
+              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
+              titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
+              child: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            );
+          },
+        ),
       ),
-    ),
       drawer: Sidebar(animationController: _animationController),
       body: GestureControl(
         child: PageView(
@@ -180,28 +208,28 @@ Widget build(BuildContext context) {
           onPageChanged: (int index) async {
             setState(() => _selectedIndex = index);
             bool? hasVibrator = await Vibration.hasVibrator();
-              if (hasVibrator) {
-                Vibration.vibrate(duration: 30);
-              }
+            if (hasVibrator) {
+              Vibration.vibrate(duration: 30);
+            }
           },
           children: _screens,
         ),
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
-          _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut); 
-        }, 
+          _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        },
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor: _themeMode == ThemeMode.dark ? Colors.white : const Color.fromARGB(107, 178, 178, 178), 
+          indicatorColor: _themeMode == ThemeMode.dark ? Colors.white : const Color.fromARGB(107, 178, 178, 178),
           labelTextStyle: WidgetStateProperty.all(const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
         ),
         child: NavigationBar(
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.music_note_outlined), 
+              icon: const Icon(Icons.music_note_outlined),
               label: 'Hymns',
-              selectedIcon: Container( 
+              selectedIcon: Container(
                 margin: const EdgeInsets.only(bottom: 6.0),
                 child: const Icon(Icons.music_note_rounded),
               ),
@@ -209,7 +237,7 @@ Widget build(BuildContext context) {
             NavigationDestination(
               icon: const Icon(Icons.library_music_outlined),
               label: 'Keerthane',
-              selectedIcon: Container( 
+              selectedIcon: Container(
                 margin: const EdgeInsets.only(bottom: 6.0),
                 child: const Icon(Icons.library_music_rounded),
               ),
@@ -217,7 +245,7 @@ Widget build(BuildContext context) {
             NavigationDestination(
               icon: const Icon(Icons.category_outlined),
               label: 'Categories',
-              selectedIcon: Container( 
+              selectedIcon: Container(
                 margin: const EdgeInsets.only(bottom: 6.0),
                 child: const Icon(Icons.category_rounded),
               ),
@@ -225,7 +253,7 @@ Widget build(BuildContext context) {
             NavigationDestination(
               icon: const Icon(Icons.star_border),
               label: 'Favorites',
-              selectedIcon: Container( 
+              selectedIcon: Container(
                 margin: const EdgeInsets.only(bottom: 6.0),
                 child: const Icon(Icons.star_border_purple500_rounded),
               ),
@@ -233,7 +261,7 @@ Widget build(BuildContext context) {
           ],
           selectedIndex: _selectedIndex,
           onDestinationSelected: _onItemTapped,
-        )
+        ),
       ),
     );
   }

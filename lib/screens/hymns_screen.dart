@@ -63,7 +63,7 @@ class _HymnsScreenState extends State<HymnsScreen> {
             content: Text('Lyrics updated successfully!'),
           ));
         } else {
-          throw Exception('Failed to fetch data from GitHub');
+          throw Exception('Failed to fetch data from cloud');
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -85,7 +85,7 @@ class _HymnsScreenState extends State<HymnsScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
               children: [
                 TextSpan(
-                  text: 'Pressing "YES" every once a week or 3 days will ensure you have the latest, most accurate and corrected lyrics.',
+                  text: 'Pressing "YES" pulls the updated and corrected lyrics!',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
