@@ -23,22 +23,27 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   bool _isLoading = true;
 
   final ScrollController _scrollController = ScrollController();
+  bool _showScrollToTopButton = false;
 
   @override
   void initState() {
     super.initState();
-    loadKeerthane().then((data) => setState(() {
-      keerthane = data;
-      keerthane.sort((a, b) => a.number.compareTo(b.number));
-      filteredKeerthane = keerthane;
-      _scrollController.addListener(_scrollListener);
-    }));
+    loadKeerthane().then((data) {
+      if (mounted) {
+        setState(() {
+          keerthane = data;
+          _sortKeerthane();
+          _isLoading = false;
+        });
+      }
+    });
+    _scrollController.addListener(_scrollListener);
     checkAndUpdateLyricsOnOpen();
   }
 
   Future<void> checkAndUpdateLyricsOnOpen() async {
     final prefs = await SharedPreferences.getInstance();
-    final lastUpdateTimestamp = prefs.getInt('lastLyricsUpdate') ?? 0;
+    final lastUpdateTimestamp = prefs.getInt('lastLyricsUpdateKeerthane') ?? 0;
     final now = DateTime.now().millisecondsSinceEpoch;
     final updateInterval = const Duration(days: 3).inMilliseconds;
 
@@ -48,24 +53,27 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
 
         if (response.statusCode == 200) {
           final List<Keerthane> updatedKeerthane = await loadKeerthaneFromNetwork(response.body);
-
-          setState(() {
-            keerthane = updatedKeerthane;
-            _sortKeerthane();
-          });
-
-          await prefs.setInt('lastLyricsUpdate', now);
-
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Lyrics updated successfully!'),
-          ));
+          if (mounted) {
+            setState(() {
+              keerthane = updatedKeerthane;
+              _sortKeerthane();
+            });
+            await prefs.setInt('lastLyricsUpdateKeerthane', now);
+            if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Keerthane lyrics updated successfully!'),
+                ));
+            }
+          }
         } else {
-          throw Exception('Failed to fetch data from cloud');
+          throw Exception('Failed to fetch Keerthane data from cloud');
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Failed to update lyrics. Please try again later.'),
-        ));
+        if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Failed to update Keerthane lyrics. Please try again later.'),
+            ));
+        }
       }
     }
   }
@@ -75,19 +83,9 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Refresh Lyrics?'),
-          content: const Text.rich(
-            TextSpan(
-              text: 'Do you want to check for updated lyrics?\n\n',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                  text: 'Pressing "YES" pulls the updated and corrected lyrics!',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
+          title: const Text('Refresh Keerthane Lyrics?'),
+          content: const Text('Do you want to check for updated Keerthane lyrics?'),
+          actionsAlignment: MainAxisAlignment.end,
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -108,84 +106,72 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   }
 
   void _showUpdateDialog() {
-    setState(() {
-      _isLoading = true;
-    });
+    if (mounted) setState(() => _isLoading = true);
 
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: const Text('Updating Lyrics...'),
-              content: SizedBox(
-                height: 100,
-                width: 100,
-                child: Center(
-                  child: _isLoading
-                      ? const CircularProgressIndicator()
-                      : Lottie.asset('lib/assets/icons/tick-animation.json'),
-                ),
-              ),
-            );
-          },
+        return AlertDialog(
+          title: const Text('Updating Keerthane Lyrics...'),
+          content: SizedBox(
+            height: 100,
+            width: 100,
+            child: Center(
+              child: _isLoading
+                  ? const CircularProgressIndicator()
+                  : Lottie.asset('lib/assets/icons/tick-animation.json', width: 80, height: 80),
+            ),
+          ),
         );
       },
     );
 
     fetchAndUpdateLyrics().then((_) {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Keerthane Lyrics Updated!'),
+              content: SizedBox(
+                  height: 100, width: 100,
+                  child: Lottie.asset('lib/assets/icons/tick-animation.json', width: 80, height: 80)),
+              actionsAlignment: MainAxisAlignment.end,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
-
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Lyrics Updated!'),
-            content: SizedBox(
-              height: 100,
-              width: 100,
-              child: Lottie.asset('lib/assets/icons/tick-animation.json'),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
     }).catchError((error) {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Update Failed'),
+              content: const Text('Failed to update Keerthane lyrics. Please try again later.'),
+              actionsAlignment: MainAxisAlignment.end,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
-
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Update Failed'),
-            content: const Text('Failed to update lyrics. Please try again later.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
     });
   }
 
@@ -195,44 +181,72 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
 
       if (keerthaneResponse.statusCode == 200) {
         final updatedKeerthanas = await loadKeerthaneFromNetwork(keerthaneResponse.body);
-
-        // Store updated data in SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('keerthaneData', jsonEncode(updatedKeerthanas));
-
-        setState(() {
-          keerthane = updatedKeerthanas;
-          _sortKeerthane();
-        });
+        if (mounted) {
+          setState(() {
+            keerthane = updatedKeerthanas;
+            _sortKeerthane();
+          });
+        }
       } else {
-        throw Exception('Failed to fetch data from GitHub');
+        throw Exception('Failed to fetch Keerthane data from GitHub');
       }
     } catch (e) {
-      print('Error updating lyrics: $e');
+      print('Error updating Keerthane lyrics: $e');
       rethrow;
     }
   }
 
   void _sortKeerthane() {
+    if (!mounted) return;
     setState(() {
-      _searchQuery = null;
       if (_selectedOrder == 'number') {
         keerthane.sort((a, b) => a.number.compareTo(b.number));
       } else if (_selectedOrder == 'title') {
         keerthane.sort((a, b) => a.title.compareTo(b.title));
       }
-      filteredKeerthane = List.from(keerthane);
+      _filterKeerthane();
+    });
+  }
+
+  void _filterKeerthane() {
+    if (!mounted) return;
+    setState(() {
+       if (_searchQuery == null || _searchQuery!.isEmpty) {
+        filteredKeerthane = List.from(keerthane);
+      } else {
+        final query = _searchQuery!.toLowerCase().trim();
+        filteredKeerthane = keerthane.where((k) =>
+          k.title.toLowerCase().contains(query) ||
+          k.number.toString().contains(query)
+        ).toList();
+      }
     });
   }
 
   void _showFilterMenu(BuildContext context) {
+    final RenderBox? overlay = Overlay.of(context).context.findRenderObject() as RenderBox?;
+    final RenderBox? button = context.findRenderObject() as RenderBox?;
+    if (button == null || overlay == null) return;
+
+    final position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(Offset.zero, ancestor: overlay),
+        button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+
     showMenu<String>(
       context: context,
-      position: const RelativeRect.fromLTRB(100, 100, 0, 0),
+      position: position.shift(const Offset(0, 8)),
       items: [
-        const PopupMenuItem<String>(value: "number", child: Text("Order by Keerthane Number")),
-        const PopupMenuItem<String>(value: "title", child: Text("Order in Alphabetical Order")),
+        const PopupMenuItem<String>(value: "number", child: Text("Order by Number")),
+        const PopupMenuItem<String>(value: "title", child: Text("Order Alphabetically")),
       ],
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ).then((value) {
       if (value != null) {
         setState(() {
@@ -247,15 +261,16 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
   void dispose() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
-  bool _showScrollToTopButton = false;
-
   void _scrollListener() {
-    setState(() {
-      _showScrollToTopButton = _scrollController.offset >= 400;
-    });
+    if (mounted) {
+      setState(() {
+        _showScrollToTopButton = _scrollController.offset >= 400;
+      });
+    }
   }
 
   void _scrollToTop() {
@@ -268,140 +283,93 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: custom.SearchBar(
-                    hintText: 'Search Keerthane',
-                    hintStyle: const TextStyle(color: Colors.black),
-                    onChanged: (searchQuery) {
-                      setState(() {
-                        _searchQuery = searchQuery;
-                        if (searchQuery.isEmpty) {
-                          filteredKeerthane = List.from(keerthane);
-                        } else {
-                          filteredKeerthane = keerthane.where((keerthane) =>
-                            keerthane.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
-                            keerthane.number.toString().contains(searchQuery.toLowerCase())
-                          ).toList();
-                        }
-                      });
-                    },
-                    focusNode: _searchFocusNode,
-                    onQueryCleared: () {
-                      setState(() {
-                        _searchQuery = null;
-                        filteredKeerthane = List.from(keerthane);
-                        Future.delayed(const Duration(milliseconds: 100), () {
-                          _searchFocusNode.unfocus();
-                        });
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    minimumSize: const Size(0, 40),
-                  ),
-                  onPressed: () {
-                    _showFilterMenu(context);
-                  },
-                  child: const Row(
-                    children: [
-                      Icon(Icons.filter_list),
-                      SizedBox(width: 8),
-                      Text('Filter',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    minimumSize: const Size(0, 40),
-                  ),
-                  onPressed: checkAndUpdateLyrics,
-                  child: const Row(
-                    children: [
-                      Icon(Icons.refresh),
-                      SizedBox(width: 8),
-                      Text(
-                        'Refresh Lyrics',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+        title: custom.SearchBar(
+          hintText: 'Search Keerthane (Number, Title)',
+          onChanged: (searchQuery) {
+            setState(() {
+              _searchQuery = searchQuery;
+              _filterKeerthane();
+            });
+          },
+          focusNode: _searchFocusNode,
+          onQueryCleared: () {
+            setState(() {
+              _searchQuery = null;
+              _filterKeerthane();
+              Future.delayed(const Duration(milliseconds: 100), () {
+                _searchFocusNode.unfocus();
+              });
+            });
+          },
+          backgroundColor: colorScheme.surfaceContainerHighest,
+          searchIconColor: colorScheme.onSurfaceVariant,
+          clearIconColor: colorScheme.onSurfaceVariant,
+          textStyle: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
         ),
-        toolbarHeight: 120,
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.filter_list),
+              tooltip: 'Filter Keerthane',
+              color: colorScheme.onSurface,
+              onPressed: () => _showFilterMenu(context),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh Lyrics',
+            color: colorScheme.onSurface,
+            onPressed: checkAndUpdateLyrics,
+          ),
+        ],
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            const SizedBox(height: 10),
             Expanded(
               child: Stack(
                 children: [
-                  ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _searchQuery != null ? filteredKeerthane.length : keerthane.length,
-                    itemBuilder: (context, index) {
-                      final keerthaneItem = _searchQuery != null ? filteredKeerthane[index] : keerthane[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 5.0),
-                        elevation: 2.0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 40,
-                              child: Semantics(
-                                label: 'Keerthane icon',
-                                child: Image.asset(
-                                  'lib/assets/icons/keerthane.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          title: Text(
-                            'Keerthane ${keerthaneItem.number}: ${keerthaneItem.title}',
-                            style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                          onTap: () => navigateToKeerthaneDetail(context, keerthaneItem),
-                        ),
-                      );
-                    },
-                  ),
+                  if (_isLoading && keerthane.isEmpty)
+                    const Center(child: CircularProgressIndicator())
+                  else if (filteredKeerthane.isEmpty && (_searchQuery != null && _searchQuery!.isNotEmpty))
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset('lib/assets/lottie/search-empty.json', width: 200, height: 200),
+                          const SizedBox(height: 16),
+                          Text('No Keerthane found for "$_searchQuery".', style: textTheme.titleMedium, textAlign: TextAlign.center,),
+                        ],
+                      ),
+                    )
+                  else
+                    ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(top: 8.0),
+                      itemCount: filteredKeerthane.length,
+                      itemBuilder: (context, index) {
+                        final keerthaneItem = filteredKeerthane[index];
+                        return _buildKeerthaneListTile(keerthaneItem, colorScheme, textTheme);
+                      },
+                    ),
                   if (_showScrollToTopButton)
                     Positioned(
-                      bottom: 20,
-                      right: 20,
+                      bottom: 16,
+                      right: 0,
                       child: FloatingActionButton(
                         mini: true,
                         onPressed: _scrollToTop,
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                        elevation: 6.0,
+                        backgroundColor: colorScheme.tertiaryContainer,
+                        foregroundColor: colorScheme.onTertiaryContainer,
+                        elevation: 3.0,
                         child: const Icon(Icons.arrow_upward),
                       ),
                     ),
@@ -414,10 +382,38 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
     );
   }
 
-  void navigateToKeerthaneDetail(BuildContext context, Keerthane keerthane) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => KeerthaneDetailScreen(keerthane: keerthane)),
+  Widget _buildKeerthaneListTile(Keerthane keerthaneItem, ColorScheme colorScheme, TextTheme textTheme) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: colorScheme.outlineVariant, width: 1),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0),
+      child: ListTile(
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Image.asset(
+              'lib/assets/icons/keerthane.png',
+            ),
+          ),
+        ),
+        title: Text(
+          'Keerthane ${keerthaneItem.number}: ${keerthaneItem.title}',
+          style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)
+        ),
+        trailing: Icon(Icons.chevron_right, color: colorScheme.secondary),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => KeerthaneDetailScreen(keerthane: keerthaneItem)),
+          );
+        },
+        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      ),
     );
   }
 }

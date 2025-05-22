@@ -6,6 +6,7 @@ import 'screens/hymns_screen.dart';
 import 'screens/keerthane_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vibration/vibration.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:in_app_update/in_app_update.dart';
@@ -17,7 +18,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  try {
+    if (kIsWeb) {
+      FirebaseOptions firebaseOptions = const FirebaseOptions(
+        apiKey: "AIzaSyDxevY9bYbwnMKCCyAqCXo5emtBbE4_keY",
+        authDomain: "hymnappnoti.firebaseapp.com",
+        projectId: "hymnappnoti",
+        storageBucket: "hymnappnoti.firebasestorage.app",
+        messagingSenderId: "162340486626",
+        appId: "1:162340486626:web:6ea1b8331cdcb4b3e54dbb",
+      );
+      await Firebase.initializeApp(options: firebaseOptions);
+    } else {
+      await Firebase.initializeApp();
+    }
+  } catch (e) {
+    debugPrint('Firebase initialization error: $e');
+    // Continue app initialization even if Firebase fails
+  }
+
+  await _initOneSignal();
 
   runApp(
     ShowCaseWidget(
@@ -29,6 +50,12 @@ void main() async {
   );
 }
 
+Future<void> _initOneSignal() async {
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize("29f2a6ba-3f56-4ffe-8075-3b70d7440b13");
+  OneSignal.Notifications.requestPermission(true);
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -38,8 +65,55 @@ class MyApp extends StatelessWidget {
       builder: (context, themeState, child) {
         return MaterialApp(
           title: 'CSI Hymns and Lyrics',
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: themeState.seedColor,
+              brightness: Brightness.light,
+            ),
+            navigationBarTheme: NavigationBarThemeData(
+              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+              indicatorShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 0,
+            ),
+            cardTheme: CardThemeData(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            appBarTheme: const AppBarTheme(
+              centerTitle: true,
+              elevation: 0,
+            ),
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: themeState.blackThemeEnabled ? Colors.black : null,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: themeState.seedColor,
+              brightness: Brightness.dark,
+            ),
+            navigationBarTheme: NavigationBarThemeData(
+              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+              indicatorShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 0,
+            ),
+            cardTheme: CardThemeData(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            appBarTheme: const AppBarTheme(
+              centerTitle: true,
+              elevation: 0,
+            ),
+          ),
           themeMode: themeState.themeMode,
           home: const MainScreen(),
         );
@@ -60,7 +134,6 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   int _counter = 0;
   final GlobalKey _menuButtonKey = GlobalKey();
   int _selectedIndex = 0;
-  ThemeMode _themeMode = ThemeMode.system;
   late AnimationController _animationController;
   late PageController _pageController;
   bool _isDrawerOpen = false;
@@ -70,7 +143,6 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     super.initState();
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300),);
     _pageController = PageController();
-    _getThemeFromPreferences();
     checkForUpdate();
     _initOneSignal();
   }
@@ -157,15 +229,6 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     _pageController.jumpToPage(index);
   }
 
-  void _getThemeFromPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isDarkMode = prefs.getBool('isDarkMode') ?? false;
-
-    setState(() {
-      _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
-    });
-  }
-
   Future<void> _checkFirstRunAndShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = (prefs.getBool('isFirstRun') ?? true);
@@ -179,10 +242,14 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CSI Kannada Hymns Book',
-          style: TextStyle(fontFamily: 'plusJakartaSans', fontWeight: FontWeight.bold),
+        title: Text(
+          'CSI Kannada Hymns Book',
+          style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: colorScheme.onSurface),
         ),
         leading: Builder(
           builder: (context) {
@@ -191,15 +258,18 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
               title: 'Sidebar',
               description: 'Tap here to open the menu for categories and settings.',
               targetShapeBorder: const CircleBorder(),
-              overlayColor: const Color.fromARGB(139, 0, 0, 0).withOpacity(0.6),
-              titleTextStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontWeight: FontWeight.bold),
+              overlayColor: Colors.black.withOpacity(0.7),
+              titleTextStyle: TextStyle(color: colorScheme.onPrimaryContainer, fontSize: 20, fontWeight: FontWeight.bold),
               child: IconButton(
-                icon: const Icon(Icons.menu),
+                icon: Icon(Icons.menu, color: colorScheme.onSurface),
                 onPressed: () => Scaffold.of(context).openDrawer(),
               ),
             );
           },
         ),
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
       ),
       drawer: Sidebar(animationController: _animationController),
       body: GestureControl(
@@ -219,49 +289,32 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
         },
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: _themeMode == ThemeMode.dark ? Colors.white : const Color.fromARGB(107, 178, 178, 178),
-          labelTextStyle: WidgetStateProperty.all(const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-        ),
-        child: NavigationBar(
-          destinations: [
-            NavigationDestination(
-              icon: const Icon(Icons.music_note_outlined),
-              label: 'Hymns',
-              selectedIcon: Container(
-                margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.music_note_rounded),
-              ),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.library_music_outlined),
-              label: 'Keerthane',
-              selectedIcon: Container(
-                margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.library_music_rounded),
-              ),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.category_outlined),
-              label: 'Categories',
-              selectedIcon: Container(
-                margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.category_rounded),
-              ),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.star_border),
-              label: 'Favorites',
-              selectedIcon: Container(
-                margin: const EdgeInsets.only(bottom: 6.0),
-                child: const Icon(Icons.star_border_purple500_rounded),
-              ),
-            ),
-          ],
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: _onItemTapped,
-        ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 500),
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.music_note),
+            selectedIcon: Icon(Icons.music_note, color: colorScheme.onSecondaryContainer),
+            label: 'Hymns',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.album),
+            selectedIcon: Icon(Icons.album, color: colorScheme.onSecondaryContainer),
+            label: 'Keerthane',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.category),
+            selectedIcon: Icon(Icons.category, color: colorScheme.onSecondaryContainer),
+            label: 'Categories',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.favorite),
+            selectedIcon: Icon(Icons.favorite, color: colorScheme.onSecondaryContainer),
+            label: 'Favorites',
+          ),
+        ],
       ),
     );
   }

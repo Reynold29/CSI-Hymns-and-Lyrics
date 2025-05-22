@@ -29,6 +29,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   bool _isPlaying = false;
   bool _isMiniPlayerVisible = false;
   double _playbackSpeed = 1.0;
+  bool _isAudioLoading = false; // ADDED: Loading state for audio button
 
   final Duration _skipDuration = const Duration(seconds: 5);
   final _audioButtonHeroTag = const Symbol('audioButtonHeroTag');
@@ -59,16 +60,15 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
   void initState() {
     super.initState();
     _checkIsFavorite();
-    _init();
     _playerStateSubscription = _audioPlayer.playerStateStream.listen((playerState) {
       setState(() {
         _isPlaying = playerState.playing;
-      if (playerState.processingState == ProcessingState.completed) {
-        _onAudioCompleted();
-      }
+        if (playerState.processingState == ProcessingState.completed) {
+          _onAudioCompleted();
+        }
+      });
     });
-  });
-}
+  }
 
   Future<void> _init() async {
     final session = await AudioSession.instance;
@@ -81,12 +81,19 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     });
 
     String keerthaneNumber = widget.keerthane.number.toString();
-    String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Keerthane_$keerthaneNumber.ogg';
+    String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Keerthane/Keerthane_$keerthaneNumber.ogg';
 
     try {
       await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+      setState(() {
+        _isAudioLoading = false; // Set loading to false after successful load
+        _isMiniPlayerVisible = true; // Open mini player after successful load
+      });
     } catch (e) {
-      print('Error loading audio source: $e');
+      print('Error loading audio source in _init: $e');
+      setState(() {
+        _isAudioLoading = false; // Set loading to false even on error
+      });
       if (mounted) {
         showDialog(
           context: context,
@@ -96,6 +103,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
           ),
         );
       }
+      throw e;
     }
   }
 
@@ -218,58 +226,59 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     if (hasVibrator) {
       Vibration.vibrate(duration: 30);
     }
-    if (!_isMiniPlayerVisible) {
-        if (_audioPlayer.audioSource == null) {
-            String keerthaneNumber = widget.keerthane.number.toString();
-            String audioUrl = 'https://raw.githubusercontent.com/reynold29/midi-files/main/Keerthane_$keerthaneNumber.ogg';
-
-            try {
-                await _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
-            } catch (e) {
-                print('Error loading audio source: $e');
-                showDialog(
-                    context: context,
-                    builder: (context) => AudioErrorDialog(
-                        itemNumber: widget.keerthane.number,
-                        itemType: 'Keerthane',
-                    ),
-                );
-                return;
-            }
-        }
-    } else {
-        await _audioPlayer.pause();
-    }
     setState(() {
-        _isMiniPlayerVisible = !_isMiniPlayerVisible;
+      _isAudioLoading = true; // Start loading, show indicator
     });
 
-    if (_isMiniPlayerVisible) {
-        _playbackSpeed = 1.0;
+    if (!_isMiniPlayerVisible) {
+      if (_audioPlayer.audioSource == null) {
         try {
-            if (_audioPlayer.audioSource != null) {
-                await _audioPlayer.setSpeed(_playbackSpeed);
-            }
+          await _init();
         } catch (e) {
-            print("Error resetting playback speed: $e");
+          // Error dialog is already shown in _init, _isAudioLoading is set to false there.
+          return;
         }
+      } else {
+        setState(() {
+          _isAudioLoading = false; // If audio source is already loaded, just show mini player
+          _isMiniPlayerVisible = true;
+        });
+      }
+    } else {
+      await _audioPlayer.pause();
+      setState(() {
+        _isMiniPlayerVisible = false;
+        _isAudioLoading = false; // Stop loading if closing mini player
+      });
+    }
+
+    if (_isMiniPlayerVisible && !_isAudioLoading) { // Only reset speed if mini player is becoming visible and not loading
+      _playbackSpeed = 1.0;
+      try {
+        if (_audioPlayer.audioSource != null) {
+          await _audioPlayer.setSpeed(_playbackSpeed);
+        }
+      } catch (e) {
+        print("Error resetting playback speed: $e");
+      }
     }
   }
+
 
   void _onAudioCompleted() {
     print("Audio playback completed!");
 
     if (_isLooping) {
-        print("Loop mode is ON - restarting audio.");
-        _audioPlayer.seek(Duration.zero);
-        _audioPlayer.play();
+      print("Loop mode is ON - restarting audio.");
+      _audioPlayer.seek(Duration.zero);
+      _audioPlayer.play();
     } else {
-        print("Loop mode is OFF - pausing audio.");
-        setState(() {
-            _isPlaying = false;
-        });
-        _audioPlayer.seek(Duration.zero);
-        _audioPlayer.pause();
+      print("Loop mode is OFF - pausing audio.");
+      setState(() {
+        _isPlaying = false;
+      });
+      _audioPlayer.seek(Duration.zero);
+      _audioPlayer.pause();
     }
   }
 
@@ -279,7 +288,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
       Vibration.vibrate(duration: 30);
     }
     setState(() {
-        _isLooping = !_isLooping;
+      _isLooping = !_isLooping;
     });
     print("Loop mode toggled: _isLooping = $_isLooping");
   }
@@ -291,19 +300,19 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
     }
     print("setPlaybackSpeed called with speed: $speed (Simplified Navigation)");
     setState(() {
-        _playbackSpeed = speed;
+      _playbackSpeed = speed;
     });
     try {
-        print("Before _audioPlayer.setSpeed(speed), audioSource: ${_audioPlayer.audioSource}");
-        if (_audioPlayer.audioSource != null) {
-            await _audioPlayer.setSpeed(speed);
-        } else {
-            print("Audio source is still null when trying to change speed (inside IF).");
-        }
+      print("Before _audioPlayer.setSpeed(speed), audioSource: ${_audioPlayer.audioSource}");
+      if (_audioPlayer.audioSource != null) {
+        await _audioPlayer.setSpeed(speed);
+      } else {
+        print("Audio source is still null when trying to change speed (inside IF).");
+      }
     } catch (e) {
-        print("Error setting playback speed: $e");
+      print("Error setting playback speed: $e");
     } finally {
-        print("setPlaybackSpeed finally block - Navigation MINIMAL - NO Navigator.pop()");
+      print("setPlaybackSpeed finally block - Navigation MINIMAL - NO Navigator.pop()");
     }
   }
 
@@ -325,7 +334,7 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                     children: [
                       Text(
                         'Keerthane ${widget.keerthane.number}',
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 15),
                       StatefulBuilder(
@@ -346,10 +355,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                         label: const Text('English'),
                         selected: selectedLanguage == 'English',
                         onSelected: (bool selected) async {
-                            bool? hasVibrator = await Vibration.hasVibrator();
-                            if (hasVibrator) {
-                              Vibration.vibrate(duration: 30);
-                            }
+                          bool? hasVibrator = await Vibration.hasVibrator();
+                          if (hasVibrator) {
+                            Vibration.vibrate(duration: 30);
+                          }
                           if (selected) {
                             setState(() {
                               selectedLanguage = 'English';
@@ -368,10 +377,10 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                         ),
                         selected: selectedLanguage == 'Kannada',
                         onSelected: (bool selected) async {
-                            bool? hasVibrator = await Vibration.hasVibrator();
-                            if (hasVibrator) {
-                              Vibration.vibrate(duration: 30);
-                            }
+                          bool? hasVibrator = await Vibration.hasVibrator();
+                          if (hasVibrator) {
+                            Vibration.vibrate(duration: 30);
+                          }
                           if (selected) {
                             setState(() {
                               selectedLanguage = 'Kannada';
@@ -429,7 +438,16 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
                                 heroTag: _audioButtonHeroTag,
                                 onPressed: _toggleMiniPlayerVisibility,
                                 tooltip: 'Open Audio Player',
-                                child: Icon(_isMiniPlayerVisible ? Icons.music_note : Icons.music_note),
+                                child: _isAudioLoading
+                                    ? SizedBox(
+                                  width: 20.0,
+                                  height: 20.0,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 4.0,
+                                  ),
+                                )
+                                    : Icon(_isMiniPlayerVisible ? Icons.music_note : Icons.music_note),
                               ),
                             ),
                           ),
@@ -509,37 +527,37 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
               ),
             ],
           ),
-  StreamBuilder<Duration>(
-    stream: _audioPlayer.positionStream,
-    builder: (context, snapshot) {
-        Duration? position = snapshot.data;
-        Duration? duration = _audioPlayer.duration;
-        double sliderValue = position?.inMilliseconds.toDouble() ?? 0.0;
-        double sliderMax = duration?.inMilliseconds.toDouble() ?? 100.0;
+          StreamBuilder<Duration>(
+            stream: _audioPlayer.positionStream,
+            builder: (context, snapshot) {
+              Duration? position = snapshot.data;
+              Duration? duration = _audioPlayer.duration;
+              double sliderValue = position?.inMilliseconds.toDouble() ?? 0.0;
+              double sliderMax = duration?.inMilliseconds.toDouble() ?? 100.0;
 
-        sliderValue = sliderValue.clamp(0.0, sliderMax);
+              sliderValue = sliderValue.clamp(0.0, sliderMax);
 
-        return Column(
-            children: [
-                SliderTheme(
+              return Column(
+                children: [
+                  SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5.0),
-                        overlayShape: const RoundSliderOverlayShape(overlayRadius: 10.0),
-                        activeTrackColor: Theme.of(context).colorScheme.primary,
-                        inactiveTrackColor: Colors.grey[700],
-                        thumbColor: Theme.of(context).colorScheme.primary,
+                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5.0),
+                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 10.0),
+                      activeTrackColor: Theme.of(context).colorScheme.primary,
+                      inactiveTrackColor: Colors.grey[700],
+                      thumbColor: Theme.of(context).colorScheme.primary,
                     ),
                     child: Slider(
-                        activeColor: Theme.of(context).colorScheme.primary,
-                        inactiveColor: Colors.grey[700],
-                        thumbColor: Theme.of(context).colorScheme.primary,
-                        value: sliderValue,
-                        max: sliderMax,
-                        min: 0.0,
-                        onChanged: (value) {
-                            final newPosition = Duration(milliseconds: value.toInt());
-                            _audioPlayer.seek(newPosition);
-                        },
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      inactiveColor: Colors.grey[700],
+                      thumbColor: Theme.of(context).colorScheme.primary,
+                      value: sliderValue,
+                      max: sliderMax,
+                      min: 0.0,
+                      onChanged: (value) {
+                        final newPosition = Duration(milliseconds: value.toInt());
+                        _audioPlayer.seek(newPosition);
+                      },
                     ),
                   ),
                   Padding(
@@ -588,34 +606,34 @@ class _KeerthaneDetailScreenState extends State<KeerthaneDetailScreen> {
               ),
               StatefulBuilder(
                 builder: (BuildContext context, StateSetter setStateSB) {
-                    bool _isButtonPushed = false;
+                  bool _isButtonPushed = false;
 
-                    return IconButton(
-                        icon: AnimatedScale(
-                            // ignore: dead_code
-                            scale: _isButtonPushed ? 1.2 : 1.0,
-                            duration: const Duration(milliseconds: 150),
-                            child: FaIcon(
-                                FontAwesomeIcons.repeat,
-                                color: _isLooping
-                                    ? const Color.fromARGB(255, 133, 3, 255)
-                                    : Colors.white,
-                                size: 20,
-                            ),
-                        ),
-                        tooltip: _isLooping ? 'Loop On' : 'Loop Off',
-                        onPressed: () {
-                            _toggleLoop();
-                            setStateSB(() {
-                                _isButtonPushed = true;
-                            });
-                            Future.delayed(const Duration(milliseconds: 150), () {
-                                setStateSB(() {
-                                    _isButtonPushed = false;
-                                });
-                            });
-                        },
-                    );
+                  return IconButton(
+                    icon: AnimatedScale(
+                      // ignore: dead_code
+                      scale: _isButtonPushed ? 1.2 : 1.0,
+                      duration: const Duration(milliseconds: 150),
+                      child: FaIcon(
+                        FontAwesomeIcons.repeat,
+                        color: _isLooping
+                            ? const Color.fromARGB(255, 133, 3, 255)
+                            : Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                    tooltip: _isLooping ? 'Loop On' : 'Loop Off',
+                    onPressed: () {
+                      _toggleLoop();
+                      setStateSB(() {
+                        _isButtonPushed = true;
+                      });
+                      Future.delayed(const Duration(milliseconds: 150), () {
+                        setStateSB(() {
+                          _isButtonPushed = false;
+                        });
+                      });
+                    },
+                  );
                 },
               ),
               PopupMenuButton<double>(

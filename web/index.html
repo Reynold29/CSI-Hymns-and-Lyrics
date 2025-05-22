@@ -15,6 +15,11 @@
   <title>CSI Hymns Book</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js"></script>
+
   <script src="flutter.js" defer></script>
   <script src="main.dart.js" type="application/javascript" defer></script>
 </head>
@@ -27,6 +32,15 @@
         }
       }).then(function(appRunner) {
         appRunner.runApp();
+      });
+    });
+  </script>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "29f2a6ba-3f56-4ffe-8075-3b70d7440b13",
       });
     });
   </script>
