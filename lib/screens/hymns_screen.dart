@@ -285,14 +285,28 @@ class _HymnsScreenState extends State<HymnsScreen> {
   }
 
   void _showFilterMenu(BuildContext context) {
+    final RenderBox? overlay = Overlay.of(context).context.findRenderObject() as RenderBox?;
+    final RenderBox? button = context.findRenderObject() as RenderBox?;
+    if (button == null || overlay == null) return;
+
+    final position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(Offset.zero, ancestor: overlay),
+        button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+
     showMenu<String>(
       context: context,
-      position: const RelativeRect.fromLTRB(100, 100, 0, 0),
+      position: position.shift(const Offset(0, 8)),
       items: [
         const PopupMenuItem<String>(value: "number", child: Text("Order by Hymn Number")),
         const PopupMenuItem<String>(value: "title", child: Text("Order in Alphabetical Order")),
         const PopupMenuItem<String>(value: "time_signature", child: Text("Order by Tune Meter")),
       ],
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ).then((value) {
       if (value != null) {
         setState(() {
@@ -326,46 +340,74 @@ class _HymnsScreenState extends State<HymnsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: custom.SearchBar(
-          hintText: 'Search Hymns (Number, Title, Meter)',
-          onChanged: (searchQuery) {
-            setState(() {
-              _searchQuery = searchQuery;
-              _filterHymns();
-            });
-          },
-          focusNode: _searchFocusNode,
-          onQueryCleared: () {
-            setState(() {
-              _searchQuery = null;
-              _filterHymns();
-              if (_selectedOrder == 'time_signature') _groupHymnsBySignature();
-              Future.delayed(const Duration(milliseconds: 100), () {
-                _searchFocusNode.unfocus();
-              });
-            });
-          },
-          backgroundColor: colorScheme.surfaceContainerHighest,
-          searchIconColor: colorScheme.onSurfaceVariant,
-          clearIconColor: colorScheme.onSurfaceVariant,
-          textStyle: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            tooltip: 'Filter Hymns',
-            color: colorScheme.onSurface,
-            onPressed: () => _showFilterMenu(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh Lyrics',
-            color: colorScheme.onSurface,
-            onPressed: checkAndUpdateLyrics,
-          ),
-        ],
-        backgroundColor: colorScheme.surface,
+        automaticallyImplyLeading: false, 
         elevation: 0,
+        toolbarHeight: 130, // Ensuring this is 130
+        backgroundColor: colorScheme.surface,
+        flexibleSpace: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    custom.SearchBar(
+                      hintText: 'Search Hymns (Number, Title, Meter)',
+                      onChanged: (searchQuery) {
+                        setState(() {
+                          _searchQuery = searchQuery;
+                          _filterHymns();
+                        });
+                      },
+                      focusNode: _searchFocusNode,
+                      onQueryCleared: () {
+                        setState(() {
+                          _searchQuery = null;
+                          _filterHymns();
+                          if (_selectedOrder == 'time_signature') _groupHymnsBySignature();
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            _searchFocusNode.unfocus();
+                          });
+                        });
+                      },
+                      backgroundColor: colorScheme.surfaceContainerHighest,
+                      searchIconColor: colorScheme.onSurfaceVariant,
+                      clearIconColor: colorScheme.onSurfaceVariant,
+                      textStyle: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton.icon(
+                          icon: const Icon(Icons.filter_list),
+                          label: const Text('Filter'),
+                          onPressed: () => _showFilterMenu(context),
+                          style: TextButton.styleFrom(
+                            foregroundColor: colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        TextButton.icon(
+                          icon: const Icon(Icons.refresh),
+                          label: const Text('Refresh Lyrics'),
+                          onPressed: checkAndUpdateLyrics,
+                          style: TextButton.styleFrom(
+                            foregroundColor: colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

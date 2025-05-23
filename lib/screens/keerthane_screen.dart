@@ -288,47 +288,73 @@ class _KeerthaneScreenState extends State<KeerthaneScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: custom.SearchBar(
-          hintText: 'Search Keerthane (Number, Title)',
-          onChanged: (searchQuery) {
-            setState(() {
-              _searchQuery = searchQuery;
-              _filterKeerthane();
-            });
-          },
-          focusNode: _searchFocusNode,
-          onQueryCleared: () {
-            setState(() {
-              _searchQuery = null;
-              _filterKeerthane();
-              Future.delayed(const Duration(milliseconds: 100), () {
-                _searchFocusNode.unfocus();
-              });
-            });
-          },
-          backgroundColor: colorScheme.surfaceContainerHighest,
-          searchIconColor: colorScheme.onSurfaceVariant,
-          clearIconColor: colorScheme.onSurfaceVariant,
-          textStyle: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
-        ),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: const Icon(Icons.filter_list),
-              tooltip: 'Filter Keerthane',
-              color: colorScheme.onSurface,
-              onPressed: () => _showFilterMenu(context),
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        toolbarHeight: 130, // Ensuring this is 130
+        backgroundColor: colorScheme.surface,
+        flexibleSpace: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    custom.SearchBar(
+                      hintText: 'Search Keerthane (Number, Title)',
+                      onChanged: (searchQuery) {
+                        setState(() {
+                          _searchQuery = searchQuery;
+                          _filterKeerthane();
+                        });
+                      },
+                      focusNode: _searchFocusNode,
+                      onQueryCleared: () {
+                        setState(() {
+                          _searchQuery = null;
+                          _filterKeerthane();
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            _searchFocusNode.unfocus();
+                          });
+                        });
+                      },
+                      backgroundColor: colorScheme.surfaceContainerHighest,
+                      searchIconColor: colorScheme.onSurfaceVariant,
+                      clearIconColor: colorScheme.onSurfaceVariant,
+                      textStyle: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton.icon(
+                          icon: const Icon(Icons.filter_list),
+                          label: const Text('Filter'),
+                          onPressed: () => _showFilterMenu(context),
+                          style: TextButton.styleFrom(
+                            foregroundColor: colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        TextButton.icon(
+                          icon: const Icon(Icons.refresh),
+                          label: const Text('Refresh Lyrics'),
+                          onPressed: checkAndUpdateLyrics,
+                          style: TextButton.styleFrom(
+                            foregroundColor: colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              },
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh Lyrics',
-            color: colorScheme.onSurface,
-            onPressed: checkAndUpdateLyrics,
-          ),
-        ],
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
